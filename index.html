@@ -1,1302 +1,143 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotebookLM: Trợ Lý AI Cho Giảng Viên | 教育者のためのAIパートナー</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0284c7',
-                        secondary: '#f59e0b',
-                        accent: '#3b82f6',
-                        surface: '#ffffff',
-                        background: '#fafafa',
-                        textMain: '#1f2937',
-                        textMuted: '#6b7280'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <title>AIWS Project Hub</title>
     <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --primary-color: #2563eb;
+            --accent-color: #3b82f6;
+        }
+
         body {
-            background-color: #f8fafc;
-            color: #1f2937;
-            scroll-behavior: smooth;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 320px;
-            max-height: 400px;
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(229, 231, 235, 0.5);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 10px;
         }
-        .main-tab-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+
+        header p {
+            font-size: 1.1rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .main-tab-content.active {
-            display: block;
-            opacity: 1;
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
         }
-        .studio-tab-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        .studio-tab-content.active {
-            display: block;
-            opacity: 1;
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary-color);
         }
-        .highlight-segment {
-            transition: all 0.5s ease;
+
+        .card h2 {
+            font-size: 1.4rem;
+            margin-top: 0;
+            color: #1e293b;
         }
-        .highlight-segment.active {
-            background-color: #fef08a; 
-            border-color: #f59e0b;     
-            transform: scale(1.02);
-            box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.2);
+
+        .card p {
+            font-size: 0.95rem;
+            color: #64748b;
+            flex-grow: 1;
+        }
+
+        .go-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .card:hover .go-link {
+            color: var(--accent-color);
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-<!-- Chosen Palette: Brilliant Blues & Soft Amber (Sky-600, Amber-500, Slate-50) -->
-<!-- Application Structure Plan: This web application uses a full-tabbed layout to divide the content logically into four key areas: Core Capabilities (Tab 1), Creative Studio (Tab 2), Other applications in teaching (Tab 3), and Interactive Knowledge Quiz (Tab 4). Each area has its own introductory text, interactive mockups, or live Chart.js charts. The newly added Tab 4 contains a fully functional 10-question quiz tracking real-time score, providing instant answers and helpful hints, all fully dynamic and translated on language toggle. This keeps the user highly engaged while reinforcing what they have learned. -->
-<!-- Visualization & Content Choices: 1. Core Grounding Accuracy -> Goal: Compare -> Interactive Radar Chart (Chart.js) -> Represents performance on 5 key axes (Accuracy, Citations, Multi-Source capability, Context retention, Security) with translated multi-line wrapped labels to prevent UI overflow. 2. Creative Studio Output -> Goal: Organize & Showcase -> Dynamic Tab Component with bilingual state management -> Keeps multi-format utilities digestible. 3. Practical Time Savings -> Goal: Compare/Change -> Stacked Bar Chart -> Demonstrates concrete hours saved per week on administrative work. 4. Quiz Tab -> Goal: Test & Reinforce -> Interactive single-choice questions with bilingual feedback and scoring. NO SVG/Mermaid used. -->
-<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <div class="container">
+        <header>
+            <h1>Artificial Intelligence Workshop Series (AIWS)</h1>
+            <p>Welcome to the AIWS hub. Explore our curated projects, tools, and workshop notes focusing on cutting-edge AI technologies and systems.</p>
+        </header>
 
-    <nav class="fixed w-full z-50 glass-card">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center font-bold text-xl text-primary">
-                    🧠 NotebookLM Edu
+        <main class="grid">
+            <a href="notebooklm.html" class="card">
+                <div>
+                    <h2>NotebookLM</h2>
+                    <p>Discover how Google's AI-powered notebook helps you synthesize documents, generate summaries, and interact with your notes.</p>
                 </div>
-                
-                <div class="flex items-center space-x-2">
-                    <button onclick="toggleLanguage('vi')" id="lang-btn-vi" class="px-3 py-1.5 rounded-lg text-xs font-bold border border-primary bg-primary text-white shadow-sm transition-all">🇻🇳 VI</button>
-                    <button onclick="toggleLanguage('ja')" id="lang-btn-ja" class="px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-300 text-textMain hover:border-primary transition-all">🇯🇵 JA</button>
+                <span class="go-link">Explore Module &rarr;</span>
+            </a>
+
+            <a href="gems.html" class="card">
+                <div>
+                    <h2>Gemini Gems</h2>
+                    <p>Explore custom versions of Gemini tailored for specific tasks, specialized workflows, and enhanced productivity.</p>
                 </div>
-            </div>
-        </div>
-    </nav>
+                <span class="go-link">Explore Module &rarr;</span>
+            </a>
 
-    <header class="pt-24 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-        <h1 id="hero-title" class="text-3xl md:text-5xl font-extrabold text-textMain tracking-tight mb-2">
-            Giải Phóng Gánh Nặng <span class="text-primary">Xử Lý Tài Liệu</span>
-        </h1>
-        <p id="hero-subtitle" class="max-w-2xl text-base md:text-lg text-textMuted mx-auto leading-relaxed">
-            Chuyển hóa tri thức thô thành học liệu đa phương tiện sinh động và chuẩn xác.
-        </p>
-    </header>
+            <a href="pka-itws-1st.html" class="card">
+                <div>
+                    <h2>PKA-ITWS (1st)</h2>
+                    <p>Review the primary documentation, baseline notes, and initial findings from the first IT Workshop Series session.</p>
+                </div>
+                <span class="go-link">Explore Module &rarr;</span>
+            </a>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div class="flex flex-wrap justify-center border-b border-gray-200">
-            <button onclick="switchMainTab('core')" id="main-tab-btn-core" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-primary text-primary focus:outline-none transition-all">
-                Năng Lực Cốt Lõi
-            </button>
-            <button onclick="switchMainTab('studio')" id="main-tab-btn-studio" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all">
-                Studio Sáng Tạo
-            </button>
-            <button onclick="switchMainTab('impact')" id="main-tab-btn-impact" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all">
-                Những Ứng Dụng Khác Trong Giảng Dạy
-            </button>
-            <button onclick="switchMainTab('quiz')" id="main-tab-btn-quiz" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all">
-                Trắc Nghiệm Nhanh
-            </button>
-        </div>
+            <a href="pka-itws-2nd.html" class="card">
+                <div>
+                    <h2>PKA-ITWS (2nd)</h2>
+                    <p>Dive into advanced applications, subsequent developments, and deep-dives from the second IT Workshop Series session.</p>
+                </div>
+                <span class="go-link">Explore Module &rarr;</span>
+            </a>
+        </main>
     </div>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-grow pb-16">
-
-        <!-- Tab 1: Core Capabilities -->
-        <div id="main-tab-core" class="main-tab-content active">
-            <div class="text-center mb-10">
-                <h2 id="core-title" class="text-2xl md:text-3xl font-bold text-textMain">Năng Lực Cốt Lõi (Source-Grounded AI)</h2>
-                <p id="core-desc" class="mt-3 text-sm md:text-base text-textMuted max-w-3xl mx-auto">
-                    Khác với các AI phổ thông, NotebookLM hoạt động trên "Học liệu chuẩn" do chính giảng viên cung cấp, giảm thiểu tối đa các rủi ro về sai sót học thuật.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-8">
-                <div class="space-y-4">
-                    <div class="flex p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
-                        <div class="flex-shrink-0 text-2xl">🎯</div>
-                        <div class="ml-4">
-                            <h3 id="feat1-title" class="text-base font-bold text-textMain">Độ chính xác cao (Hạn chế tối đa ảo tưởng)</h3>
-                            <p id="feat1-desc" class="mt-1 text-xs md:text-sm text-textMuted">AI tập trung truy xuất thông tin từ tài liệu gốc, hỗ trợ đảm bảo tính chính xác và khoa học của nội dung học thuật.</p>
-                        </div>
-                    </div>
-                    <div class="flex p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
-                        <div class="flex-shrink-0 text-2xl">🔗</div>
-                        <div class="ml-4">
-                            <h3 id="feat2-title" class="text-lg font-bold text-textMain">Trích dẫn nguồn minh bạch (Citations)</h3>
-                            <p id="feat2-desc" class="mt-1 text-xs md:text-sm text-textMuted">Mọi phản hồi đều gắn liền với bằng chứng từ tài liệu gốc. Tính năng này không chỉ giúp kiểm chứng thông tin mà còn đảm bảo tính liêm chính học thuật.</p>
-                        </div>
-                    </div>
-                    <div class="flex p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
-                        <div class="flex-shrink-0 text-2xl">📚</div>
-                        <div class="ml-4">
-                            <h3 id="feat3-title" class="text-lg font-bold text-textMain">Quản lý đa nguồn dữ liệu</h3>
-                            <p id="feat3-desc" class="mt-1 text-xs md:text-sm text-textMuted">Nạp đồng thời giáo trình PDF, bài nghiên cứu và transcript YouTube để tạo ra hệ tri thức bài giảng thống nhất.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                    <h4 id="chart1-title" class="text-center font-bold text-textMain mb-2 text-sm md:text-base">So Sánh Khả Năng Đáp Ứng Học Thuật: NotebookLM vs AI Phổ Thông</h4>
-                    <div class="chart-container">
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Authentic Minna no Nihongo Grounded Showcase -->
-            <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-                <h3 id="core-visual-title" class="text-lg font-bold text-textMain mb-1">Minh họa thực tế: Trích dẫn chính xác giáo trình Minna no Nihongo</h3>
-                <p id="core-visual-desc" class="text-xs text-textMuted mb-6">Trực quan hóa cách NotebookLM đối chiếu từ vựng & cấu trúc ngữ pháp từ tài liệu đính kèm để đưa ra phản hồi rõ ràng, hạn chế sai sót.</p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-xl">
-                    <!-- Left Column: Source Book Visual -->
-                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
-                        <div>
-                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-2 mb-3 gap-2">
-                                <span id="source-doc-header" class="text-xs font-bold text-primary">📄 翻訳・文法解説.pdf (Trang 14)</span>
-                                <a href="https://drive.google.com/file/d/1G65TRapUUgo_wdFyrP5eUJVYeSSEScvQ/view?usp=sharing" target="_blank" id="view-original-btn" class="text-[10px] bg-primary/10 hover:bg-primary/20 text-primary px-2 py-1 rounded font-bold transition-all flex items-center gap-1">
-                                    🔍 Xem ảnh trang 14
-                                </a>
-                            </div>
-                            
-                            <div class="space-y-3 font-mono text-xs md:text-sm">
-                                <div id="segment-1" class="highlight-segment p-2 border-l-2 border-transparent rounded">
-                                    <span class="font-bold text-amber-600">[1]</span>
-                                    <p class="text-textMain leading-relaxed" id="source-grammar-rule1">
-                                        "<b>Trợ từ は:</b> Đặt sau danh từ 1 để biểu thị danh từ đó là chủ đề của câu văn. Người nói thiết lập chủ đề muốn thảo luận..."
-                                    </p>
-                                </div>
-                                <div id="segment-2" class="highlight-segment p-2 border-l-2 border-transparent rounded">
-                                    <span class="font-bold text-amber-600">[2]</span>
-                                    <p class="text-textMain leading-relaxed" id="source-grammar-rule2">
-                                        "<b>Đuôi です:</b> Đứng sau danh từ để tạo thành vị ngữ, biểu thị sự khẳng định lịch sự hoặc phán đoán của người nói đối với người nghe."
-                                    </p>
-                                </div>
-                                <div id="segment-3" class="highlight-segment p-2 border-l-2 border-transparent rounded">
-                                    <span class="font-bold text-amber-600">[3]</span>
-                                    <p class="text-textMain leading-relaxed italic text-primary" id="source-grammar-rule3">
-                                        "<b>Ví dụ mẫu câu 1:</b> わたしは マイク・ミラーです (Tôi là Mike Miller)."
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <span class="text-[9px] text-gray-400 mt-4 block" id="source-book-caption">Giáo án gốc từ Minna no Nihongo sơ cấp I</span>
-                    </div>
-
-                    <!-- Right Column: Interactive AI Panel with Citations -->
-                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
-                        <div class="space-y-4">
-                            <!-- User Prompt Box -->
-                            <div class="bg-slate-100 p-3 rounded-lg border border-slate-200 text-xs md:text-sm">
-                                <div class="flex items-center space-x-2 mb-1.5">
-                                    <span class="text-sm">💬</span>
-                                    <span id="user-prompt-header" class="font-bold text-slate-700 text-xs">Câu hỏi của Giảng viên</span>
-                                </div>
-                                <p id="user-prompt-box" class="text-textMain italic font-medium">"Hãy giải thích cho tôi cấu trúc giới thiệu bản thân cơ bản trong Bài 1"</p>
-                            </div>
-
-                            <!-- AI Output response -->
-                            <div>
-                                <div class="flex items-center space-x-2 border-b border-gray-100 pb-2 mb-3">
-                                    <span class="text-lg">🤖</span>
-                                    <span id="ai-response-header" class="text-xs font-bold text-indigo-600">NotebookLM AI Giáo Trình Trợ Lý</span>
-                                </div>
-                                <div id="ai-response-box" class="bg-indigo-50/50 p-3 rounded-lg border border-indigo-100/60 text-xs md:text-sm text-textMain leading-relaxed">
-                                    <!-- Generated Dynamically based on language -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-4 pt-2 border-t border-gray-100 text-[10px] text-textMuted italic flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                            <span id="core-visual-interactive-tip">* Hãy rê chuột hoặc bấm chọn các số chú thích màu xanh để kiểm tra nguồn gốc từ giáo trình</span>
-                            <span class="bg-green-100 text-green-800 font-bold px-1.5 py-0.5 rounded text-[8px] self-start sm:self-auto">Grounded AI Verification</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 2: Creative Studio -->
-        <div id="main-tab-studio" class="main-tab-content">
-            <div class="text-center mb-10">
-                <h2 id="studio-title" class="text-2xl md:text-3xl font-bold text-textMain">NotebookLM Studio: Hướng Dẫn Sử Dụng</h2>
-                <p id="studio-desc" class="mt-3 text-sm md:text-base text-textMuted max-w-3xl mx-auto">
-                    Khai phá tiềm năng chuyển hóa bài giảng thông qua giao diện Studio đa phương tiện. Chọn các tab tương tác bên dưới để trải nghiệm.
-                </p>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden mb-8">
-                <div class="flex flex-col sm:flex-row border-b border-gray-100 bg-gray-50">
-                    <button class="studio-tab active flex-1 py-4 px-6 text-center font-bold text-sm bg-primary text-white transition-all focus:outline-none" data-target="tab-slide" id="tab-btn-slide">
-                        📊 Slide & Revise
-                    </button>
-                    <button class="studio-tab flex-1 py-4 px-6 text-center font-bold text-sm text-textMain hover:bg-gray-100 transition-all focus:outline-none" data-target="tab-info" id="tab-btn-info">
-                        🖼️ Hỗ trợ Infographic
-                    </button>
-                    <button class="studio-tab flex-1 py-4 px-6 text-center font-bold text-sm text-textMain hover:bg-gray-100 transition-all focus:outline-none" data-target="tab-video" id="tab-btn-video">
-                        🎬 Kịch bản Video
-                    </button>
-                </div>
-
-                <div class="p-6 md:p-8">
-                    <!-- Slide and Revise Sub-Tab -->
-                    <div id="tab-slide" class="studio-tab-content active">
-                        <h3 id="t1-title" class="text-xl font-bold text-textMain mb-2">Chức năng "Revise" (Hiệu chỉnh Slide)</h3>
-                        <p id="t1-desc" class="text-textMuted mb-6 text-xs md:text-sm">NotebookLM có thể tạo nhanh các bản phác thảo slide bài giảng tự động và hỗ trợ giảng viên hiệu chỉnh (revise) chính xác theo đúng ý đồ giảng dạy.</p>
-                        
-                        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                            <h4 id="slide-section-title" class="font-bold text-sm text-textMain mb-4">Mô phỏng: Slide bài học số 30</h4>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <!-- Before Card -->
-                                <div class="bg-white p-5 rounded-lg border border-red-100 shadow-sm flex flex-col justify-between h-40">
-                                    <div>
-                                        <span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px] uppercase">Before / Trước</span>
-                                        <h5 id="before-slide-title" class="font-bold text-sm text-textMain mt-2">Bản thảo thô chưa hiệu chỉnh</h5>
-                                        <p class="text-xs text-textMuted mt-1">Nội dung thô do AI bóc tách trực tiếp từ bài học số 30.</p>
-                                    </div>
-                                    <a href="https://drive.google.com/file/d/18Ey8S4fstpzgRp4LTH7Vf9hVlD8chcva/view?usp=drive_link" target="_blank" class="w-full text-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg text-xs transition-all inline-block mt-3" id="before-slide-btn">Xem Slide Before</a>
-                                </div>
-                                <!-- After Card -->
-                                <div class="bg-white p-5 rounded-lg border border-green-100 shadow-sm flex flex-col justify-between h-40">
-                                    <div>
-                                        <span class="bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded text-[10px] uppercase">After / Sau</span>
-                                        <h5 id="after-slide-title" class="font-bold text-sm text-textMain mt-2">Slide đã hiệu chỉnh hoàn thiện</h5>
-                                        <p class="text-xs text-textMuted mt-1">Cấu trúc bài viết đã được revise lại phù hợp với yêu cầu của bài giảng số 30.</p>
-                                    </div>
-                                    <a href="https://drive.google.com/file/d/1HArPu06lJ4UmKrzDPSWfwL-9KX-r7-YM/view?usp=drive_link" target="_blank" class="w-full text-center py-2 bg-primary text-white font-bold rounded-lg text-xs hover:bg-primary/90 transition-all inline-block mt-3" id="after-slide-btn">Xem Slide After</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Infographic Sub-Tab -->
-                    <div id="tab-info" class="studio-tab-content">
-                        <h3 id="t2-title" class="text-xl font-bold text-textMain mb-2">Cấu trúc Visual của Infographic</h3>
-                        <p id="t2-desc" class="text-textMuted mb-6 text-xs md:text-sm">Hỗ trợ phân tách và định dạng nội dung trực quan để đưa vào các phần mềm đồ họa (như Canva).</p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                            <div class="bg-sky-50/50 p-6 rounded-xl border border-sky-100 flex flex-col justify-between">
-                                <div>
-                                    <div class="text-4xl mb-3">📝</div>
-                                    <h4 id="t2-card1-title" class="font-bold text-textMain mb-2">Tiêu đề ngắn gọn</h4>
-                                    <p id="t2-card1-desc" class="text-xs text-textMuted leading-relaxed">Tóm gọn nội dung chương sách thành các tiêu đề ngắn gọn.</p>
-                                </div>
-                                <div class="mt-4 pt-2 border-t border-sky-100 text-[10px] text-primary font-semibold">Ex: "40% Lượng phát thải từ điện than"</div>
-                            </div>
-                            <div class="bg-amber-50/50 p-6 rounded-xl border border-amber-100 flex flex-col justify-between">
-                                <div>
-                                    <div class="text-4xl mb-3">⚙️</div>
-                                    <h4 id="t2-card2-title" class="font-bold text-textMain mb-2">Các bước cốt lõi</h4>
-                                    <p id="t2-card2-desc" class="text-xs text-textMuted leading-relaxed">Hệ thống hóa các bài nghiên cứu phức tạp thành sơ đồ lộ trình chi tiết từng bước.</p>
-                                </div>
-                                <div class="mt-4 pt-2 border-t border-amber-100 text-[10px] text-secondary font-semibold">Ex: "Hơi nước → Đốt lò than → Phát điện"</div>
-                            </div>
-                            <div class="bg-blue-50/50 p-6 rounded-xl border border-blue-100 flex flex-col justify-between">
-                                <div>
-                                    <div class="text-4xl mb-3">💡</div>
-                                    <h4 id="t2-card3-title" class="font-bold text-textMain mb-2">Biểu tượng trực quan</h4>
-                                    <p id="t2-card3-desc" class="text-xs text-textMuted leading-relaxed">Đề xuất các cụm icon minh họa phù hợp hỗ trợ tăng khả năng tiếp thu thị giác.</p>
-                                </div>
-                                <div class="mt-4 pt-2 border-t border-blue-100 text-[10px] text-blue-600 font-semibold">Ex: "Sử dụng icon 🏭, 🌳, 🌊"</div>
-                            </div>
-                        </div>
-
-                        <!-- Infographic Visual Triggers -->
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-center gap-4">
-                            <a href="https://drive.google.com/file/d/1e6ju_JxSVRDiOaU1_om4xzLEANzh_Adv/view?usp=sharing" target="_blank" id="view-info-btn" class="inline-flex items-center justify-center gap-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-5 py-3 rounded-lg transition-all text-xs">
-                                🎨 Xem sơ đồ cấu trúc mẫu
-                            </a>
-                            <a href="https://drive.google.com/file/d/1C6QkWKIBF3W1kZ6ajUz-BWSfmRU5L2aj/view?usp=drive_link" target="_blank" id="view-info-img-btn" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-accent text-white font-bold px-5 py-3 rounded-lg shadow-md hover:opacity-90 transition-all text-xs">
-                                🖼️ Xem ảnh Infographic mẫu Bài 33
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Video Script Sub-Tab -->
-                    <div id="tab-video" class="studio-tab-content">
-                        <h3 id="t3-title" class="text-xl font-bold text-textMain mb-2">Kịch bản Video E-learning</h3>
-                        <p id="t3-desc" class="text-textMuted mb-6 text-xs md:text-sm">Hỗ trợ chuyển đổi nội dung học thuật thành kịch bản phân cảnh kết hợp hình ảnh và lời dẫn âm thanh trực quan.</p>
-                        
-                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 mb-8 space-y-4">
-                            <h4 id="video-demo-title" class="font-bold text-sm text-textMain">Bản thiết kế video giải thích ngữ pháp bài 33</h4>
-                            
-                            <ul class="list-decimal pl-5 text-xs md:text-sm text-textMain space-y-2" id="video-script-list">
-                                <!-- Populated dynamically based on language -->
-                            </ul>
-                        </div>
-
-                        <!-- Video Links with Disclaimer -->
-                        <div class="bg-slate-100 p-6 rounded-xl border border-slate-200 text-center space-y-4">
-                            <p id="video-disclaimer" class="text-xs text-red-600 font-semibold italic">Lưu ý: Hai video dưới đây không đồng nhất 100% về cách thể hiện</p>
-                            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                                <a href="https://drive.google.com/file/d/1DAE-yAX4QaLKijtoGdJ3Ufc7a9woIf3E/view?usp=drive_link" target="_blank" id="video-link-vi-btn" class="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-5 py-3 rounded-lg shadow hover:bg-primary/90 transition-all text-xs">
-                                    🎥 Xem Video tiếng Việt (Bài 33)
-                                </a>
-                                <a href="https://drive.google.com/file/d/195WTASqPBWe6eBb2YIoa3fkm9byFA3Sl/view?usp=drive_link" target="_blank" id="video-link-ja-btn" class="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white font-bold px-5 py-3 rounded-lg shadow hover:bg-indigo-700 transition-all text-xs">
-                                    🇯🇵 日本語ビデオを再生 (第33課)
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 3: Other applications in teaching -->
-        <div id="main-tab-impact" class="main-tab-content">
-            <div class="text-center mb-10">
-                <h2 id="impact-title" class="text-2xl md:text-3xl font-bold text-textMain">Những Ứng Dụng Khác Trong Giảng Dạy</h2>
-                <p id="impact-desc" class="mt-3 text-sm md:text-base text-textMuted max-w-3xl mx-auto">
-                    NotebookLM hỗ trợ giảng viên chuẩn bị học liệu đa dạng và linh hoạt hơn cho lớp học.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                <div class="p-5 border border-gray-200 rounded-xl bg-white hover:shadow-md transition-shadow">
-                    <span class="text-3xl block mb-2">📋</span>
-                    <h3 id="app-card1-title" class="text-base font-bold text-textMain mb-1">Thiết lập cấu trúc slide</h3>
-                    <p id="app-card1-desc" class="text-xs text-textMuted">Tạo nhanh khung bài học và các mẫu câu ví dụ cho bài giảng.</p>
-                </div>
-                <div class="p-5 border border-gray-200 rounded-xl bg-white hover:shadow-md transition-shadow">
-                    <span class="text-3xl block mb-2">📁</span>
-                    <h3 id="app-card2-title" class="text-base font-bold text-textMain mb-1">Ngân hàng câu hỏi</h3>
-                    <p id="app-card2-desc" class="text-xs text-textMuted">Trích xuất các câu hỏi, bài tập từ sách để tổng hợp thành một ngân hàng câu hỏi cho giáo viên.</p>
-                </div>
-                <div class="p-5 border border-gray-200 rounded-xl bg-white hover:shadow-md transition-shadow">
-                    <span class="text-3xl block mb-2">⚙️</span>
-                    <h3 id="app-card3-title" class="text-base font-bold text-textMain mb-1">Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp</h3>
-                    <p id="app-card3-desc" class="text-xs text-textMuted">Trích xuất ngữ pháp và từ vựng theo bài học để tạo thành ngân hàng dữ liệu, từ đó tạo ra các bài tập hoặc câu hỏi mới dựa trên vốn ngân hàng đó.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 4: Interactive Quiz -->
-        <div id="main-tab-quiz" class="main-tab-content">
-            <div class="text-center mb-10">
-                <h2 id="quiz-title" class="text-2xl md:text-3xl font-bold text-textMain">Kiểm Tra Trắc Nghiệm Kiến Thức</h2>
-                <p id="quiz-desc" class="mt-3 text-sm md:text-base text-textMuted max-w-3xl mx-auto">
-                    Xác nhận lại mức độ hiểu biết của bạn về trợ lý học tập NotebookLM thông qua bộ câu hỏi tương tác dưới đây.
-                </p>
-            </div>
-
-            <div class="max-w-3xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8" id="quiz-board">
-                <!-- Inside JS render -->
-            </div>
-        </div>
-
-    </main>
-
-    <footer class="bg-gray-950 text-white py-12 text-center">
-        <p id="footer-text" class="text-xs md:text-sm text-gray-400">Tài liệu học liệu tương tác song ngữ dành cho giảng viên và nhà đào tạo đại học.</p>
-    </footer>
-
-    <script>
-        const dict = {
-            vi: {
-                navCore: "Năng Lực Cốt Lõi",
-                navStudio: "Studio Sáng Tạo",
-                navImpact: "Những Ứng Dụng Khác Trong Giảng Dạy",
-                navQuiz: "Trắc Nghiệm Nhanh",
-                heroTitle: 'Giải Phóng Gánh Nặng <span class="text-primary">Xử Lý Tài Liệu</span>',
-                heroSubtitle: 'Chuyển hóa tri thức thô thành học liệu đa phương tiện sinh động và chuẩn xác. Khám phá cách NotebookLM trở thành "bộ não thứ hai" của giảng viên.',
-                
-                coreTitle: "Năng Lực Cốt Lõi (Source-Grounded AI)",
-                coreDesc: "Khác với các AI phổ thông, NotebookLM hoạt động trên \"Học liệu chuẩn\" do chính giảng viên cung cấp, giảm thiểu tối đa các rủi ro về sai sót học thuật.",
-                feat1Title: "Độ chính xác cao (Hạn chế tối đa ảo tưởng)",
-                feat1Desc: "AI tập trung truy xuất thông tin từ tài liệu gốc, hỗ trợ đảm bảo tính chính xác và khoa học của nội dung học thuật.",
-                feat2Title: "Trích dẫn nguồn minh bạch (Citations)",
-                feat2Desc: "Mọi phản hồi đều gắn liền với bằng chứng từ tài liệu gốc. Tính năng này không chỉ giúp kiểm chứng thông tin mà còn đảm bảo tính liêm chính học thuật.",
-                feat3Title: "Quản lý đa nguồn dữ liệu",
-                feat3Desc: "Nạp đồng thời giáo trình PDF, bài nghiên cứu và transcript YouTube để tạo ra hệ sinh thái tri thức bài giảng thống nhất.",
-                
-                chart1Title: "So Sánh Khả Năng Đáp Ứng Học Thuật: NotebookLM vs AI Phổ Thông",
-                radarLabels: [
-                    ["Độ chính xác", "dựa trên nguồn"],
-                    ["Trích dẫn", "nguồn gốc"],
-                    ["Bám sát", "ngữ cảnh"],
-                    ["Bảo mật", "dữ liệu"],
-                    ["Xử lý đa", "nguồn bài giảng"]
-                ],
-
-                coreVisualTitle: "Minh họa thực tế: Quy trình trích dẫn nguồn giáo trình Minna no Nihongo",
-                coreVisualDesc: "Trực quan hóa cách NotebookLM đối chiếu từ vựng & cấu trúc ngữ pháp từ tài liệu đính kèm để đưa ra phản hồi rõ ràng, hạn chế sai sót.",
-                coreVisualInteractiveTip: "* Hãy rê chuột hoặc bấm chọn các số chú thích màu xanh để làm nổi bật dòng văn gốc tương ứng phía bên trái",
-                sourceDocHeader: "📄 翻訳・文法解説.pdf (Trang 14)",
-
-                sourceGrammarRule1: "<b>Trợ từ は:</b> Đặt sau danh từ 1 để biểu thị danh từ đó là chủ đề của câu văn. Người nói thiết lập chủ đề muốn thảo luận...",
-                sourceGrammarRule2: "<b>Đuôi です:</b> Đứng sau danh từ để tạo thành vị ngữ, biểu thị sự khẳng định lịch sự hoặc phán đoán của người nói đối với người nghe.",
-                sourceGrammarRule3: "<b>Ví dụ mẫu câu 1:</b> わたしle は マイク・ミラーです (Tôi là Mike Miller).",
-                
-                userPromptHeader: "💬 Câu hỏi của Giảng viên",
-                userPromptBox: `"Hãy giải thích cho tôi cấu trúc giới thiệu bản thân cơ bản trong Bài 1"`,
-                viewOriginalBtn: "🔍 Xem ảnh trang 14",
-                sourceBookCaption: "Giáo án gốc từ Minna no Nihongo sơ cấp I",
-
-                aiResponseHeader: "🤖 NotebookLM AI Giáo Trình Trợ Lý",
-                aiResponseContent: "Dựa vào dữ liệu từ sách Giải thích Ngữ pháp Bài 1 trang 14, cấu trúc giới thiệu bản thân cơ bản bao gồm việc đặt trợ từ <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(1)' onmouseout='resetHighlights()'>ha [1]</span> sau chủ ngữ và kết thúc bằng vị ngữ chứa <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(2)' onmouseout='resetHighlights()'>desu [2]</span>. Minh họa chi tiết qua mẫu câu: <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(3)' onmouseout='resetHighlights()'>watashi wa Maiku Miraa desu [3]</span>.",
-
-                studioTitle: "NotebookLM Studio: Hướng Dẫn Sử Dụng",
-                studioDesc: "Hỗ trợ chuyển hóa bài giảng thông qua giao diện Studio đa phương tiện. Chọn các tab tương tác bên dưới để trải nghiệm.",
-                tabBtnSlide: "📊 Slide & Revise",
-                tabBtnInfo: "🖼️ Hỗ trợ Infographic",
-                tabBtnVideo: "🎬 Kịch bản Video",
-                
-                t1Title: "Chức năng \"Revise\" (Hiệu chỉnh Slide)",
-                t1Desc: "NotebookLM có thể tạo nhanh các bản phác thảo slide bài giảng tự động và hỗ trợ giảng viên hiệu chỉnh (revise) chính xác theo đúng ý đồ giảng dạy.",
-                slideSectionTitle: "Mô phỏng: Slide bài học số 30",
-                beforeSlide: "Bản thảo thô chưa hiệu chỉnh",
-                afterSlide: "Slide đã hiệu chỉnh hoàn thiện",
-                viewSlideBtnBefore: "Xem Slide Before",
-                viewSlideBtnAfter: "Xem Slide After",
-                
-                t2Title: "Cấu trúc Visual của Infographic",
-                t2Desc: "Hỗ trợ phân tách và định dạng nội dung trực quan để đưa vào các phần mềm đồ họa (như Canva).",
-                t2Card1Title: "Tiêu đề ngắn gọn",
-                t2Card1Desc: "Tóm gọn nội dung chương sách thành các tiêu đề ngắn gọn.",
-                t2Card2Title: "Các bước cốt lõi",
-                t2Card2Desc: "Hệ thống hóa các bài nghiên cứu phức tạp thành sơ đồ lộ trình chi tiết từng bước.",
-                t2Card3Title: "Biểu tượng trực quan",
-                t2Card3Desc: "Đề xuất các cụm icon minh họa phù hợp hỗ trợ tăng khả năng tiếp thu thị giác.",
-                viewInfoBtn: "🎨 Xem sơ đồ cấu trúc mẫu",
-                viewInfoImgBtn: "🖼️ Xem ảnh Infographic mẫu Bài 33",
-
-                t3Title: "Kịch bản Video E-learning",
-                t3Desc: "Hỗ trợ chuyển đổi nội dung học thuật thành kịch bản phân cảnh kết hợp hình ảnh và lời dẫn âm thanh.",
-                videoDemoTitle: "Kịch bản mẫu: Video giải thích ngữ pháp bài 33",
-                videoDisclaimer: "Lưu ý: Hai video dưới đây không đồng nhất 100% về cách thể hiện",
-                videoLinkViBtn: "🎥 Xem Video tiếng Việt (Bài 33)",
-                videoLinkJaBtn: "🇯🇵 日本語ビデオを再生 (第33課)",
-                videoScriptList: [
-                    "<b>Thể mệnh lệnh (命令形) và Thể cấm chỉ (禁止形):</b> Dùng để ra lệnh, bắt buộc hành vi hoặc cấm đoán nghiêm khắc.",
-                    "<b>Cấu trúc ～と書いてあります / ～ ...:</b> Diễn đạt cách đọc hoặc ý nghĩa biểu thị của một văn bản, chữ Hán.",
-                    "<b>Giải nghĩa X は Y という意味です:</b> Trình bày rõ ngữ nghĩa chi tiết của một từ vựng, ký hiệu hoặc biển báo.",
-                    "<b>Trích dẫn gián tiếp ～と言っていました:</b> Truyền đạt một cách khách quan lời nhắn hoặc phát ngôn của người thứ ba.",
-                    "<b>Cầu khiến lịch sự ～...:</b> Nhờ đối phương nhắn lại lời thoại một cách lịch sự, tôn trọng."
-                ],
-                colScene: "Phân cảnh",
-                colVisual: "Hình ảnh (Storyboard)",
-                colAudio: "Lời dẫn (Voice-over)",
-                
-                impactTitle: "Những Ứng Dụng Khác Trong Giảng Dạy",
-                impactDesc: "NotebookLM hỗ trợ giảng viên chuẩn bị học liệu đa dạng và linh hoạt hơn cho lớp học.",
-                appCard1Title: "Thiết lập cấu trúc slide",
-                appCard1Desc: "Tạo nhanh khung bài học và các mẫu câu ví dụ cho bài giảng.",
-                appCard2Title: "Ngân hàng câu hỏi",
-                appCard2Desc: "Trích xuất các câu hỏi, bài tập từ sách để tổng hợp thành một ngân hàng câu hỏi cho giáo viên.",
-                appCard3Title: "Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp",
-                appCard3Desc: "Trích xuất ngữ pháp và từ vựng theo bài học để tạo thành ngân hàng dữ liệu, từ đó tạo ra các bài tập hoặc câu hỏi mới dựa trên vốn ngân hàng đó.",
-
-                quizTitle: "Kiểm Tra Trắc Nghiệm Kiến Thức",
-                quizDesc: "Xác nhận lại mức độ hiểu biết của bạn về trợ lý học tập NotebookLM thông qua bộ câu hỏi tương tác dưới đây.",
-                qCurrent: "Câu hỏi",
-                qScore: "Điểm số hiện tại",
-                qCorrectLabel: "Chính xác! 🎉",
-                qIncorrectLabel: "Chưa chính xác! ❌",
-                qExplanationLabel: "Giải thích:",
-                qHintLabel: "Gợi ý",
-                qBtnSubmit: "Gửi đáp án",
-                qBtnNext: "Tiếp theo",
-                qBtnRestart: "Làm lại bài thi",
-                qCompletionTitle: "Chúc mừng bạn đã hoàn thành bài trắc nghiệm!",
-                qCompletionScore: "Tổng điểm của bạn:",
-                qPassMsg: "Tốt lắm! Bạn đã nắm rõ các tính năng cơ bản của trợ lý NotebookLM.",
-                qFailMsg: "Bạn có thể xem lại các nội dung trên trang và thực hiện lại bài trắc nghiệm để cải thiện điểm số.",
-
-                footerText: "Tài liệu học liệu tương tác song ngữ dành cho giảng viên và nhà đào tạo đại học."
-            },
-            ja: {
-                navCore: "核心機能",
-                navStudio: "スタジオ機能",
-                navImpact: "その他の指導応用",
-                navQuiz: "ミニクイズ",
-                heroTitle: 'ドキュメント処理の <span class="text-primary">負担から解放</span>',
-                heroSubtitle: '退屈なデータ資料を視覚的で正確なマルチメディア教材に変換。NotebookLMがどのように教育者の「第二の脳」となるかをご紹介します。',
-                
-                coreTitle: "教育向けの核心機能（ソースグラウンディングAI）",
-                coreDesc: "一般のAIとは異なり、NotebookLMは教育者が自ら提供した「信頼できる教材ソース」のみで機能し、誤った知識出力（ハルシネーション）を極めて低く抑えます。",
-                feat1Title: "高い正確性（ハルシネーションの抑制）",
-                feat1Desc: "AIは提供された原本の範囲内で情報を処理します。講義における信頼性と学術品質を守ります。",
-                feat2Title: "透明な情報の引用（シネーション）",
-                feat2Desc: "すべての回答に原文の該当箇所（ページ・行）を引用表記します。これにより教育現場の学術的整合性を容易に検証できます。",
-                feat3Title: "柔軟なマルチソース管理",
-                feat3Desc: "PDFの教科書、学術論文、さらには講義動画のYouTube文字起こしを同時にインポート。1つの統合型知的エコシステムを構築します。",
-                
-                chart1Title: "比較：NotebookLM vs 一般的なAIチャットボット",
-                radarLabels: [
-                    ["出力の正確性", "ハルシネーション抑制"],
-                    ["引用・裏付けの明示", "ソース提示"],
-                    ["提供資料の", "文脈適合率"],
-                    ["プライバシーと", "データセキュリティ"],
-                    ["多様な講義ソース", "対応力"]
-                ],
-
-                coreVisualTitle: "実証：『みんなの日本語 第1課』に基づく正確なソース引用プロセス",
-                coreVisualDesc: "NotebookLMがアップロードされた『みんなの日本語』原本データと回答を1対1で突き合わせ、ハルシネーションを抑制して回答する仕組み。",
-                coreVisualInteractiveTip: "* 右側のAI回答内にある青い引用リンクにホバーするかクリックすると、左側の原本に該当するテキストセグメントがハイライト表示されます",
-                sourceDocHeader: "📄 翻訳・文法解説.pdf (14ページ)",
-
-                sourceGrammarRule1: "<b>助詞「は」:</b> 名詞1の後に付き、その名詞が文の主題であることを表します。話し手は話そうとする主題をはっきりと提示します...",
-                sourceGrammarRule2: "<b>文末「です」:</b> 名詞の後に付き、述語を形成して丁寧な断定を表現し、同時に聞き手に対する敬意を表します。",
-                sourceGrammarRule3: "<b>文型例文1:</b> わたしは マイク・ミラーです（私はマイク・ミラーです）。",
-                
-                userPromptHeader: "💬 講師からの質問",
-                userPromptBox: `"第1課の自己紹介の基本構造を説明してください"`,
-                viewOriginalBtn: "🔍 原本14ページの画像を表示",
-                sourceBookCaption: "『みんなの日本語 初級Ⅰ』の教材原本データ",
-
-                aiResponseHeader: "🤖 NotebookLM AI学習アシスタント",
-                aiResponseContent: "『みんなの日本語』第1課の14ページ「文法解説」のデータによると、自己紹介 of 基本構造は、主題を示す助詞 <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(1)' onmouseout='resetHighlights()'>は [1]</span> を主語の後ろに配置し、丁寧な断定を表す文末 <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(2)' onmouseout='resetHighlights()'>です [2]</span> で文を終了させます。具体的な文型例は： <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(3)' onmouseout='resetHighlights()'>わたしは マイク・ミラーです [3]</span> です。",
-
-                studioTitle: "NotebookLM Studio: 実践的活用ガイド",
-                studioDesc: "マルチメディア教材への変換をサポート。下のインタラクティブタブを選択して、機能をお試しください。",
-                tabBtnSlide: "📊 スライド & 校正",
-                tabBtnInfo: "🖼️ インフォグラフィック設計",
-                tabBtnVideo: "🎬 動画スクリプト設計",
-                
-                t1Title: "スライド校正（Revise）機能のデモ",
-                t1Desc: "NotebookLMは、ソース資料 từ 講義スライドの構成案を自動生成し、さらに教育者の意図に合わせて校正（Revise）することができます。",
-                slideSectionTitle: "実例デモ：第30課講義スライド",
-                beforeSlide: "校正前のラフ下書きスライド",
-                afterSlide: "校正・ブラッシュアップ後の完成版",
-                viewSlideBtnBefore: "校正前スライドを表示",
-                viewSlideBtnAfter: "校正後スライドを表示",
-                
-                t2Title: "インフォグラフィックの視覚構造設計",
-                t2Desc: "テキスト情報を整理・抽出し、Canvaなどのデザインツール用ビジュアル素材構造を設計します。",
-                t2Card1Title: "要約キャッチコピー",
-                t2Card1Desc: "教材のテキストから主要なキーワードやキャッチコピーをまとめます。",
-                t2Card2Title: "プロセス・ロードマップ",
-                t2Card2Desc: "研究論文に登場する工程をステップに分けて配置します。",
-                t2Card3Title: "イラストアイコン of 推奨",
-                t2Card3Desc: "視覚的理解を促進するため、内容に即した関連アイコンを提案します。",
-                viewInfoBtn: "🎨 インフォグラフィックの構造図表示",
-                viewInfoImgBtn: "🖼️ 第33課インフォグラフィック画像表示",
-
-                t3Title: "Eラーニング講義用の動画台本",
-                t3Desc: "専門理論を視覚情報と音声ナレーションのレイアウトに変換します。",
-                videoDemoTitle: "第33課文法解説ビデオ台本設計案",
-                videoDisclaimer: "※注意：これら2つのビデオは表現方法が100%同一ではありません",
-                videoLinkViBtn: "🎥 ベトナム語ビデオを再生 (第33課)",
-                videoLinkJaBtn: "🇯🇵 日本語ビデオを再生 (第33課)",
-                videoScriptList: [
-                    "<b>命令形（めいれいけい）と禁止形（きんしけい）：</b> 命令や厳格な禁止を表現する文型法則を体系化します。",
-                    "<b>～と書いてあります / ～と読みます：</b> 記号や文字、漢字の解読結果や特定の文章内容を伝達します。",
-                    "<b>X は Y という意味です：</b> 記号、交通マーク、警告標識などの詳細な構造的意味を解説します。",
-                    "<b>間接引用の表現 ～と言っていました：</b> 第三者の伝言や発話を客観的かつ正確に聞き手に共有します。",
-                    "<b>丁寧な伝言依頼 ～と伝えていただけませんか：</b> 相手に対し、他者への丁寧な伝言仲介を依頼します。"
-                ],
-                colScene: "シーン番号",
-                colVisual: "映像設計（ストーリーボード）",
-                colAudio: "ナレーション（ボイスオーバー）",
-                
-                impactTitle: "その他の指導応用",
-                impactDesc: "NotebookLMは、教育者が授業に合わせて多様で柔軟な教材を準備することをサポートします。",
-                appCard1Title: "スライド講義構成の構築",
-                appCard1Desc: "講義アウトラインや例文スライドを迅速に構築できます。",
-                appCard2Title: "問題バンク",
-                appCard2Desc: "原本教材から演習問題やタスクを抽出し、授業にすぐに活用できる問題バンクを統合整理します。",
-                appCard3Title: "語彙・文法バンクからの問題作成",
-                appCard3Desc: "各課に属する文法規則や新規語彙を体系的にデータ化し、蓄積されたバンクを基に新しい問題や課題を生成します。",
-
-                quizTitle: "理解度確認ミニクイズ",
-                quizDesc: "NotebookLMの機能と活用方法についての理解度を確認するための全8問の双方向ミニクイズです。",
-                qCurrent: "質問",
-                qScore: "現在のスコア",
-                qCorrectLabel: "正解です！ 🎉",
-                qIncorrectLabel: "不正解です！ ❌",
-                qExplanationLabel: "解説:",
-                qHintLabel: "ヒント",
-                qBtnSubmit: "回答を送信",
-                qBtnNext: "次へ",
-                qBtnRestart: "クイズをやり直す",
-                qCompletionTitle: "クイズを完了しました！お疲れ様でした。",
-                qCompletionScore: "あなたのスコア:",
-                qPassMsg: "素晴らしい！NotebookLMのアシスタント機能をよく理解しています。",
-                qFailMsg: "解説を読み直し、もう一度クイズに挑戦してスコアを向上させましょう。",
-
-                footerText: "高等教育機関の講師、および研修開発コーディネーター向けに作成されたインタラクティブ教材。"
-            }
-        };
-
-        const reviseTextData = {
-            vi: {
-                academic: `<h3 class="text-lg font-bold text-primary mb-2">Bài 1: Danh từ 1 は Danh từ 2 です</h3><ul class="list-disc pl-5 space-y-2"><li><b>Ý nghĩa:</b> Biểu thị câu khẳng định lịch sự (N1 là N2).</li><li><b>Nguyên tắc cấu trúc:</b> Trợ từ は liên kết chủ đề và です nằm ở cuối câu biểu thị thái độ kính trọng đối với người nghe.</li><li><b>Ví dụ tiêu biểu:</b> わたistas wa 学生です (Chúng tôi là sinh viên).</li></ul>`,
-                story: `<h3 class="text-lg font-bold text-primary mb-2">Làm Quen Với Tiếng Nhật Thật Đơn Giản</h3><p class="italic text-slate-200 font-medium">"Khi bạn muốn giới thiệu mình là ai trong tiếng Nhật, hãy tưởng tượng trợ từ は như một cây cầu chỉ thẳng vào chính bạn, và từ です giống như một cái cúi đầu chào lịch thiệp ở cuối câu. Ví dụ, khi anh Miller nói 'わたし...'"</p>`,
-                short: `<div class="font-bold text-lg text-primary mb-2">🔥 Ngữ pháp Bài 1 cốt lõi:</div><div class="flex flex-col sm:flex-row gap-3"><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">..: Chỉ chủ đề chủ ngữ</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">đơ: Khẳng định lịch sự</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">Ví dụ: わたし...</div></div>`
-            },
-            ja: {
-                academic: `<h3 class="text-lg font-bold text-primary mb-2">第1課：名詞1 は 名詞2 です</h3><ul class="list-disc pl-5 space-y-2"><li><b>文法的意味：</b> 丁寧な肯定判断（N1はN2である）を構築する基本文型。</li><li><b>構造적法則：</b> 主題提示の助詞「は」および文末の丁寧な叙述・断定を丁寧な「です」の呼応関係。</li><li><b>代表例文：</b> わたしたちは 学生です（私たちは学生です）。</li></ul>`,
-                story: `<p class="italic text-slate-200 font-medium">「日本語で自己紹介するとき、助詞の『は』はまるでスポットライトのように、あなた自身を優しく指し示します。そして文末の『です』は、相手への丁寧なお辞儀のような役割を果たします。ミラーさんが『わたしは マイク・ミラーです』と名乗るとき、その美しい基本表現が相手の心を開く鍵となるのです。」</p>`,
-                short: `<div class="font-bold text-lg text-primary mb-2">🔥 第1課文法の要点：</div><div class="flex flex-col sm:flex-row gap-3"><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">は：主題提示</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">です：丁寧な肯定</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">例文：わたしは ミラーです</div></div>`
-            }
-        };
-
-        const videoScriptData = {
-            vi: [
-                { scene: "Phân cảnh 1", visual: "Hiển thị dòng chữ lớn: 'Giải Thích Ngữ Pháp Bài 33: Thể Mệnh Lệnh & Cấm Chỉ'. Nền tối sang trọng, kết hợp biểu trưng của hệ thống.", audio: "Chào mừng quý học viên đến với bài 33. Hôm nay, trợ lý ảo sẽ hỗ trợ chúng ta tóm tắt các điểm ngữ pháp trọng yếu..." },
-                { scene: "Phân cảnh 2", visual: "Màn hình chuyển sang phân tích cấu trúc 'X は Y という意味です' kèm ví dụ minh họa ký hiệu giặt ủi.", audio: "Mẫu câu này dùng để định nghĩa và giải nghĩa chi tiết các biểu tượng hoặc văn bản chưa rõ nghĩa..." }
-            ],
-            ja: [
-                { scene: "シーン 1", visual: "メインタイトル画面：『第33課文法解説：命令形と禁止形』が表示。ホワイト của  ミニマルなテキストデザイン。", audio: "みなさん、こんにちは。このパートでは、第33課の命令表現や禁止表現の構造を詳細に学んでいきましょう..." },
-                { scene: "シーン 2", visual: "例文解説スライド：『X は Y という意味です』。ピクトグラムや各種記号の意味説明画面が表示。", audio: "この表現構造は、日常生活の標識やマーク、専門用語の意味内容を正確に説明する際に重宝します..." }
-            ]
-        };
-
-        // Complete 8 Interactive Quiz Questions for Bilingual Use (Grounded strictly in the page content)
-        const quizQuestions = {
-            vi: [
-                {
-                    q: "1. Khác với các AI phổ thông, dữ liệu nạp hoạt động của NotebookLM là gì?",
-                    options: [
-                        "Dữ liệu ngẫu nhiên từ mạng xã hội",
-                        "Chỉ hoạt động dựa trên học liệu chuẩn do giảng viên cung cấp",
-                        "Mọi nguồn bách khoa toàn thư mở Wikipedia",
-                        "Dữ liệu mở rộng tự động từ trang tìm kiếm lớn nhất"
-                    ],
-                    correct: 1,
-                    hint: "Đọc phần năng lực 'Source-Grounded AI'.",
-                    explanation: "NotebookLM chỉ hoạt động dựa trên học liệu chuẩn (giáo trình, tệp PDF, video...) được chính bạn cung cấp để triệt tiêu lỗi ảo tưởng."
-                },
-                {
-                    q: "2. Năng lực 'Zero Hallucination' trong giáo dục đại học mang ý nghĩa cốt lõi nào?",
-                    options: [
-                        "AI không tự ý thêm thắt kiến thức ngoài tài liệu gốc",
-                        "AI tự động sửa lỗi diễn đạt của học sinh",
-                        "AI có thể dự đoán đề thi tương lai",
-                        "AI trả lời nhanh chóng bằng 100 thứ tiếng"
-                    ],
-                    correct: 0,
-                    hint: "Liên quan đến độ tin cậy tuyệt đối của học thuật.",
-                    explanation: "Zero Hallucination đảm bảo AI bám sát hoàn toàn tài liệu gốc, không bị ảo tưởng hoặc bịa đặt kiến thức nằm ngoài nguồn."
-                },
-                {
-                    q: "3. Minh chứng rõ nét nhất bảo đảm tính liêm chính học thuật trong câu trả lời của NotebookLM là gì?",
-                    options: [
-                        "Tốc độ phản hồi cực nhanh",
-                        "Trích dẫn nguồn trực tiếp (Citations) kèm trang/dòng đối chiếu",
-                        "Mã code định dạng phức tạp",
-                        "Biểu tượng vui nhộn đi kèm câu thoại"
-                    ],
-                    correct: 1,
-                    hint: "NotebookLM liên kết câu trả lời với chính xác các vị trí trong tài liệu gốc.",
-                    explanation: "Mỗi câu trả lời đều có trích dẫn nguồn liên kết trực tiếp với đoạn, dòng, trang trong tệp PDF gốc để đối chiếu."
-                },
-                {
-                    q: "4. NotebookLM có thể nạp các định dạng nguồn nào dưới đây?",
-                    options: [
-                        "Chỉ cho phép liên kết trang mạng xã hội",
-                        "Giáo trình PDF, bài nghiên cứu và transcript YouTube",
-                        "Ứng dụng lập trình trò chơi di động",
-                        "Chỉ chấp nhận tệp văn bản thô không dấu"
-                    ],
-                    correct: 1,
-                    hint: "Đọc phần năng lực quản lý đa nguồn dữ liệu.",
-                    explanation: "NotebookLM hỗ trợ đa dạng học liệu bao gồm PDF, Google Docs, link web và thậm chí cả lời thoại video YouTube."
-                },
-                {
-                    q: "5. Điểm đặc trưng nhất của chức năng 'Revise' trong phần Slide là gì?",
-                    options: [
-                        "Tự động đổi màu slide ngẫu nhiên",
-                        "Hiệu chỉnh cấu trúc, độ dài và tông giọng slide đúng ý đồ giảng dạy",
-                        "Dịch tự động toàn bộ sang tiếng Anh",
-                        "Xóa hoàn toàn slide bài học cũ"
-                    ],
-                    correct: 1,
-                    hint: "Đọc mô tả chức năng Slide & Revise tại Studio sáng tạo.",
-                    explanation: "Chức năng Revise cho phép giảng viên hiệu chỉnh chính xác cấu trúc và thông tin chi tiết của slide theo đúng kịch bản mong muốn."
-                },
-                {
-                    q: "6. Ba cấu trúc visual chính mà phần hỗ trợ Infographic đề xuất bóc tách bao gồm gì?",
-                    options: [
-                        "Tên người vẽ, cấu trúc cơ sở dữ liệu, biểu đồ hình tròn",
-                        "Tiêu đề ngắn gọn, các bước cốt lõi, gợi ý biểu tượng trực quan",
-                        "Danh sách email, bản đồ nhiệt, biểu đồ cột",
-                        "Mã HTML, bảng dữ liệu tài chính, phụ đề"
-                    ],
-                    correct: 1,
-                    hint: "Đọc ba thẻ màu ở tiểu mục Infographic của Studio Sáng Tạo.",
-                    explanation: "Hỗ trợ Infographic đề xuất 3 nhóm: Tiêu đề ngắn gọn, các bước cốt lõi và biểu tượng trực quan để tương thích với Canva."
-                },
-                {
-                    q: "7. Chức năng 'Ngân hàng câu hỏi' thực hiện nhiệm vụ gì để giải phóng sức lao động của giáo viên?",
-                    options: [
-                        "Tự động gửi email bài tập cho từng học sinh",
-                        "Trích xuất các câu hỏi, bài tập từ sách để tổng hợp",
-                        "Chấm điểm trực tuyến tự động không cần xem bài",
-                        "Tìm bài giảng từ các trường đại học khác"
-                    ],
-                    correct: 1,
-                    hint: "Đọc phần mô tả 'Ngân hàng câu hỏi' tại tab 3.",
-                    explanation: "NotebookLM tự động gom, trích xuất tất cả câu hỏi bài tập có sẵn trong tài liệu đã nạp để tổng hợp thành ngân hàng đề."
-                },
-                {
-                    q: "8. NotebookLM hỗ trợ giảng viên tạo bài tập từ kho ngữ pháp và từ vựng như thế nào?",
-                    options: [
-                        "Tìm đề thi ngẫu nhiên trên Internet",
-                        "Trích xuất ngữ pháp, từ vựng theo bài học để tạo bài tập hoặc câu hỏi mới",
-                        "Bắt học viên tự viết từ vựng",
-                        "Dịch từ vựng sang tiếng Pháp tự động"
-                    ],
-                    correct: 1,
-                    hint: "Xem mục ứng dụng thứ 3 của tab 3.",
-                    explanation: "Hệ thống hỗ trợ phân tách kho từ vựng và ngữ pháp theo từng chương/bài để thiết kế bài kiểm tra mới dựa trên kho dữ liệu đó."
-                }
-            ],
-            ja: [
-                {
-                    q: "1. 一般的なAIとは異なり、NotebookLMが動作する基本データソースは何ですか？",
-                    options: [
-                        "SNS上のランダムなテキストデータ",
-                        "教育者が自ら提供した信頼できる教材ソースのみ",
-                        "オープンソース of オンライン百科事典Wikipedia",
-                        "検索エンジンから自動的に拡張されたビッグデータ"
-                    ],
-                    correct: 1,
-                    hint: "「教育向けの核心機能」の項目を確認してください。",
-                    explanation: "NotebookLMはハルシネーション（嘘の出力）を防ぐため、ユーザー自身が読み込ませた正確なソースのみに基づき動作します。"
-                },
-                {
-                    q: "2. 教育現場における「ゼロ・ハルシネーション」の最大の意義は何ですか？",
-                    options: [
-                        "AIは提供された原本の外部から憶測で情報を追加しない",
-                        "AIが受講生の文章表現の誤りを自動修正する",
-                        "AIが将来のテスト傾向を自動で推測する",
-                        "AIが100以上の言語で即座に応答を生成する"
-                    ],
-                    correct: 0,
-                    hint: "学術的な信頼性をどのように守るかに関連しています。",
-                    explanation: "ハルシネーションをゼロに抑えることで、原本以外の不正確なデータが混入せず、教材の品質を堅牢に維持できます。"
-                },
-                {
-                    q: "3. NotebookLMの回答の透明性と整合性を証明する主な特徴は何ですか？",
-                    options: [
-                        "多言語への自動翻訳能力",
-                        "原文 of 該当箇所（ページ・行）を直接引用表記（Citations）すること",
-                        "複雑なコーディングプログラムを表示すること",
-                        "回答に親しみやすいアイコンが自動付与されること"
-                    ],
-                    correct: 1,
-                    hint: "NotebookLMは、回答が原本のどこに基づいているかをリンクで示します。",
-                    explanation: "回答に含まれる引用番号をクリックすることで、原本PDFの該当するテキスト位置を簡単に追跡・検証できます。"
-                },
-                {
-                    q: "4. NotebookLMにインポート可能なデータ形式には何がありますか？",
-                    options: [
-                        "SNSの外部公式アカウントのみ",
-                        "PDFの教科書、学術論文、YouTube講義の書き起こしテキストなど",
-                        "ゲームプログラミングファイルのみ",
-                        "特殊な無記号のテキストファイルのみ"
-                    ],
-                    correct: 1,
-                    hint: "「柔軟なマルチソース管理」の項目を確認してください。",
-                    explanation: "PDF、Googleドキュメント、WebページのURL、さらにYouTube動画の音声書き起こしなど多岐にわたるソースに対応しています。"
-                },
-                {
-                    q: "5. スライド作成における「Revise」機能の主要な役割は何ですか？",
-                    options: [
-                        "スライドの配色デザインをランダムに変更する",
-                        "教育者の指導意図に合わせて、構成やトーンを正確に校正する",
-                        "自動的にスライド全体の英語翻訳を実行する",
-                        "古い講義用スライドを全消去してリセットする"
-                    ],
-                    correct: 1,
-                    hint: "「スタジオ機能」タブのスライド＆校正パートを確認してください。",
-                    explanation: "自動構築されたスライドの骨子をベースに、講師の細かい表現プランに沿って情報をリライト・修正してくれます。"
-                },
-                {
-                    q: "6. インフォグラフィックの視覚設計支援において、抽出が推奨されている3つの視覚構造は何ですか？",
-                    options: [
-                        "製作者名、データベース設計、円グラフ",
-                        "要約キャッチコピー、プロセス・ロードマップ、推奨アイコン",
-                        "受講生メール、ヒートマップ、縦棒グラフ",
-                        "HTMLコード、財務バランスシート、セリフ字幕"
-                    ],
-                    correct: 1,
-                    hint: "「スタジオ機能」タブの「インフォグラフィック設計」を確認してください。",
-                    explanation: "Canvaなどのデザインツールに落とし込みやすくするため、キャッチコピー、ステップ、アイコンの3点を整理してくれます。"
-                },
-                {
-                    q: "7. 「問題バンク」の自動化機能は、講師のどのような業務負担を削減しますか？",
-                    options: [
-                        "生徒個別への課題送信用メールの自動送信",
-                        "インポートした原本に存在する既存の演習問題やタスクの抽出と統合",
-                        "課題に対する自動採点・フィードバック",
-                        "他大学の講義データのオンラインサーチ"
-                    ],
-                    correct: 1,
-                    hint: "「その他の指導応用」タブの問題バンクの記述を確認してください。",
-                    explanation: "読み込ませた書籍内から練習問題を漏れなく抽出して一箇所に集約し、オリジナルの問題集の基礎を築きます。"
-                },
-                {
-                    q: "8. 「語彙・文法バンクからの問題作成」機能における、問題作成 of プロセスはどのようなものですか？",
-                    options: [
-                        "インターネット上からランダムに問題を探し出す",
-                        "課ごとの重要語彙と文法事項をバンク化し、それを基に新たな練習問題を作成する",
-                        "生徒に英単語のフリーライティングを強制する",
-                        "語彙を自動的にフランス語に翻訳する"
-                    ],
-                    correct: 1,
-                    hint: "「その他の指導応用」タブの3つ目の項目を確認してください。",
-                    explanation: "各課に登場する定型表現や必須単語をデータベース化（バンク化）し、それらを用いた全く新しい演習問題を生成できます。"
-                }
-            ]
-        };
-
-        // UI State
-        const state = {
-            lang: 'vi',
-            mainTab: 'core',
-            tone: 'academic',
-            quiz: {
-                currentIdx: 0,
-                score: 0,
-                selectedAns: null,
-                isSubmitted: false
-            }
-        };
-
-        let radarChartInstance = null;
-
-        function setLangText(elementId, text, isHtml = false) {
-            const el = document.getElementById(elementId);
-            if (el) {
-                if (isHtml) el.innerHTML = text;
-                else el.innerText = text;
-            }
-        }
-
-        function toggleLanguage(lang) {
-            state.lang = lang;
-            
-            const btnVi = document.getElementById('lang-btn-vi');
-            const btnJa = document.getElementById('lang-btn-ja');
-            if (lang === 'vi') {
-                btnVi.className = "px-3 py-1.5 rounded-lg text-xs font-bold border border-primary bg-primary text-white shadow-sm transition-all";
-                btnJa.className = "px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-300 text-textMain hover:border-primary transition-all";
-            } else {
-                btnJa.className = "px-3 py-1.5 rounded-lg text-xs font-bold border border-primary bg-primary text-white shadow-sm transition-all";
-                btnVi.className = "px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-300 text-textMain hover:border-primary transition-all";
-            }
-
-            const activeDict = dict[lang];
-
-            setLangText('hero-title', activeDict.heroTitle, true);
-            setLangText('hero-subtitle', activeDict.heroSubtitle);
-            
-            setLangText('core-title', activeDict.coreTitle);
-            setLangText('core-desc', activeDict.coreDesc);
-            setLangText('feat1-title', activeDict.feat1Title);
-            setLangText('feat1-desc', activeDict.feat1Desc);
-            setLangText('feat2-title', activeDict.feat2Title);
-            setLangText('feat2-desc', activeDict.feat2Desc);
-            setLangText('feat3-title', activeDict.feat3Title);
-            setLangText('feat3-desc', activeDict.feat3Desc);
-            setLangText('chart1-title', activeDict.chart1Title);
-
-            setLangText('core-visual-title', activeDict.coreVisualTitle);
-            setLangText('core-visual-desc', activeDict.coreVisualDesc);
-            setLangText('core-visual-interactive-tip', activeDict.coreVisualInteractiveTip);
-            setLangText('source-doc-header', activeDict.sourceDocHeader);
-
-            // Document text rules
-            setLangText('source-grammar-rule1', activeDict.sourceGrammarRule1, true);
-            setLangText('source-grammar-rule2', activeDict.sourceGrammarRule2, true);
-            setLangText('source-grammar-rule3', activeDict.sourceGrammarRule3, true);
-            setLangText('ai-response-header', activeDict.aiResponseHeader);
-            setLangText('ai-response-box', activeDict.aiResponseContent, true);
-
-            // Prompt text rules
-            setLangText('user-prompt-header', activeDict.userPromptHeader);
-            setLangText('user-prompt-box', activeDict.userPromptBox);
-            setLangText('view-original-btn', activeDict.viewOriginalBtn);
-            setLangText('source-book-caption', activeDict.sourceBookCaption);
-
-            setLangText('studio-title', activeDict.studioTitle);
-            setLangText('studio-desc', activeDict.studioDesc);
-            setLangText('tab-btn-slide', activeDict.tabBtnSlide);
-            setLangText('tab-btn-info', activeDict.tabBtnInfo);
-            setLangText('tab-btn-video', activeDict.tabBtnVideo);
-            
-            setLangText('t1-title', activeDict.t1Title);
-            setLangText('t1-desc', activeDict.t1Desc);
-            setLangText('slide-section-title', activeDict.slideSectionTitle);
-            setLangText('before-slide-title', activeDict.beforeSlide);
-            setLangText('after-slide-title', activeDict.afterSlide);
-            setLangText('before-slide-btn', activeDict.viewSlideBtnBefore);
-            setLangText('after-slide-btn', activeDict.viewSlideBtnAfter);
-
-            setLangText('t2-title', activeDict.t2Title);
-            setLangText('t2-desc', activeDict.t2Desc);
-            setLangText('t2-card1-title', activeDict.t2Card1Title);
-            setLangText('t2-card1-desc', activeDict.t2Card1Desc);
-            setLangText('t2-card2-title', activeDict.t2Card2Title);
-            setLangText('t2-card2-desc', activeDict.t2Card2Desc);
-            setLangText('t2-card3-title', activeDict.t2Card3Title);
-            setLangText('t2-card3-desc', activeDict.t2Card3Desc);
-            setLangText('view-info-btn', activeDict.viewInfoBtn);
-            setLangText('view-info-img-btn', activeDict.viewInfoImgBtn);
-
-            setLangText('t3-title', activeDict.t3Title);
-            setLangText('t3-desc', activeDict.t3Desc);
-            setLangText('video-demo-title', activeDict.videoDemoTitle);
-            setLangText('video-disclaimer', activeDict.videoDisclaimer);
-            setLangText('video-link-vi-btn', activeDict.videoLinkViBtn);
-            setLangText('video-link-ja-btn', activeDict.videoLinkJaBtn);
-
-            setLangText('col-scene', activeDict.colScene);
-            setLangText('col-visual', activeDict.colVisual);
-            setLangText('col-audio', activeDict.colAudio);
-
-            setLangText('impact-title', activeDict.impactTitle);
-            setLangText('impact-desc', activeDict.impactDesc);
-            setLangText('app-card1-title', activeDict.appCard1Title);
-            setLangText('app-card1-desc', activeDict.appCard1Desc);
-            setLangText('app-card2-title', activeDict.appCard2Title);
-            setLangText('app-card2-desc', activeDict.appCard2Desc);
-            setLangText('app-card3-title', activeDict.appCard3Title);
-            setLangText('app-card3-desc', activeDict.appCard3Desc);
-
-            // Quiz general labels translation
-            setLangText('quiz-title', activeDict.quizTitle);
-            setLangText('quiz-desc', activeDict.quizDesc);
-            setLangText('footer-text', activeDict.footerText);
-
-            // Update main tab buttons text
-            document.getElementById('main-tab-btn-core').innerText = activeDict.navCore;
-            document.getElementById('main-tab-btn-studio').innerText = activeDict.navStudio;
-            document.getElementById('main-tab-btn-impact').innerText = activeDict.navImpact;
-            document.getElementById('main-tab-btn-quiz').innerText = activeDict.navQuiz;
-
-            // Update Video script bullet points dynamically
-            const listContainer = document.getElementById('video-script-list');
-            if (listContainer) {
-                listContainer.innerHTML = '';
-                activeDict.videoScriptList.forEach(item => {
-                    const li = document.createElement('li');
-                    li.className = "leading-relaxed";
-                    li.innerHTML = item;
-                    listContainer.appendChild(li);
-                });
-            }
-
-            updateVideoTable();
-            updateChartsData();
-            renderQuiz();
-        }
-
-        function switchMainTab(tabId) {
-            state.mainTab = tabId;
-
-            // Toggle main tabs display
-            document.querySelectorAll('.main-tab-content').forEach(el => {
-                el.classList.remove('active');
-            });
-            document.getElementById(`main-tab-${tabId}`).classList.add('active');
-
-            // Update main tab button states
-            document.querySelectorAll('.main-tab-btn').forEach(btn => {
-                btn.className = "main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all";
-            });
-            const activeBtn = document.getElementById(`main-tab-btn-${tabId}`);
-            if (activeBtn) {
-                activeBtn.className = "main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-primary text-primary focus:outline-none transition-all";
-            }
-        }
-
-        // Segment highlight logic for Minna No Nihongo visualization
-        function highlightSegment(id) {
-            resetHighlights();
-            const segment = document.getElementById(`segment-${id}`);
-            if (segment) {
-                segment.classList.add('active');
-            }
-        }
-
-        function resetHighlights() {
-            document.querySelectorAll('.highlight-segment').forEach(seg => {
-                seg.classList.remove('remove');
-                seg.classList.remove('active');
-            });
-        }
-
-        // Table logic removed, function kept as safely non-crashing empty stub since referenced elsewhere
-        function updateVideoTable() {
-            // Deprecated - Table removed from HTML
-        }
-
-        function updateChartsData() {
-            const activeDict = dict[state.lang];
-
-            if (radarChartInstance) {
-                radarChartInstance.data.labels = activeDict.radarLabels;
-                radarChartInstance.update();
-            }
-        }
-
-        function initTabs() {
-            const tabs = document.querySelectorAll('.studio-tab');
-            const contents = document.querySelectorAll('.studio-tab-content');
-
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(t => {
-                        t.className = "studio-tab flex-1 py-4 px-6 text-center font-bold text-sm text-textMain hover:bg-gray-100 transition-all focus:outline-none";
-                    });
-                    
-                    tab.className = "studio-tab active flex-1 py-4 px-6 text-center font-bold text-sm bg-primary text-white transition-all focus:outline-none";
-
-                    contents.forEach(c => c.classList.remove('active'));
-                    
-                    const targetId = tab.getAttribute('data-target');
-                    document.getElementById(targetId).classList.add('active');
-                });
-            });
-        }
-
-        // Quiz Renderer
-        function renderQuiz() {
-            const board = document.getElementById('quiz-board');
-            const langDict = dict[state.lang];
-            const questionsList = quizQuestions[state.lang];
-            const totalQuestions = questionsList.length;
-
-            if (state.quiz.currentIdx >= totalQuestions) {
-                // Render completion screen (Passing score updated to 6 out of 8 questions)
-                const isPassed = state.quiz.score >= 6;
-                board.innerHTML = `
-                    <div class="text-center py-8 space-y-6">
-                        <div class="text-6xl">${isPassed ? '🎓' : '📚'}</div>
-                        <h3 class="text-2xl font-bold text-textMain">${langDict.qCompletionTitle}</h3>
-                        <div class="bg-gray-50 p-6 rounded-2xl max-w-sm mx-auto border border-gray-100">
-                            <span class="text-sm text-textMuted font-semibold block">${langDict.qCompletionScore}</span>
-                            <span class="text-4xl font-extrabold text-primary block mt-1">${state.quiz.score} / ${totalQuestions}</span>
-                        </div>
-                        <p class="text-sm text-textMuted max-w-md mx-auto">
-                            ${isPassed ? langDict.qPassMsg : langDict.qFailMsg}
-                        </p>
-                        <button onclick="restartQuiz()" class="px-6 py-3 bg-primary text-white font-bold rounded-xl text-sm shadow hover:bg-primary/90 transition-all">
-                            ${langDict.qBtnRestart}
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-
-            const currentQ = questionsList[state.quiz.currentIdx];
-
-            let optionsHtml = '';
-            currentQ.options.forEach((opt, idx) => {
-                let optionStyle = 'border-gray-200 hover:border-primary hover:bg-slate-50';
-                let checkMark = '';
-                
-                if (state.quiz.isSubmitted) {
-                    if (idx === currentQ.correct) {
-                        optionStyle = 'border-green-500 bg-green-50/50 text-green-900';
-                        checkMark = '🟢 ';
-                    } else if (idx === state.quiz.selectedAns) {
-                        optionStyle = 'border-red-500 bg-red-50/50 text-red-900';
-                        checkMark = '🔴 ';
-                    } else {
-                        optionStyle = 'border-gray-100 opacity-60';
-                    }
-                } else if (idx === state.quiz.selectedAns) {
-                    optionStyle = 'border-primary bg-sky-50 text-primary font-semibold';
-                }
-
-                optionsHtml += `
-                    <button onclick="selectQuizOption(${idx})" ${state.quiz.isSubmitted ? 'disabled' : ''} class="w-full text-left p-4 rounded-xl border-2 transition-all flex items-center text-xs md:text-sm ${optionStyle}">
-                        <span class="mr-2">${checkMark}</span> ${opt}
-                    </button>
-                `;
-            });
-
-            let feedbackHtml = '';
-            let actionBtnHtml = '';
-
-            if (state.quiz.isSubmitted) {
-                const isCorrect = state.quiz.selectedAns === currentQ.correct;
-                feedbackHtml = `
-                    <div class="p-4 rounded-xl border mt-6 ${isCorrect ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'} text-xs md:text-sm">
-                        <span class="font-bold block text-sm mb-1">${isCorrect ? langDict.qCorrectLabel : langDict.qIncorrectLabel}</span>
-                        <p class="font-medium"><b>${langDict.qExplanationLabel}</b> ${currentQ.explanation}</p>
-                    </div>
-                `;
-                actionBtnHtml = `
-                    <button onclick="nextQuizQuestion()" class="px-6 py-3 bg-primary text-white font-bold rounded-xl text-sm shadow hover:bg-primary/90 transition-all flex items-center justify-center self-end">
-                        ${langDict.qBtnNext}
-                    </button>
-                `;
-            } else {
-                actionBtnHtml = `
-                    <button onclick="submitQuizAnswer()" ${state.quiz.selectedAns === null ? 'disabled' : ''} class="px-6 py-3 bg-slate-900 text-white font-bold rounded-xl text-sm shadow hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center self-end">
-                        ${langDict.qBtnSubmit}
-                    </button>
-                `;
-            }
-
-            board.innerHTML = `
-                <div class="flex justify-between items-center border-b border-gray-100 pb-3 mb-6">
-                    <span class="text-xs font-bold text-primary uppercase">${langDict.qCurrent} ${state.quiz.currentIdx + 1} / ${totalQuestions}</span>
-                    <span class="text-xs font-semibold text-textMuted">${langDict.qScore}: <b class="text-primary font-bold">${state.quiz.score}</b></span>
-                </div>
-
-                <div class="space-y-6">
-                    <h4 class="text-base md:text-lg font-bold text-textMain leading-relaxed">${currentQ.q}</h4>
-
-                    <div class="space-y-3">
-                        ${optionsHtml}
-                    </div>
-
-                    <!-- Hint segment -->
-                    ${!state.quiz.isSubmitted ? `
-                        <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
-                            <span class="text-xs font-bold text-secondary block mb-1">💡 ${langDict.qHintLabel}:</span>
-                            <span class="text-xs text-amber-800 leading-relaxed">${currentQ.hint}</span>
-                        </div>
-                    ` : ''}
-
-                    ${feedbackHtml}
-
-                    <div class="flex justify-end pt-4">
-                        ${actionBtnHtml}
-                    </div>
-                </div>
-            `;
-        }
-
-        function selectQuizOption(idx) {
-            state.quiz.selectedAns = idx;
-            renderQuiz();
-        }
-
-        function submitQuizAnswer() {
-            if (state.quiz.selectedAns === null || state.quiz.isSubmitted) return;
-            const currentQ = quizQuestions[state.lang][state.quiz.currentIdx];
-            
-            state.quiz.isSubmitted = true;
-            if (state.quiz.selectedAns === currentQ.correct) {
-                state.quiz.score++;
-            }
-            renderQuiz();
-        }
-
-        function nextQuizQuestion() {
-            state.quiz.currentIdx++;
-            state.quiz.selectedAns = null;
-            state.quiz.isSubmitted = false;
-            renderQuiz();
-        }
-
-        function restartQuiz() {
-            state.quiz.currentIdx = 0;
-            state.quiz.score = 0;
-            state.quiz.selectedAns = null;
-            state.quiz.isSubmitted = false;
-            renderQuiz();
-        }
-
-        function initCharts() {
-            Chart.defaults.font.family = "'Inter', 'system-ui', 'sans-serif'";
-            Chart.defaults.color = '#6b7280';
-
-            const tooltipConfig = {
-                tooltip: {
-                    callbacks: {
-                        title: function(tooltipItems) {
-                            const item = tooltipItems[0];
-                            let label = item.chart.data.labels[item.dataIndex];
-                            if (Array.isArray(label)) {
-                              return label.join(' ');
-                            } else {
-                              return label;
-                            }
-                        }
-                    }
-                }
-            };
-
-            const ctxRadar = document.getElementById('radarChart').getContext('2d');
-            radarChartInstance = new Chart(ctxRadar, {
-                type: 'radar',
-                data: {
-                    labels: dict.vi.radarLabels,
-                    datasets: [{
-                        label: 'NotebookLM',
-                        data: [100, 100, 90, 95, 100],
-                        fill: true,
-                        backgroundColor: 'rgba(2, 132, 199, 0.15)',
-                        borderColor: '#0284c7',
-                        pointBackgroundColor: '#0284c7',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#0284c7',
-                        borderWidth: 2
-                    }, {
-                        label: 'AI Chatbot Phổ Thông',
-                        data: [50, 20, 60, 40, 30],
-                        fill: true,
-                        backgroundColor: 'rgba(245, 158, 11, 0.15)',
-                        borderColor: '#f59e0b',
-                        pointBackgroundColor: '#f59e0b',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#f59e0b',
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(0, 0, 0, 0.05)' },
-                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
-                            pointLabels: { font: { size: 10 }, color: '#1f2937' },
-                            ticks: { display: false, min: 0, max: 100 }
-                        }
-                    },
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        ...tooltipConfig
-                    }
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            initTabs();
-            initCharts();
-            toggleLanguage('vi');
-        });
-    </script>
 </body>
 </html>

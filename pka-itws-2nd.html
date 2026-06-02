@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Workshop Companion - Digital Diner</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Noto Sans JP', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f4f9f1',
+                            100: '#e5f2de',
+                            200: '#cbe5be',
+                            300: '#a5d093',
+                            400: '#7cb568',
+                            500: '#5c9948',
+                            600: '#477b37',
+                            700: '#3a622d',
+                            800: '#314f27',
+                            900: '#23381d',
+                            accent: '#deff9a',
+                            cyan: '#00e5ff',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth Custom Transitions */
+        .transition-all-300 {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Hidden class for language toggle */
+        .lang-node {
+            display: none;
+        }
+        .active-lang {
+            display: block;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen selection:bg-brand-accent selection:text-slate-950 antialiased overflow-x-hidden">
+
+    <!-- Language Selector Floating Header -->
+    <header class="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 px-4 py-3 sm:px-8 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="h-10 w-10 bg-gradient-to-tr from-brand-600 to-brand-accent rounded-xl flex items-center justify-center shadow-lg shadow-brand-900/40">
+                <i class="fa-solid fa-utensils text-slate-950 text-lg"></i>
+            </div>
+            <div>
+                <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent">IT Workshop Guide</span>
+                <h1 class="text-lg font-extrabold tracking-tight text-white leading-none">The Full-Stack Blueprint</h1>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <!-- Language Toggle Switch -->
+            <button onclick="setLanguage('en')" id="btn-en" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-brand-accent text-slate-950 shadow">
+                EN 🇺🇸
+            </button>
+            <button onclick="setLanguage('jp')" id="btn-jp" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-slate-800 text-slate-400 hover:text-slate-100">
+                JP 🇯🇵
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="relative py-16 px-6 sm:px-12 max-w-7xl mx-auto overflow-hidden">
+        <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-brand-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
+        
+        <div class="text-center relative z-10 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 bg-brand-900/50 border border-brand-700/30 text-brand-accent px-4 py-1.5 rounded-full text-xs font-semibold mb-6 tracking-wide">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span data-key="hero-tag">A 4-Session Practical Guide for Sophomore Students</span>
+            </div>
+            <h2 class="text-4xl sm:text-6xl font-black tracking-tight text-white mb-6">
+                <span class="bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent" data-key="hero-title">Master Software</span> <br class="hidden sm:inline">
+                <span class="text-brand-accent drop-shadow-sm" data-key="hero-accent">Architecture</span>
+            </h2>
+            <p class="text-slate-400 text-lg sm:text-xl leading-relaxed font-light mb-8 max-w-2xl mx-auto" data-key="hero-desc">
+                Learn modern Full-Stack development by converting the concepts you know (OOP, Databases) into industry-standard design patterns.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#diner-section" class="px-6 py-3 rounded-xl bg-brand-accent text-slate-950 font-bold hover:bg-white hover:scale-[1.02] transition-all-300 shadow-xl shadow-brand-accent/10 flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <span data-key="cta-explore">Explore Diner Simulator</span>
+                </a>
+                <a href="#syllabus-section" class="px-6 py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-200 font-bold hover:bg-slate-700 hover:border-slate-600 transition-all-300 flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span data-key="cta-syllabus">View 4-Session Syllabus</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Digital Diner Simulator Section -->
+    <section id="diner-section" class="py-12 px-4 sm:px-8 max-w-7xl mx-auto scroll-mt-20">
+        <div class="border-b border-slate-800 pb-4 mb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+            <div>
+                <span class="text-xs font-bold text-brand-accent tracking-widest uppercase" data-key="sim-tag">Conceptual Framework</span>
+                <h3 class="text-3xl font-extrabold text-white mt-1" data-key="sim-title">🍽️ The Digital Diner Simulator</h3>
+            </div>
+            <p class="text-slate-400 max-w-md text-sm leading-relaxed" data-key="sim-desc">
+                Select a restaurant role to trace how it implements actual software patterns, database records, and web traffic controllers.
+            </p>
+        </div>
+
+        <!-- Simulator Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Left Side: Interactive Diner Diagram -->
+            <div class="lg:col-span-7 bg-slate-900/60 border border-slate-800 rounded-3xl p-6 sm:p-8 relative">
+                
+                <!-- Diagram Visual Path lines (simulated with absolute elements) -->
+                <div class="absolute inset-0 pointer-events-none opacity-20">
+                    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <path id="path-flow" d="M 60,120 Q 200,80 340,120 T 620,120" fill="none" stroke="#deff9a" stroke-width="4" stroke-dasharray="8 8" class="animate-[dash_20s_linear_infinite]"/>
+                    </svg>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6 relative z-10">
+                    <!-- Customer Card -->
+                    <button onclick="selectDinerRole('customer')" id="diner-customer" class="role-btn text-left p-5 rounded-2xl border bg-slate-950 border-slate-800 hover:border-brand-accent/50 hover:bg-slate-900 transition-all-300 group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="h-12 w-12 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center group-hover:bg-brand-accent group-hover:text-slate-950 transition-all-300">
+                                <i class="fa-solid fa-user-tie text-xl"></i>
+                            </span>
+                            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Layer 1</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base group-hover:text-brand-accent transition-all-300" data-key="role-customer-title">The Customer</h4>
+                        <span class="text-xs text-slate-400 mt-1 block" data-key="role-customer-sub">Client / Browser</span>
+                    </button>
+
+                    <!-- Menu Card -->
+                    <button onclick="selectDinerRole('menu')" id="diner-menu" class="role-btn text-left p-5 rounded-2xl border bg-slate-950 border-slate-800 hover:border-brand-accent/50 hover:bg-slate-900 transition-all-300 group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="h-12 w-12 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center group-hover:bg-brand-accent group-hover:text-slate-950 transition-all-300">
+                                <i class="fa-solid fa-list-ol text-xl"></i>
+                            </span>
+                            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Layer 2</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base group-hover:text-brand-accent transition-all-300" data-key="role-menu-title">The Menu</h4>
+                        <span class="text-xs text-slate-400 mt-1 block" data-key="role-menu-sub">REST Endpoints</span>
+                    </button>
+
+                    <!-- Waiter Card -->
+                    <button onclick="selectDinerRole('waiter')" id="diner-waiter" class="role-btn text-left p-5 rounded-2xl border bg-slate-950 border-slate-800 hover:border-brand-accent/50 hover:bg-slate-900 transition-all-300 group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="h-12 w-12 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center group-hover:bg-brand-accent group-hover:text-slate-950 transition-all-300">
+                                <i class="fa-solid fa-bell-concierge text-xl"></i>
+                            </span>
+                            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Layer 3</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base group-hover:text-brand-accent transition-all-300" data-key="role-waiter-title">The Waiter</h4>
+                        <span class="text-xs text-slate-400 mt-1 block" data-key="role-waiter-sub">Controller</span>
+                    </button>
+
+                    <!-- Head Chef Card -->
+                    <button onclick="selectDinerRole('chef')" id="diner-chef" class="role-btn text-left p-5 rounded-2xl border bg-slate-950 border-slate-800 hover:border-brand-accent/50 hover:bg-slate-900 transition-all-300 group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="h-12 w-12 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center group-hover:bg-brand-accent group-hover:text-slate-950 transition-all-300">
+                                <i class="fa-solid fa-hat-chef text-xl"></i>
+                            </span>
+                            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Layer 4</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base group-hover:text-brand-accent transition-all-300" data-key="role-chef-title">The Head Chef</h4>
+                        <span class="text-xs text-slate-400 mt-1 block" data-key="role-chef-sub">Service Layer</span>
+                    </button>
+
+                    <!-- Pantry Card -->
+                    <button onclick="selectDinerRole('pantry')" id="diner-pantry" class="role-btn text-left p-5 rounded-2xl border bg-slate-950 border-slate-800 hover:border-brand-accent/50 hover:bg-slate-900 transition-all-300 group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="h-12 w-12 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center group-hover:bg-brand-accent group-hover:text-slate-950 transition-all-300">
+                                <i class="fa-solid fa-warehouse text-xl"></i>
+                            </span>
+                            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Layer 5</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base group-hover:text-brand-accent transition-all-300" data-key="role-pantry-title">Pantry Manager</h4>
+                        <span class="text-xs text-slate-400 mt-1 block" data-key="role-pantry-sub">Repository</span>
+                    </button>
+
+                    <!-- Fridge Card -->
+                    <button onclick="selectDinerRole('fridge')" id="diner-fridge" class="role-btn text-left p-5 rounded-2xl border bg-slate-950 border-slate-800 hover:border-brand-accent/50 hover:bg-slate-900 transition-all-300 group">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="h-12 w-12 rounded-xl bg-slate-800 text-slate-300 flex items-center justify-center group-hover:bg-brand-accent group-hover:text-slate-950 transition-all-300">
+                                <i class="fa-solid fa-database text-xl"></i>
+                            </span>
+                            <span class="text-[10px] font-bold tracking-widest text-slate-500 uppercase">Layer 6</span>
+                        </div>
+                        <h4 class="font-bold text-white text-base group-hover:text-brand-accent transition-all-300" data-key="role-fridge-title">The Fridge</h4>
+                        <span class="text-xs text-slate-400 mt-1 block" data-key="role-fridge-sub">Database</span>
+                    </button>
+                </div>
+
+                <!-- Live HTTP Request Simulation Flow Tool -->
+                <div class="mt-8 bg-slate-950/60 rounded-2xl p-4 border border-slate-800/80">
+                    <h5 class="text-xs font-bold uppercase tracking-wider text-brand-cyan mb-3 flex items-center gap-2">
+                        <span class="flex h-2 w-2 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-cyan opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-cyan"></span>
+                        </span>
+                        <span data-key="flow-simulation-title">Interactive Workflow Simulator</span>
+                    </h5>
+                    <div class="flex flex-wrap items-center gap-2 text-sm">
+                        <span class="bg-brand-900/40 border border-brand-700/50 text-brand-accent text-xs font-bold px-2 py-1 rounded">GET /orders/1</span>
+                        <span class="text-slate-500"><i class="fa-solid fa-arrow-right-long animate-pulse"></i></span>
+                        <span class="bg-slate-900 border border-slate-800 text-slate-400 text-xs px-2.5 py-1 rounded hover:text-white transition cursor-pointer" onclick="selectDinerRole('customer')" data-key="flow-cust">Customer (Browser)</span>
+                        <span class="text-slate-600">→</span>
+                        <span class="bg-slate-900 border border-slate-800 text-slate-400 text-xs px-2.5 py-1 rounded hover:text-white transition cursor-pointer" onclick="selectDinerRole('waiter')" data-key="flow-wait">Waiter (Controller)</span>
+                        <span class="text-slate-600">→</span>
+                        <span class="bg-slate-900 border border-slate-800 text-slate-400 text-xs px-2.5 py-1 rounded hover:text-white transition cursor-pointer" onclick="selectDinerRole('chef')" data-key="flow-chef">Chef (Service)</span>
+                        <span class="text-slate-600">→</span>
+                        <span class="bg-slate-900 border border-slate-800 text-slate-400 text-xs px-2.5 py-1 rounded hover:text-white transition cursor-pointer" onclick="selectDinerRole('pantry')" data-key="flow-pant">Pantry (Repository)</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Side: Descriptive Panel detailing active Role -->
+            <div class="lg:col-span-5 bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 sm:p-8 relative overflow-hidden flex flex-col justify-between min-h-[460px]">
+                
+                <div id="role-details-container">
+                    <!-- Dynamic Content Injected here by JS -->
+                </div>
+
+                <!-- Back to diner list or small tip -->
+                <div class="border-t border-slate-800/80 pt-4 mt-6 flex justify-between items-center">
+                    <span class="text-xs text-slate-500" data-key="role-tip">Click any role to see architecture mapping</span>
+                    <button class="text-xs font-semibold text-brand-accent hover:underline flex items-center gap-1.5" onclick="selectDinerRole('chef')">
+                        <span data-key="role-next">Check out "The Head Chef"</span> <i class="fa-solid fa-circle-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 4-Session Curriculum Section -->
+    <section id="syllabus-section" class="py-16 px-4 sm:px-8 bg-slate-900/30 border-y border-slate-900 max-w-7xl mx-auto scroll-mt-20">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <span class="text-xs font-bold text-brand-accent tracking-widest uppercase" data-key="syll-tag">Deep-Dive Curriculum</span>
+            <h3 class="text-4xl font-extrabold text-white mt-1 mb-4" data-key="syll-title">📅 The 4-Session Blueprint Map</h3>
+            <p class="text-slate-400 font-light" data-key="syll-desc">
+                From core structural designs to simulated coding interviews, trace your timeline milestones below.
+            </p>
+        </div>
+
+        <!-- Session Interactive Navigation Tabs -->
+        <div class="flex flex-wrap justify-center gap-2 mb-10 max-w-4xl mx-auto">
+            <button onclick="setSession(1)" id="btn-sess-1" class="session-nav-btn px-4 py-3 rounded-xl font-bold text-sm border transition-all-300 flex items-center gap-2 bg-brand-accent border-brand-accent text-slate-950">
+                <span class="h-5 w-5 rounded-full bg-slate-950 text-brand-accent flex items-center justify-center text-xs">1</span>
+                <span data-key="nav-s1-title">S1: Blueprint</span>
+            </button>
+            <button onclick="setSession(2)" id="btn-sess-2" class="session-nav-btn px-4 py-3 rounded-xl font-bold text-sm border transition-all-300 flex items-center gap-2 bg-slate-900 border-slate-800 text-slate-400 hover:text-white">
+                <span class="h-5 w-5 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs">2</span>
+                <span data-key="nav-s2-title">S2: Foundation</span>
+            </button>
+            <button onclick="setSession(3)" id="btn-sess-3" class="session-nav-btn px-4 py-3 rounded-xl font-bold text-sm border transition-all-300 flex items-center gap-2 bg-slate-900 border-slate-800 text-slate-400 hover:text-white">
+                <span class="h-5 w-5 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs">3</span>
+                <span data-key="nav-s3-title">S3: The Brains</span>
+            </button>
+            <button onclick="setSession(4)" id="btn-sess-4" class="session-nav-btn px-4 py-3 rounded-xl font-bold text-sm border transition-all-300 flex items-center gap-2 bg-slate-900 border-slate-800 text-slate-400 hover:text-white">
+                <span class="h-5 w-5 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs">4</span>
+                <span data-key="nav-s4-title">S4: The Visuals</span>
+            </button>
+        </div>
+
+        <!-- Session Content Body -->
+        <div id="session-card-container" class="bg-slate-900/40 border border-slate-800 rounded-3xl p-6 sm:p-10 max-w-5xl mx-auto">
+            <!-- Dynamic Content Injected here by JS -->
+        </div>
+    </section>
+
+    <!-- Folder Structure Visualizer Section -->
+    <section class="py-16 px-4 sm:px-8 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Side: Directory Tree -->
+            <div class="lg:col-span-5 bg-slate-950 border border-slate-800/85 rounded-3xl p-6 font-mono text-sm leading-relaxed relative">
+                <div class="absolute top-4 right-4 text-xs text-slate-600 tracking-wider font-sans uppercase">File Tree</div>
+                <h4 class="text-xs font-bold text-brand-accent uppercase tracking-widest mb-6 font-sans" data-key="tree-title">📋 Starter Kit Blueprint</h4>
+                
+                <!-- Tree representation -->
+                <div class="space-y-1.5 text-slate-300">
+                    <div class="flex items-center gap-2 text-white">
+                        <i class="fa-solid fa-folder-open text-brand-accent"></i>
+                        <span>/my-it-workshop-app</span>
+                    </div>
+                    <div class="pl-4 flex items-center gap-2 text-white">
+                        <span class="text-slate-600">├──</span>
+                        <i class="fa-solid fa-folder-open text-brand-accent"></i>
+                        <span>src/main/</span>
+                    </div>
+                    <!-- Controller -->
+                    <div onclick="highlightTreeItem('controller')" class="pl-8 flex items-center gap-2 cursor-pointer hover:bg-slate-900 py-1 px-1.5 rounded transition group">
+                        <span class="text-slate-600">│   ├──</span>
+                        <i class="fa-solid fa-folder text-brand-cyan group-hover:scale-105 transition"></i>
+                        <span class="text-brand-cyan">controllers/</span>
+                        <span class="text-[10px] bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 px-1.5 rounded ml-auto">S3</span>
+                    </div>
+                    <!-- Services -->
+                    <div onclick="highlightTreeItem('service')" class="pl-8 flex items-center gap-2 cursor-pointer hover:bg-slate-900 py-1 px-1.5 rounded transition group">
+                        <span class="text-slate-600">│   ├──</span>
+                        <i class="fa-solid fa-folder text-teal-400 group-hover:scale-105 transition"></i>
+                        <span class="text-teal-400">services/</span>
+                        <span class="text-[10px] bg-teal-400/10 text-teal-400 border border-teal-400/20 px-1.5 rounded ml-auto">S3</span>
+                    </div>
+                    <!-- Repositories -->
+                    <div onclick="highlightTreeItem('repository')" class="pl-8 flex items-center gap-2 cursor-pointer hover:bg-slate-900 py-1 px-1.5 rounded transition group">
+                        <span class="text-slate-600">│   ├──</span>
+                        <i class="fa-solid fa-folder text-indigo-400 group-hover:scale-105 transition"></i>
+                        <span class="text-indigo-400">repositories/</span>
+                        <span class="text-[10px] bg-indigo-400/10 text-indigo-400 border border-indigo-400/20 px-1.5 rounded ml-auto">S2</span>
+                    </div>
+                    <!-- Models -->
+                    <div onclick="highlightTreeItem('model')" class="pl-8 flex items-center gap-2 cursor-pointer hover:bg-slate-900 py-1 px-1.5 rounded transition group">
+                        <span class="text-slate-600">│   ├──</span>
+                        <i class="fa-solid fa-folder text-amber-400 group-hover:scale-105 transition"></i>
+                        <span class="text-amber-400">models/</span>
+                        <span class="text-[10px] bg-amber-400/10 text-amber-400 border border-amber-400/20 px-1.5 rounded ml-auto">S2</span>
+                    </div>
+                    <!-- Static Web Content -->
+                    <div onclick="highlightTreeItem('static')" class="pl-4 flex items-center gap-2 cursor-pointer hover:bg-slate-900 py-1 px-1.5 rounded transition group">
+                        <span class="text-slate-600">├──</span>
+                        <i class="fa-solid fa-folder text-brand-accent group-hover:scale-105 transition"></i>
+                        <span class="text-brand-accent">resources/static/</span>
+                        <span class="text-[10px] bg-brand-accent/10 text-brand-accent border border-brand-accent/20 px-1.5 rounded ml-auto">S4</span>
+                    </div>
+                    <!-- Config -->
+                    <div class="pl-8 flex items-center gap-2 text-slate-500">
+                        <span class="text-slate-600">│   ├──</span>
+                        <i class="fa-solid fa-file-code text-slate-600"></i>
+                        <span>config/DatabaseConfig</span>
+                    </div>
+                    <!-- README -->
+                    <div onclick="highlightTreeItem('readme')" class="pl-4 flex items-center gap-2 cursor-pointer hover:bg-slate-900 py-1 px-1.5 rounded transition group">
+                        <span class="text-slate-600">├──</span>
+                        <i class="fa-solid fa-file-lines text-slate-300 group-hover:scale-105 transition"></i>
+                        <span class="text-slate-300">README.md</span>
+                        <span class="text-[10px] bg-slate-100/10 text-slate-300 border border-slate-100/20 px-1.5 rounded ml-auto">S4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Details on highlighted folder -->
+            <div class="lg:col-span-7 space-y-6">
+                <span class="text-xs font-bold text-brand-accent tracking-widest uppercase" data-key="tree-detail-tag">Folder Directory Highlight</span>
+                <h3 class="text-3xl font-extrabold text-white" id="tree-highlight-title">Select a directory to view blueprint context</h3>
+                <p class="text-slate-400 text-base leading-relaxed" id="tree-highlight-desc">
+                    Clicking one of the active folders (marked S2, S3, S4, S5) in the file tree on the left will reveal its role in clean, 3-layer architecture.
+                </p>
+                
+                <!-- Quick stats inside the highlight block -->
+                <div id="tree-highlight-meta" class="hidden grid grid-cols-2 gap-4 mt-4">
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+                        <span class="text-xs text-slate-500 block uppercase font-bold" data-key="tree-meta-session">Associated Session</span>
+                        <span class="text-base font-bold text-white" id="tree-meta-session-val">Session 2</span>
+                    </div>
+                    <div class="bg-slate-900/60 border border-slate-800 p-4 rounded-xl">
+                        <span class="text-xs text-slate-500 block uppercase font-bold" data-key="tree-meta-owner">Architectural Owner</span>
+                        <span class="text-base font-bold text-brand-accent" id="tree-meta-owner-val">Pantry Manager</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Interactive AI Prompt Builder Card Generator -->
+    <section class="py-16 px-4 sm:px-8 bg-gradient-to-t from-slate-950 to-slate-900/40 border-t border-slate-900 max-w-7xl mx-auto">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold text-brand-accent tracking-widest uppercase" data-key="p-tag">Instant Copier</span>
+                <h3 class="text-3xl sm:text-4xl font-black text-white mt-1" data-key="p-title">🤖 Active AI Prompt Builder Card</h3>
+                <p class="text-slate-400 text-sm mt-2" data-key="p-desc">
+                    Select your workspace project template and chosen task layer. Our compiler will automatically generate the corresponding prompt cards.
+                </p>
+            </div>
+
+            <!-- Configuration Inputs -->
+            <div class="bg-slate-900/50 border border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Select Project Theme -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" data-key="label-theme">1. Select Project Theme</label>
+                        <select id="prompt-project" onchange="generatePrompt()" class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-accent transition">
+                            <option value="campus">Campus Club Manager (University-themed)</option>
+                            <option value="finance">Money Mind (Personal Finance Tracker)</option>
+                            <option value="task">Task Master (Corporate Productivity App)</option>
+                        </select>
+                    </div>
+
+                    <!-- Select Prompt Task -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" data-key="label-task">2. Select Target Layer / Task</label>
+                        <select id="prompt-task" onchange="generatePrompt()" class="w-full bg-slate-950 border border-slate-800 text-slate-200 rounded-xl px-4 py-3 focus:outline-none focus:border-brand-accent transition">
+                            <option value="database">Database Schema Layout (Session 1)</option>
+                            <option value="endpoint">REST API Endpoint Contract (Session 3)</option>
+                            <option value="logic">Business Logic Verification (Session 3)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Generated Prompt Output Textarea -->
+                <div class="relative bg-slate-950 border border-slate-800 rounded-2xl p-5">
+                    <div class="absolute top-4 right-4 flex items-center gap-2">
+                        <button onclick="copyGeneratedPrompt()" class="bg-brand-accent text-slate-950 text-xs font-extrabold px-3 py-1.5 rounded-lg hover:scale-105 transition active:scale-95 flex items-center gap-1.5 shadow shadow-brand-accent/20">
+                            <i class="fa-solid fa-copy"></i> <span id="btn-copy-text" data-key="copy-btn">Copy to Clipboard</span>
+                        </button>
+                    </div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" data-key="label-prompt">Generated Prompt Output</label>
+                    <textarea id="prompt-output" readonly class="w-full min-h-[140px] bg-transparent text-slate-300 font-mono text-xs focus:outline-none resize-none leading-relaxed pt-2"></textarea>
+                </div>
+
+                <div class="bg-brand-900/10 border border-brand-800/40 rounded-xl p-4 flex gap-3 items-start">
+                    <span class="text-brand-accent mt-0.5"><i class="fa-solid fa-lightbulb"></i></span>
+                    <p class="text-xs text-slate-400 leading-normal" data-key="prompt-tip">
+                        How to use: Copy this generated text block and paste it directly into an AI assistant. The instructions force the AI to explain structural design decisions rather than simply handing you a copy-paste solution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Static Footer -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 px-8 text-center text-slate-500 text-xs">
+        <p class="mb-2" data-key="footer-powered">Interactive Syllabus Guide powered by the Digital Diner Concept Framework</p>
+        <p>&copy; 2026 IT Workshop Blueprint. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Data and Controller Setup -->
+    <script>
+        // Language state
+        let currentLang = 'en';
+
+        // All localized texts & content dictionaries
+        const dict = {
+            en: {
+                // Global UI
+                'hero-tag': 'A 4-Session Practical Guide for Sophomore Students',
+                'hero-title': 'Master Software',
+                'hero-accent': 'Architecture',
+                'hero-desc': 'Learn modern Full-Stack development by converting the concepts you know (OOP, Databases) into industry-standard design patterns.',
+                'cta-explore': 'Explore Diner Simulator',
+                'cta-syllabus': 'View 4-Session Syllabus',
+                'sim-tag': 'Conceptual Framework',
+                'sim-title': '🍽️ The Digital Diner Simulator',
+                'sim-desc': 'Select a restaurant role to trace how it implements actual software patterns, database records, and web traffic controllers.',
+                'flow-simulation-title': 'Interactive Workflow Simulator',
+                'flow-cust': 'Customer (Browser)',
+                'flow-wait': 'Waiter (Controller)',
+                'flow-chef': 'Chef (Service)',
+                'flow-pant': 'Pantry (Repository)',
+                'role-tip': 'Click any role to see architecture mapping',
+                'role-next': 'Check out "The Head Chef"',
+                'syll-tag': 'Deep-Dive Curriculum',
+                'syll-title': '📅 The 4-Session Blueprint Map',
+                'syll-desc': 'From core structural designs to simulated coding interviews, trace your timeline milestones below.',
+                'nav-s1-title': 'S1: Blueprint',
+                'nav-s2-title': 'S2: Foundation',
+                'nav-s3-title': 'S3: The Brains',
+                'nav-s4-title': 'S4: The Visuals',
+                'nav-s5-title': 'S5: The Sell',
+                'tree-title': '📋 Starter Kit Blueprint',
+                'tree-detail-tag': 'Folder Directory Highlight',
+                'tree-meta-session': 'Associated Session',
+                'tree-meta-owner': 'Architectural Owner',
+                'p-tag': 'Instant Copier',
+                'p-title': '🤖 Active AI Prompt Builder Card',
+                'p-desc': 'Select your workspace project template and chosen task layer. Our compiler will automatically generate the corresponding prompt cards.',
+                'label-theme': '1. Select Project Theme',
+                'label-task': '2. Select Target Layer / Task',
+                'label-prompt': 'Generated Prompt Output',
+                'copy-btn': 'Copy to Clipboard',
+                'copied': 'Copied!',
+                'prompt-tip': 'How to use: Copy this generated text block and paste it directly into an AI assistant. The instructions force the AI to explain structural design decisions rather than simply handing you a copy-paste solution.',
+                'footer-powered': 'Interactive Syllabus Guide powered by the Digital Diner Concept Framework',
+                
+                // Project Options inside prompt builder
+                'opt-campus': 'Campus Club Manager (University-themed)',
+                'opt-finance': 'Money Mind (Personal Finance Tracker)',
+                'opt-task': 'Task Master (Corporate Productivity App)',
+
+                // Diner Simulator Details mapping
+                'role-customer-title': 'The Customer',
+                'role-customer-sub': 'Client / Browser',
+                'role-customer-desc': 'The Client represents the browser interface that your user clicks and interacts with. In the Digital Diner framework, the Customer decides what they want to order and sends the request over the wire.',
+                'role-customer-tech': 'Tech Counterpart: HTML5, CSS3, JavaScript, Tailwind or React.',
+                'role-customer-interview': 'Interview Angle: "How does the client send asynchronous data requests without refreshing the page? (Answer: fetch API/Promises)"',
+
+                'role-menu-title': 'The Menu',
+                'role-menu-sub': 'REST Endpoints',
+                'role-menu-desc': 'The Menu defines all dishes currently available for purchase. It establishes the "Contract" between client-side and backend servers, dictating the formatting of requested URLs.',
+                'role-menu-tech': 'Tech Counterpart: GET /products, POST /orders, DELETE /orders/1.',
+                'role-menu-interview': 'Interview Angle: "What constitutes a REST contract? Why do we map resources to plural nouns instead of verbs? (Answer: Plural resource paths maintain clean endpoint hygiene)"',
+
+                'role-waiter-title': 'The Waiter',
+                'role-waiter-sub': 'Controller Layer',
+                'role-waiter-desc': 'The Waiter is the immediate point-of-contact for requests. They do not cook. They listen to the client request, perform structural validation, delegate workflows, and return standard HTTP Status response packages.',
+                'role-waiter-tech': 'Tech Counterpart: Spring MVC RestControllers or Node.js Express router endpoints.',
+                'role-waiter-interview': 'Interview Angle: "Why must you avoid writing database queries directly in your controllers? (Answer: Controllers only route transport data; they keep logic separate from persistence)"',
+
+                'role-chef-title': 'The Head Chef',
+                'role-chef-sub': 'Service Layer',
+                'role-chef-desc': 'The Chef processes the business rules of the kitchen. This is the domain "brains." The Service layer manages security validation, transactional constraints, inventory updates, and orchestrates repository mappings.',
+                'role-chef-tech': 'Tech Counterpart: @Service classes with core OOP operational methods.',
+                'role-chef-interview': 'Interview Angle: "If we change our UI client from Web to iOS mobile, which layers of our backend change? (Answer: None! Your service logic remains completely untouched)"',
+
+                'role-pantry-title': 'Pantry Manager',
+                'role-pantry-sub': 'Repository Layer',
+                'role-pantry-desc': 'The Pantry Manager holds direct keys to stock. They do not cook. They execute structured lookups, database commands, and persist records in the active storage medium.',
+                'role-pantry-tech': 'Tech Counterpart: JPA Repository interfaces, ORM annotations, and safe parameter queries.',
+                'role-pantry-interview': 'Interview Angle: "What is the benefit of the Repository Pattern? (Answer: It decouples the service layer from direct SQL syntax, allowing changes to the storage model without altering logic)"',
+
+                'role-fridge-title': 'The Fridge',
+                'role-fridge-sub': 'Database',
+                'role-fridge-desc': 'The Fridge is the physical location of permanent storage. Raw parameters remain written in tabular index forms. It maintains persistence across runtime instances.',
+                'role-fridge-tech': 'Tech Counterpart: PostgreSQL, MySQL, H2 or SQLite.',
+                'role-fridge-interview': 'Interview Angle: "What is the benefit of mapping structural tables via relational constraints like foreign keys? (Answer: Ensures absolute database integrity across CRUD cycles)"',
+
+                // Session curricula
+                's1-goal': 'Goal: Understand system architecture, pick a template, brainstorm functions, and design the DB Schema.',
+                's1-milestones': 'Milestones: Translate real-world requirements to relational schemas. Understand 3-layer data boundaries.',
+                's1-steps': 'Practical Timeline Steps:',
+                's1-step-1': 'Select pre-vetted project templates.',
+                's1-step-2': 'Draft functional requirements with user intent.',
+                's1-step-3': 'Translate requirements to DB tables.',
+                's1-step-4': 'Set up folder layouts with git cloning.',
+                's1-ia': 'Interview Angle: "Explain how you translated functional application requirements into clean Relational SQL schemas."',
+
+                's2-goal': 'Goal: Connect the local application persistence configurations to active Databases.',
+                's2-milestones': 'Milestones: Understand Object-Relational Mapping (ORM) and abstract raw SQL with standard Repository methods.',
+                's2-steps': 'Practical Timeline Steps:',
+                's2-step-1': 'Create annotated Java/OOP entities in /models.',
+                's2-step-2': 'Draft empty Repository interfaces in /repositories.',
+                's2-step-3': 'Set target connection variables (.properties/.env).',
+                's2-step-4': 'Run bootloader CRUD tests to verify DB connections.',
+                's2-ia': 'Interview Angle: "Why use ORM models instead of writing raw query scripts manually? (Answer: Increases security against SQL injection, clean OOP encapsulation)"',
+
+                's3-goal': 'Goal: Expose your REST Endpoint controllers and orchestrate business validations.',
+                's3-milestones': 'Milestones: Master separation of concerns. Learn HTTP routing configurations.',
+                's3-steps': 'Practical Timeline Steps:',
+                's3-step-1': 'Map brainstormed features into URL endpoints.',
+                's3-step-2': 'Write robust validation logic within Service files.',
+                's3-step-3': 'Establish Controller endpoints with routing annotations.',
+                's3-step-4': 'Execute endpoint routing checks with Postman.',
+                's3-ia': 'Interview Angle: "Why isolate Service logic exceptions from Controller return statuses? (Answer: Controllers should normalize exceptions to HTTP standards, like 400 Bad Request)"',
+
+                's4-goal': 'Goal: Craft user interface dashboard assets and consume active REST endpoints.',
+                's4-milestones': 'Milestones: Learn client-side fetch scripting and dynamic DOM parsing.',
+                's4-steps': 'Practical Timeline Steps:',
+                's4-step-1': 'Deploy raw static views in /resources/static.',
+                's4-step-2': 'Write client-side scripts to call APIs on page load.',
+                's4-step-3': 'Create forms to dynamically serialize JSON payloads.',
+                's4-step-4': 'Hook up Delete and Update events to endpoints.',
+                's4-ia': 'Interview Angle: "Explain what happens from the client action to the database change when clicking DELETE on the UI."',
+
+                's5-goal': 'Goal: Package the project repository and master conceptual storytelling.',
+                's5-milestones': 'Milestones: Create premium engineering readme files and handle mock pressure scenarios.',
+                's5-steps': 'Practical Timeline Steps:',
+                's5-step-1': 'Compile architectural layout blueprints inside README.',
+                's5-step-2': 'Perform lightning sessions to explain code context.',
+                's5-step-3': 'Train against AI mock interview agents.',
+                's5-step-4': 'Deploy the repository layout on Github.',
+                's5-ia': 'Interview Angle: "If we had additional development weeks, where would you locate potential system bottlenecks?"'
+            },
+            jp: {
+                // Global UI
+                'hero-tag': '大学2年生向け 4回完結型実践ワークショップ',
+                'hero-title': '設計思想を学ぶ',
+                'hero-accent': 'ソフトウェアアーキテクチャ',
+                'hero-desc': 'すでに身につけた知識（OOP、データベース、ソフトエンジニアリング）をプロ仕様の3層アーキテクチャへと昇華させます。',
+                'cta-explore': 'レストランで例えるシミュレーター',
+                'cta-syllabus': '4日間のカリキュラムを見る',
+                'sim-tag': '概念学習フレームワーク',
+                'sim-title': '🍽️ デジタル・ダイナー（食堂）シミュレーター',
+                'sim-desc': 'レストランの役割を選択して、それぞれがどのようなソフトウェアパターン、データベース処理、Web通信に対応しているかを見てみましょう。',
+                'flow-simulation-title': 'インタラクティブな処理フローシミュレーション',
+                'flow-cust': '客 (クライアントブラウザ)',
+                'flow-wait': 'ウェイター (コントローラー)',
+                'flow-chef': 'シェフ (サービス層)',
+                'flow-pant': 'パントリー係 (リポジトリ)',
+                'role-tip': '各役割をクリックすると、アーキテクチャの解説が表示されます',
+                'role-next': '「ヘッドシェフ」の役割を見る',
+                'syll-tag': '実践カリキュラム',
+                'syll-title': '📅 4セッションのロードマップ',
+                'syll-desc': '設計書の作成から模擬面接対策まで、日ごとのマイルストーンをインタラクティブに確認できます。',
+                'nav-s1-title': 'S1: 設計図',
+                'nav-s2-title': 'S2: データベース永続化',
+                'nav-s3-title': 'S3: ロジック構築',
+                'nav-s4-title': 'S4: 画面とAPI連携',
+                'nav-s5-title': 'S5: 面接対策アピール',
+                'tree-title': '📋 スターターキット設計図',
+                'tree-detail-tag': 'フォルダ階層ハイライト',
+                'tree-meta-session': '対応するセッション',
+                'tree-meta-owner': '担当アーキテクチャ',
+                'p-tag': 'プロンプトジェネレーター',
+                'p-title': '🤖 実践AIペアプロンプト生成ツール',
+                'p-desc': '自分のプロジェクトテーマと、現在進めているセッションを選択すると、AI用の学習・設計プロンプトが自動生成されます。',
+                'label-theme': '1. プロジェクトテーマの選択',
+                'label-task': '2. ターゲット層 / セッション課題',
+                'label-prompt': '生成されたプロンプト',
+                'copy-btn': 'クリップボードにコピー',
+                'copied': 'コピーしました！',
+                'prompt-tip': '使い方: このプロンプトをコピーしてAIアシスタントにペーストします。単にコードを生成させるのではなく、設計上の理由や仕組みを説明させるように設計されています。',
+                'footer-powered': 'デジタル・ダイナー概念フレームワークに基づくインタラクティブ授業ガイド',
+                
+                // Project Options inside prompt builder
+                'opt-campus': 'キャンバスクラブマネージャー (大学サークル管理)',
+                'opt-finance': 'Money Mind (個人向け家計簿アプリ)',
+                'opt-task': 'Task Master (タスク管理・生産性向上アプリ)',
+
+                // Diner Simulator Details mapping
+                'role-customer-title': '客 (Customer)',
+                'role-customer-sub': 'クライアント / ブラウザ',
+                'role-customer-desc': 'クライアントとは、ユーザーが実際に見てクリックするブラウザ画面のことです。「デジタル・ダイナー」におけるお客さんは、メニューを見て自分が食べたいものを選び、注文（リクエスト）を送信します。',
+                'role-customer-tech': '対応する技術: HTML5, CSS3, JavaScript, Tailwind, Reactなど。',
+                'role-customer-interview': '面接での質問例: 「ブラウザ側から、画面をリロードせずにサーバーへデータを送信・取得するにはどうしますか？（回答例: fetch APIやPromisesを使用します）」',
+
+                'role-menu-title': 'メニュー (The Menu)',
+                'role-menu-sub': 'REST エンドポイント',
+                'role-menu-desc': 'メニューとは、その食堂で注文できる料理のリストのことです。これはクライアント（ブラウザ）とバックエンドサーバーの間の「規約（コントラクト）」であり、リクエストするURLの形を規定します。',
+                'role-menu-tech': '対応する技術: GET /products, POST /orders, DELETE /orders/1 など。',
+                'role-menu-interview': '面接での質問例: 「REST設計における規約とは何ですか？URLに動詞ではなく名詞を使うのはなぜですか？（回答例: エンドポイントをリソース＝名詞で整理することで、APIの一貫性を保つためです）」',
+
+                'role-waiter-title': 'ウェイター (The Waiter)',
+                'role-waiter-sub': 'Controller（コントローラー層）',
+                'role-waiter-desc': 'ウェイターは、客から注文を直接受ける窓口です。彼らは調理はしません。注文書（リクエスト）の不備をチェックし、適切な厨房（サービス層）に処理を依頼し、出来上がった料理を綺麗なトレーに載せて客に届けます（HTTPステータスコードを添えたレスポンス）。',
+                'role-waiter-tech': '対応する技術: Spring MVCの@RestControllerや、Node.js Expressのルーター処理。',
+                'role-waiter-interview': '面接での質問例: 「コントローラーの中にSQL文を直接書くのを避けるべきなのはなぜですか？（回答例: コントローラーは通信の制御に専念すべきであり、ビジネスロジックやデータ処理を混ぜると再利用性やテストが困難になるからです）」',
+
+                'role-chef-title': 'ヘッドシェフ (The Head Chef)',
+                'role-chef-sub': 'Service（サービス層）',
+                'role-chef-desc': 'シェフは、厨房の司令塔であり、料理のレシピをすべて知っている存在です。これがアプリケーションの「ビジネスロジック（頭脳）」にあたります。注文内容のルールをチェックし（「この割引クーポンは有効か？」「食材の在庫はあるか？」）、パントリーに食材を要求します。',
+                'role-chef-tech': '対応する技術: ビジネスルールを関数として定義したServiceクラス群。',
+                'role-chef-interview': '面接での質問例: 「フロントエンドをWebからスマホアプリに変更する場合、バックエンドのどの層を書き直す必要がありますか？（回答例: どこも変更する必要はありません。ビジネスロジック＝Service層は完全に独立しているからです）」',
+
+                'role-pantry-title': 'パントリー係 (Pantry Manager)',
+                'role-pantry-sub': 'Repository（リポジトリ層）',
+                'role-pantry-desc': 'パントリー係は、食材の保管場所を完全に把握し管理している人です。彼らは調理はせず、シェフから指示された食材を冷蔵庫から取り出したり、新しく届いた食材を棚に格納したりします。データベースへのアクセスを専門に行います。',
+                'role-pantry-tech': '対応する技術: JPAリポジトリ、CRUD処理を抽象化するデータベースアクセス層。',
+                'role-pantry-interview': '面接での質問例: 「リポジトリパターンのメリットは何ですか？（回答例: ビジネスロジックが特定のSQL構文やデータベースの実装に依存するのを防ぎ、データベースの変更を容易にします）」',
+
+                'role-fridge-title': '冷蔵庫 (The Fridge)',
+                'role-fridge-sub': 'データベース',
+                'role-fridge-desc': '冷蔵庫は、食材が実際に永久保存される物理的な場所です。食材データがテーブル形式で整理され保管されています。サーバーが再起動しても、ここのデータは消えずに残ります。',
+                'role-fridge-tech': '対応する技術: PostgreSQL, MySQL, SQLite など。',
+                'role-fridge-interview': '面接での質問例: 「テーブル間のリレーション（外部キー）を設定する理由は何ですか？（回答例: データの参照整合性を確保し、無効な注文や孤立したデータが発生しないようにデータベースレベルで保護するためです）」',
+
+                // Session curricula
+                's1-goal': '目標: システム構造の把握、テンプレート選択、機能洗い出し、DBスキーマ設計。',
+                's1-milestones': 'マイルストーン: 現実世界の要件をRDB設計へ。3層アーキテクチャの役割理解。',
+                's1-steps': 'このセッションで行うこと:',
+                's1-step-1': '定義済みの3つのテンプレートから1つを選択する',
+                's1-step-2': 'ユーザー目線でアプリに必要な機能リストを書き出す',
+                's1-step-3': 'AIの力を借りて機能をSQLのテーブル設計（スキーマ）に変換する',
+                's1-step-4': 'スターターコード（スケルトン）をダウンロードし、環境を起動させる',
+                's1-ia': '面接対策アピール: 「自分が作ろうとする機能要件を、どのようにSQLのテーブル設計（正規化や外部キー）にマッピングしたかを説明できます。」',
+
+                's2-goal': '目標: ローカルアプリケーションをデータベース（Fridge）に接続する。',
+                's2-milestones': 'マイルストーン: オブジェクト関係マッピング（ORM）を理解し、生のSQLを書かずにRepositoryを使ってCRUDを実装する。',
+                's2-steps': 'このセッションで行うこと:',
+                's2-step-1': '/modelsフォルダにJPAやデータベース変換のアノテーションをつけたクラスを作る',
+                's2-step-2': '/repositoriesにCRUD機能を継承した空のインターフェースを作る',
+                's2-step-3': '設定ファイル（propertiesやenv）に接続情報を記述する',
+                's2-step-4': 'データ接続の起動テストをして、ダミーデータが正しくDBに保存されるか試す',
+                's2-ia': '面接対策アピール: 「JPAやORMを使用する意義を、SQLインジェクション対策や開発速度、オブジェクト型のマッピングという観点から説明できます。」',
+
+                's3-goal': '目標: REST APIエンドポイント（メニュー）を設計し、ビジネスロジックを連結させる。',
+                's3-milestones': 'マイルストーン: 単一責任の原則（WaiterとChefの分離）の実践。HTTP通信の実装。',
+                's3-steps': 'このセッションで行うこと:',
+                's3-step-1': 'セッション1で決めた機能を、HTTPメソッド（GET, POSTなど）のAPIに整理する',
+                's3-step-2': '/servicesフォルダにデータの入力検証や例外チェックなどのビジネスロジックを書く',
+                's3-step-3': '/controllersフォルダにコントローラークラスを書き、マッピングアノテーションを設定する',
+                's3-step-4': 'Postman（または拡張機能）を使って実際に通信を送り、DBの値が変化するかテストする',
+                's3-ia': '面接対策アピール: 「例外処理やエラーレスポンス（400 Bad Requestなど）を、コントローラー層とサービス層でどのように役割分担したかを語れます。」',
+
+                's4-goal': '目標: フロントエンド画面を作成し、構築したREST APIを叩いて統合する。',
+                's4-milestones': 'マイルストーン: 非同期fetch処理、JSONデータの受け取りとDOM描画の理解。',
+                's4-steps': 'このセッションで行うこと:',
+                's4-step-1': '/resources/staticフォルダにHTMLやTailwindを配置する',
+                's4-step-2': '画面読み込み時にAPIからデータをfetchで引っ張ってくるJavaScriptを書く',
+                's4-step-3': '新規登録フォームを設置し、入力データをJSONに直してPOSTするコードを書く',
+                's4-step-4': '削除ボタンや更新処理をイベントリスナーに紐づける',
+                's4-ia': '面接対策アピール: 「削除ボタンをクリックした瞬間から、サーバーへデータが渡り、データベースが更新されるまでのエンドツーエンドのデータフローを語れます。」',
+
+                's5-goal': '目標: リポジトリをGitHubに整理し、面接でのアピールトークを極める。',
+                's5-milestones': 'マイルストーン: 魅力的なエンジニアリングREADMEの執筆と、技術面接での応答力向上。',
+                's5-steps': 'このセッションで行うこと:',
+                's5-step-1': 'READMEの中にアーキテクチャ設計図やERD、API一覧を綺麗にまとめる',
+                's5-step-2': '自分のコードのこだわりを3分以内で喋る技術トークの練習',
+                's5-step-3': 'AI模擬面接官相手に「なぜこの設計にしたか」の厳しい質問に回答する練習',
+                's5-step-4': '最終確認をしてレポジトリを一般公開できるようにする',
+                's5-ia': '面接対策アピール: 「もしもう2週間開発期間があったら、どの機能ボトルネックを改善するか（キャッシュ、セキュリティ、N+1問題など）の技術的な改善ビジョンを話せます。」'
+            }
+        };
+
+        // Static Database definitions for directories
+        const directoryData = {
+            controller: {
+                title: { en: '📂 controllers/ (Controller Layer)', jp: '📂 controllers/ (コントローラー層)' },
+                session: 'Session 3',
+                owner: { en: 'The Waiter', jp: 'ウェイター (Waiter)' },
+                desc: {
+                    en: 'This folder contains your REST HTTP endpoints. This layer serves as the entry-point interface for incoming client browser request payloads.',
+                    jp: 'REST APIのエンドポイントを設定するJavaクラスが入る場所です。クライアントから送られてきたデータ（リクエスト）を一番にキャッチして制御する役割を持ちます。'
+                }
+            },
+            service: {
+                title: { en: '📂 services/ (Service Layer)', jp: '📂 services/ (サービス層)' },
+                session: 'Session 3',
+                owner: { en: 'The Head Chef', jp: 'ヘッドシェフ (Chef)' },
+                desc: {
+                    en: 'Your core validation calculations and transactional business algorithms belong inside these Service files. Keeps the controllers pristine.',
+                    jp: 'アプリケーションの核となるビジネスルール、データの整合性検証、各種計算ロジックなどを一手に引き受けるクラス群を置く場所です。'
+                }
+            },
+            repository: {
+                title: { en: '📂 repositories/ (Repository Layer)', jp: '📂 repositories/ (リポジトリ層)' },
+                session: 'Session 2',
+                owner: { en: 'Pantry Manager', jp: 'パントリー係 (Pantry)' },
+                desc: {
+                    en: 'Interfaces defined in this folder inherit built-in database queries (CRUD). They completely handle persistence routines without leaking SQL code.',
+                    jp: 'データベース接続や、データの新規登録、変更、削除を専門に行うJPAインターフェースが入る場所です。生のSQL文を記述しなくてもCRUDができるようになります。'
+                }
+            },
+            model: {
+                title: { en: '📂 models/ (Model Layer)', jp: '📂 models/ (モデル層 / エンティティ)' },
+                session: 'Session 2',
+                owner: { en: 'The Fridge Ingredients', jp: '食材 (Ingredients)' },
+                desc: {
+                    en: 'Classes that correspond directly with database rows. Each attribute represents a schema column mapping.',
+                    jp: 'データベースのテーブル1行ぶんに相当する、JavaやJavaScriptのオブジェクト（クラス）を定義する場所です。列（カラム）がクラスのフィールドに対応します。'
+                }
+            },
+            static: {
+                title: { en: '📂 resources/static/ (Web Public Assets)', jp: '📂 resources/static/ (フロントエンド公開アセット)' },
+                session: 'Session 4',
+                owner: { en: 'The Client / Customer View', jp: 'お食事の提供用のお皿' },
+                desc: {
+                    en: 'Contains HTML structures, Tailwind designs, or responsive client javascript runtimes that are served directly to browser instances.',
+                    jp: 'ユーザーが見る画面（HTMLファイルやCSS、お絵かきJSファイルなど）を配置するフォルダです。ここに接続したJSがAPI（コントローラー）を叩きます。'
+                }
+            },
+            readme: {
+                title: { en: '📝 README.md (Project Narrative Portfolio)', jp: '📝 README.md (ポートフォリオ・履歴書)' },
+                session: 'Session 4',
+                owner: { en: 'NA', jp: 'なし' },
+                desc: {
+                    en: 'The entry documentation file that sets the visual and architectural summary of your codebase. Vital for developer recruiter tracking.',
+                    jp: 'GitHubでプロジェクトを開いたときに一番最初に表示される説明書です。採用担当者や面接官は、コードそのものの前にこのドキュメントを見て合否レベルを評価します。'
+                }
+            }
+        };
+
+        // Static Prompt generator dataset mapping
+        const promptsDatabase = {
+            campus: {
+                database: {
+                    en: 'I am designing a Campus Club Manager application using a 3-layer architecture. My target application needs to handle these core functions: 1. Allow students to register for university clubs, 2. Manage student leadership permissions inside specific clubs, 3. Record event attendance lists. Can you design a SQL schema with foreign keys, write the SQL commands, and explain why the tables relate to each other the way they do?',
+                    jp: '私は「キャンバスクラブマネージャー」というアプリを3層アーキテクチャで設計しています。このアプリは次の機能を持ちます：1. 学生が大学の部活動やサークルに登録できる、2. 特定のクラブ内でのリーダー役の権限を管理する、3. イベントごとの参加状況を記録する。リレーション設定と外部キーを用いたSQLスキーマを作成し、テーブル関係がそのようになる理由を説明してください。'
+                },
+                endpoint: {
+                    en: 'I have a database with university clubs, students, and registration models, and I need to support these functions: 1. Register a student for a club, 2. Retrieve all active members for a specific club ID, 3. Delete an attendance record. Can you suggest a REST API design mapping these functions to appropriate HTTP methods (GET, POST, DELETE) and routes? Explain why you chose each method.',
+                    jp: 'データベースに「クラブ」「学生」「登録・参加」モデルがあり、次の機能を実装する必要があります：1. 学生を新規でサークルに登録する、2. 特定のクラブIDに属する全アクティブ会員リストを取得する、3. 出席記録を1件削除する。これらをHTTPメソッド（GET、POST、DELETE）と適切なURLルート（REST API）にマッピングする設計書を作成してください。選択理由も添えてください。'
+                },
+                logic: {
+                    en: 'I have written a Service layer logic to register a student to a university club. Please review the requirement that "a student cannot register for more than 3 active clubs simultaneously" and "a student must not be blacklisted". Write a mock Service class implementation showing these validations, and identify 3 potential validation vulnerabilities that a senior engineer would ask about in a technical coding interview.',
+                    jp: '学生をサークルに登録するService（サービス層）のコードを書こうとしています。仕様は「同じ学生は同時に最大3つまでしかクラブに登録できない」「ブラックリスト登録されていない学生のみ許可」です。これらのバリデーション処理を含むモックServiceの実装例を作成し、技術面接でシニアエンジニアから指摘されそうな、処理上の欠陥やエッジケースを3つ指摘してください。'
+                },
+                interview: {
+                    en: 'Analyze my Campus Club Manager application architecture design (Controllers, Services, Repositories). Act as a tough technical interviewer at a tier-1 tech company. Ask me 3 challenging questions specifically probing my architectural decisions, how I manage relational mappings (many-to-many students and clubs), and potential database query bottlenecks (N+1 query problem).',
+                    jp: '私が設計した「キャンバスクラブマネージャー（3層アーキテクチャ構成）」に対して、大手IT企業の開発責任者である模擬面接官として振る舞ってください。特にアーキテクチャの選定理由、学生とクラブの間にある「多対多（Many-to-Many）」のリレーション処理、およびデータベース検索時のボトルネック（N+1問題）を問う、手強い技術的な質問を3つ投げてください。'
+                }
+            },
+            finance: {
+                database: {
+                    en: 'I am designing a Money Mind (Personal Finance Tracker) application using a 3-layer architecture. My target application needs to handle these core functions: 1. Record an individual transaction with category classification, 2. Manage user budgets for specific month-periods, 3. Query category-based totals. Can you design a SQL schema with foreign keys, write the SQL commands, and explain why the tables relate to each other the way they do?',
+                    jp: '私は「Money Mind（個人用家計簿）」アプリを3層アーキテクチャで設計しています。実装する主な機能は次の通りです：1. 取引（収支）データをカテゴリ別で登録する、2. 特定の月における予算上限を設定・管理する、3. カテゴリごとの合計集計を抽出する。これらを満たす外部キー付きのSQL設計書を書き、リレーション構造の理由を解説してください。'
+                },
+                endpoint: {
+                    en: 'I have a database with transactions, categories, and user budget profiles, and I need to support these functions: 1. Record a transaction (POST), 2. Fetch category monthly analytics (GET), 3. Update active budget cap (PUT). Can you suggest a REST API design mapping these functions to appropriate HTTP methods and routes? Explain why you chose each method.',
+                    jp: 'データベースに「取引」「カテゴリ」「月予算」モデルがあり、次のAPIを公開します：1. 収支データを1件登録する (POST)、2. 指定月のカテゴリ別集計を取得する (GET)、3. 予算上限を更新する (PUT)。これらをRESTのエンドポイントとしてURLとメソッドに整理し、設計した理由を説明してください。'
+                },
+                logic: {
+                    en: 'I have written a Service layer logic to process transaction submissions. The core constraint is "if a transaction amount exceeds the category budget limit, return an alert payload alongside database creation". Write a mock Service class implementation showing these validations, and identify 3 potential validation vulnerabilities that a senior engineer would ask about in a technical coding interview.',
+                    jp: '新しい取引（収支）データを登録するService（サービス層）を構築しています。ルールは「今回の支出により当月の予算上限を超える場合、警告情報を付与してデータベースに書き込む」です。このコード実装例を作成し、シニアエンジニアが技術面接でツッコミを入れそうな「不正データ」「スレッド安全性」などの潜在的な問題点を3つ指摘してください。'
+                },
+                interview: {
+                    en: 'Analyze my Personal Finance application architecture design (Controllers, Services, Repositories). Act as a tough technical interviewer at a tier-1 tech company. Ask me 3 challenging questions specifically probing my architectural decisions, why transaction math belongs strictly in the service layer, and how I protect database integrity during high concurrency scenarios.',
+                    jp: '私が構築した「家計簿アプリ」の3層設計について、厳しい技術面接官として振る舞ってください。特に計算処理をコントローラーではなくサービスに書いた根拠、データの一貫性（トランザクション管理）、同時アクセスが頻発した際のデッドロック対策など、技術的な鋭い質問を3つ出してください。'
+                }
+            },
+            task: {
+                database: {
+                    en: 'I am designing a Task Master productivity application using a 3-layer architecture. My target application needs to handle these core functions: 1. Create a task attached to specific team project buckets, 2. Set priority weights and task dependencies, 3. Track active team completions. Can you design a SQL schema with foreign keys, write the SQL commands, and explain why the tables relate to each other the way they do?',
+                    jp: '私は「Task Master（チーム用タスク管理）」アプリを3層構造で開発しようとしています。必要な機能は次の通りです：1. 特定のチームプロジェクトに紐づけてタスクを作成する、2. 優先度を設定し、タスク同士の依存関係（前提タスク）を設定する、3. 完了進捗を追跡する。外部キーを正しく設計したSQLスキーマを出力し、関係性の意図を解説してください。'
+                },
+                endpoint: {
+                    en: 'I have a database with projects, task attributes, and team assignments, and I need to support these functions: 1. Create a task (POST), 2. Retrieve critical path tasks for a project (GET), 3. Delete a project bucket (DELETE). Can you suggest a REST API design mapping these functions to appropriate HTTP methods and routes? Explain why you chose each method.',
+                    jp: 'データベースに「プロジェクト」「タスク」「担当者」モデルがあります。実装要件は：1. 新規タスク追加 (POST)、2. 未完了の優先タスク抽出 (GET)、3. プロジェクト削除 (DELETE)。これらを正しいRESTルートに割り当て、なぜその設計にしたかを解説してください。'
+                },
+                logic: {
+                    en: 'I have written a Service layer logic to process task deletion. The rule states: "a parent task cannot be deleted unless all sub-tasks are resolved first". Write a mock Service class implementation showing these validations, and identify 3 potential validation vulnerabilities that a senior engineer would ask about in a technical coding interview.',
+                    jp: 'タスクの削除を管理するServiceクラスを記述しています。仕様は「サブタスク（子）がすべて解決・完了していない場合、親タスクの削除要求を却下する」です。これを実装コード（Java/JS想定）で示し、面接でのライブコーディングや口頭試験で突っ込まれやすい問題点を3つ挙げてください。'
+                },
+                interview: {
+                    en: 'Analyze my Task Master architecture design (Controllers, Services, Repositories). Act as a tough technical interviewer at a tier-1 tech company. Ask me 3 challenging questions specifically probing my architectural decisions, how I avoid stack-overflow issues during recursive sub-task deletion validation, and my database indexing strategy for scaling performance.',
+                    jp: '私が設計した「チームタスク管理アプリ」の構造に対して、模擬試験官として技術質問を投げてください。設計上のメリットに加え、「タスク階層の削除検証に伴う再帰処理のスタックオーバーフロー回避策」や、「タスク抽出を高速化するインデックス戦略」などに関する専門的な質問を3問用意してください。'
+                }
+            }
+        };
+
+        // Track selected diner role
+        let currentRole = 'chef';
+        // Track selected session
+        let currentSession = 1;
+
+        // Init App on boot
+        window.onload = function() {
+            setLanguage('en');
+            selectDinerRole('chef');
+            setSession(1);
+            generatePrompt();
+        };
+
+        // Set system language state
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Highlight selector buttons
+            if (lang === 'en') {
+                document.getElementById('btn-en').className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-brand-accent text-slate-950 shadow";
+                document.getElementById('btn-jp').className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-slate-800 text-slate-400 hover:text-slate-100";
+            } else {
+                document.getElementById('btn-jp').className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-brand-accent text-slate-950 shadow";
+                document.getElementById('btn-en').className = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-slate-800 text-slate-400 hover:text-slate-100";
+            }
+
+            // Translate all static nodes
+            const nodes = document.querySelectorAll('[data-key]');
+            nodes.forEach(node => {
+                const key = node.getAttribute('data-key');
+                if (dict[lang][key]) {
+                    if (node.tagName === 'INPUT' || node.tagName === 'TEXTAREA') {
+                        node.setAttribute('placeholder', dict[lang][key]);
+                    } else {
+                        node.innerHTML = dict[lang][key];
+                    }
+                }
+            });
+
+            // Re-render variable segments
+            selectDinerRole(currentRole);
+            setSession(currentSession);
+            generatePrompt();
+            highlightTreeItem('service'); // Reset / default highlight item in tree view
+        }
+
+        // Diner simulator interaction controller
+        function selectDinerRole(roleKey) {
+            currentRole = roleKey;
+            
+            // Highlight selected button
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.remove('border-brand-accent', 'bg-slate-900', 'shadow-lg', 'shadow-brand-accent/5');
+                btn.classList.add('border-slate-800', 'bg-slate-950');
+            });
+
+            const activeBtn = document.getElementById(`diner-${roleKey}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-800', 'bg-slate-950');
+                activeBtn.classList.add('border-brand-accent', 'bg-slate-900', 'shadow-lg', 'shadow-brand-accent/5');
+            }
+
+            // Gather localized details
+            const title = dict[currentLang][`role-${roleKey}-title`] || '';
+            const sub = dict[currentLang][`role-${roleKey}-sub`] || '';
+            const desc = dict[currentLang][`role-${roleKey}-desc`] || '';
+            const tech = dict[currentLang][`role-${roleKey}-tech`] || '';
+            const interview = dict[currentLang][`role-${roleKey}-interview`] || '';
+
+            // Icon select mapping
+            let iconMarkup = '';
+            if (roleKey === 'customer') iconMarkup = '<i class="fa-solid fa-user-tie"></i>';
+            if (roleKey === 'menu') iconMarkup = '<i class="fa-solid fa-list-ol"></i>';
+            if (roleKey === 'waiter') iconMarkup = '<i class="fa-solid fa-bell-concierge"></i>';
+            if (roleKey === 'chef') iconMarkup = '<i class="fa-solid fa-hat-chef"></i>';
+            if (roleKey === 'pantry') iconMarkup = '<i class="fa-solid fa-warehouse"></i>';
+            if (roleKey === 'fridge') iconMarkup = '<i class="fa-solid fa-database"></i>';
+
+            const container = document.getElementById('role-details-container');
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <span class="h-14 w-14 rounded-2xl bg-brand-accent text-slate-950 flex items-center justify-center text-2xl shadow-lg shadow-brand-accent/15">
+                            ${iconMarkup}
+                        </span>
+                        <div>
+                            <span class="text-[10px] font-extrabold text-brand-accent tracking-widest uppercase">Digital Diner Role</span>
+                            <h4 class="text-2xl font-black text-white leading-tight">${title}</h4>
+                            <p class="text-slate-400 text-xs mt-0.5">${sub}</p>
+                        </div>
+                    </div>
+
+                    <p class="text-slate-300 text-sm leading-relaxed mt-4 font-light">
+                        ${desc}
+                    </p>
+
+                    <div class="bg-slate-950/80 rounded-xl p-4 border border-slate-800 space-y-3 mt-4 text-xs">
+                        <div class="flex items-center gap-2 text-brand-cyan">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            <span class="font-bold">${tech}</span>
+                        </div>
+                        <div class="flex items-start gap-2 text-slate-400 border-t border-slate-900 pt-2 leading-relaxed">
+                            <span class="text-brand-accent mt-0.5"><i class="fa-solid fa-circle-question"></i></span>
+                            <span>${interview}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Timeline session dynamic controller
+        function setSession(sessionNumber) {
+            currentSession = sessionNumber;
+
+            // Highlight tab button
+            document.querySelectorAll('.session-nav-btn').forEach(btn => {
+                btn.className = "session-nav-btn px-4 py-3 rounded-xl font-bold text-sm border transition-all-300 flex items-center gap-2 bg-slate-900 border-slate-800 text-slate-400 hover:text-white";
+                // Restore circle badge styles
+                const badge = btn.querySelector('span');
+                badge.className = "h-5 w-5 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center text-xs";
+            });
+
+            const activeBtn = document.getElementById(`btn-sess-${sessionNumber}`);
+            if (activeBtn) {
+                activeBtn.className = "session-nav-btn px-4 py-3 rounded-xl font-bold text-sm border transition-all-300 flex items-center gap-2 bg-brand-accent border-brand-accent text-slate-950";
+                const badge = activeBtn.querySelector('span');
+                badge.className = "h-5 w-5 rounded-full bg-slate-950 text-brand-accent flex items-center justify-center text-xs";
+            }
+
+            // Extract localized syllabus items
+            const titleKey = `nav-s${sessionNumber}-title`;
+            const goal = dict[currentLang][`s${sessionNumber}-goal`] || '';
+            const milestones = dict[currentLang][`s${sessionNumber}-milestones`] || '';
+            const stepsHeader = dict[currentLang][`s${sessionNumber}-steps`] || '';
+            const ia = dict[currentLang][`s${sessionNumber}-ia`] || '';
+
+            const step1 = dict[currentLang][`s${sessionNumber}-step-1`] || '';
+            const step2 = dict[currentLang][`s${sessionNumber}-step-2`] || '';
+            const step3 = dict[currentLang][`s${sessionNumber}-step-3`] || '';
+            const step4 = dict[currentLang][`s${sessionNumber}-step-4`] || '';
+
+            const card = document.getElementById('session-card-container');
+            card.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Goals & Milestones left column -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-black text-brand-accent tracking-widest uppercase">Overview</span>
+                            <h4 class="text-3xl font-extrabold text-white">Session ${sessionNumber}: ${dict[currentLang][titleKey]}</h4>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Session Target</h5>
+                                <p class="text-sm text-slate-200">${goal}</p>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                                <h5 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Milestone Outcome</h5>
+                                <p class="text-sm text-slate-300">${milestones}</p>
+                            </div>
+                        </div>
+
+                        <!-- Interview Angle callout -->
+                        <div class="bg-brand-900/10 border border-brand-800/40 p-5 rounded-2xl flex gap-3 items-start">
+                            <span class="text-brand-accent text-xl mt-0.5"><i class="fa-solid fa-microphone"></i></span>
+                            <div>
+                                <h5 class="text-xs font-bold text-brand-accent uppercase tracking-wider mb-1">The Mock Interview Angle</h5>
+                                <p class="text-xs text-slate-300 leading-relaxed">${ia}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step-by-step interactive workflow panel on right column -->
+                    <div class="lg:col-span-6 bg-slate-950/80 rounded-2xl p-6 border border-slate-800/65 flex flex-col justify-between">
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-5 flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-right-to-bracket text-brand-accent"></i>
+                                <span>${stepsHeader}</span>
+                            </h4>
+                            <ul class="space-y-4 text-xs sm:text-sm">
+                                <li class="flex gap-3 items-start">
+                                    <span class="h-6 w-6 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent flex items-center justify-center text-xs font-bold shrink-0">1</span>
+                                    <span class="text-slate-300 leading-tight">${step1}</span>
+                                </li>
+                                <li class="flex gap-3 items-start">
+                                    <span class="h-6 w-6 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                                    <span class="text-slate-300 leading-tight">${step2}</span>
+                                </li>
+                                <li class="flex gap-3 items-start">
+                                    <span class="h-6 w-6 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent flex items-center justify-center text-xs font-bold shrink-0">3</span>
+                                    <span class="text-slate-300 leading-tight">${step3}</span>
+                                </li>
+                                <li class="flex gap-3 items-start">
+                                    <span class="h-6 w-6 rounded-full bg-brand-accent/10 border border-brand-accent/20 text-brand-accent flex items-center justify-center text-xs font-bold shrink-0">4</span>
+                                    <span class="text-slate-300 leading-tight">${step4}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="border-t border-slate-900 pt-4 mt-6 flex justify-between items-center">
+                            <span class="text-xs text-slate-500">Timeline progress</span>
+                            <span class="text-xs text-brand-accent font-bold">${sessionNumber * 20}% Complete</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Highlight visual layout tree items
+        function highlightTreeItem(key) {
+            const data = directoryData[key];
+            if (!data) return;
+
+            document.getElementById('tree-highlight-title').innerText = data.title[currentLang];
+            document.getElementById('tree-highlight-desc').innerText = data.desc[currentLang];
+            
+            // Meta statistics display update
+            document.getElementById('tree-meta-session-val').innerText = data.session;
+            document.getElementById('tree-meta-owner-val').innerText = data.owner[currentLang];
+            
+            // Remove hidden
+            document.getElementById('tree-highlight-meta').classList.remove('hidden');
+        }
+
+        // Active prompt compiler engine
+        function generatePrompt() {
+            const theme = document.getElementById('prompt-project').value;
+            const task = document.getElementById('prompt-task').value;
+
+            if (promptsDatabase[theme] && promptsDatabase[theme][task]) {
+                const promptString = promptsDatabase[theme][task][currentLang];
+                document.getElementById('prompt-output').value = promptString;
+            }
+        }
+
+        // Secure standard Clipboard writer fallback logic
+        function copyGeneratedPrompt() {
+            const textToCopy = document.getElementById('prompt-output').value;
+            
+            // Traditional textarea select mapping for standard iframe sandbox security
+            const copyArea = document.createElement("textarea");
+            copyArea.value = textToCopy;
+            document.body.appendChild(copyArea);
+            copyArea.select();
+            
+            try {
+                document.execCommand("copy");
+                const btnText = document.getElementById('btn-copy-text');
+                const previousVal = btnText.innerText;
+                
+                // Set temporary Success response status
+                btnText.innerText = dict[currentLang]['copied'];
+                setTimeout(() => {
+                    btnText.innerText = previousVal;
+                }, 1500);
+            } catch (err) {
+                console.error('Fallback layout copy failed', err);
+            }
+            
+            document.body.removeChild(copyArea);
+        }
+    </script>
+</body>
+</html>

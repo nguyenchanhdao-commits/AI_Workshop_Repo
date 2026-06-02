@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario Forensic Lab | Evolutionary Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .retro { font-family: 'Press Start 2P', cursive; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .tab-active { border-bottom: 4px solid #ef4444; color: white; background: rgba(239, 68, 68, 0.05); }
+        .card-glow { box-shadow: 0 10px 30px -10px rgba(239, 68, 68, 0.15); }
+        .card-glow-blue { box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.15); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen select-none overflow-x-hidden text-base">
+
+    <!-- Glowing Background Artifacts -->
+    <div class="absolute top-0 left-1/4 -translate-x-1/2 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/3 right-1/4 translate-x-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- MAIN HEADER WITH DETAILED SHOWCASE -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 backdrop-blur-md bg-opacity-95">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="retro text-base text-red-500 tracking-widest">PKA IT WORKSHOP</span>
+                        <span class="bg-blue-500/10 text-blue-400 text-base font-bold px-3 py-1 rounded-full border border-blue-500/20 uppercase">v2.0 Logic-First</span>
+                    </div>
+                    <h1 class="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                        Mario Forensic Lab: <span class="text-slate-400 font-medium text-xl" data-en="Pedagogical Evolution" data-jp="教育設計の進化">Pedagogical Evolution</span>
+                    </h1>
+                </div>
+                <div class="flex gap-2 self-end md:self-auto bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+                    <button onclick="setLang('en')" id="btn-en" class="px-4 py-2 bg-red-600 rounded-lg text-base font-bold transition">🇺🇸 EN</button>
+                    <button onclick="setLang('jp')" id="btn-jp" class="px-4 py-2 text-slate-400 rounded-lg text-base font-bold hover:text-white transition">🇯🇵 JP</button>
+                </div>
+            </div>
+
+            <!-- WHAT STUDENTS BUILD: SHOWCASE WIDGET -->
+            <div class="mt-4 p-4 bg-slate-950/80 rounded-2xl border border-slate-800/80 grid grid-cols-1 md:grid-cols-4 gap-4 items-center text-base">
+                <div class="md:col-span-1 border-r border-slate-800/60 pr-2">
+                    <div class="flex items-center gap-2 text-red-400 font-bold text-base uppercase tracking-wider mb-1">
+                        <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+                        <span data-en="The Build Target" data-jp="最終成果物のスペック">The Build Target</span>
+                    </div>
+                    <h2 class="text-lg font-extrabold text-white" data-en="Custom Mario Engine" data-jp="自作マリオエンジン">Custom Mario Engine</h2>
+                    <p class="text-base text-slate-400 mt-1" data-en="A highly interactive, logic-controlled retro platform framework built in C." data-jp="C言語で実装する、ロジック制御 of 2Dレトロゲームフレームワーク。"></p>
+                </div>
+                <div class="md:col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-850">
+                        <span class="text-slate-500 font-semibold block text-base uppercase" data-en="Map Boundaries" data-jp="マップ境界制御">Map Boundaries</span>
+                        <span class="text-slate-200 font-bold text-lg" data-en="2D Matrix Physics" data-jp="2次元行列衝突判定">2D Matrix Physics</span>
+                    </div>
+                    <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-850">
+                        <span class="text-slate-500 font-semibold block text-base uppercase" data-en="Enemy Intelligence" data-jp="敵キャラクターAI">Enemy Intelligence</span>
+                        <span class="text-slate-200 font-bold text-lg" data-en="FSM Goomba AI" data-jp="状態遷移クリボー">FSM Goomba AI</span>
+                    </div>
+                    <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-850">
+                        <span class="text-slate-500 font-semibold block text-base uppercase" data-en="Mechanics" data-jp="ギミックロジック">Mechanics</span>
+                        <span class="text-slate-200 font-bold text-lg" data-en="Boolean Key Gates" data-jp="論理式キーゲート">Boolean Key Gates</span>
+                    </div>
+                    <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-850">
+                        <span class="text-slate-500 font-semibold block text-base uppercase" data-en="Graphics" data-jp="グラフィックス">Graphics</span>
+                        <span class="text-slate-200 font-bold text-lg" data-en="Raylib 2D GUI" data-jp="Raylib 2D GUI移植">Raylib 2D GUI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB SELECTOR -->
+            <nav class="flex gap-1 overflow-x-auto mt-6">
+                <button onclick="switchTab(1)" id="tab-1" class="px-5 py-4 text-lg font-bold text-slate-400 hover:text-white transition whitespace-nowrap tab-active">
+                    1. <span data-en="Why Mario Forensic Lab?" data-jp="なぜマリオ・ラボなのか？">Why Mario Forensic Lab?</span>
+                </button>
+                <button onclick="switchTab(2)" id="tab-2" class="px-5 py-4 text-lg font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+                    2. <span data-en="The Original Version" data-jp="初期バージョン">The Original Version</span>
+                </button>
+                <button onclick="switchTab(3)" id="tab-3" class="px-5 py-4 text-lg font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+                    3. <span data-en="The Current Version" data-jp="現行バージョン">The Current Version</span>
+                </button>
+                <button onclick="switchTab(4)" id="tab-4" class="px-5 py-4 text-lg font-bold text-slate-400 hover:text-white transition whitespace-nowrap">
+                    4. <span data-en="Overall Comparison & Vision" data-jp="比較とビジョン">Overall Comparison & Vision</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-12">
+
+        <!-- ============================================ -->
+        <!-- TAB 1: WHY MARIO FORENSIC LAB?               -->
+        <!-- ============================================ -->
+        <div id="content-1" class="space-y-12 animate-in fade-in duration-300">
+            
+            <!-- Strategic Alignment Block -->
+            <div class="bg-slate-900/60 p-8 rounded-3xl border border-slate-850 card-glow grid grid-cols-1 lg:grid-cols-12 gap-8">
+                
+                <!-- Left: Profile & Educational Context -->
+                <div class="lg:col-span-7 space-y-6">
+                    <span class="px-3 py-1 text-base bg-red-500/10 text-red-400 border border-red-500/20 rounded-full font-bold uppercase tracking-wider inline-block" data-en="The Audience Strategy" data-jp="ターゲット分析と戦略">The Audience Strategy</span>
+                    <h2 class="text-3xl font-extrabold text-white leading-tight" data-en="Formulating the Hook for First-Year Students" data-jp="初年度・新入生の知的好奇心を刺激する設計">Formulating the Hook for First-Year Students</h2>
+                    
+                    <p class="text-lg text-slate-300 leading-relaxed" data-en="Our target students are in their fresher year. At this precise stage, they possess critical theoretic prerequisites but lack experience with large-scale deployment stacks. The ultimate challenge is to bridge theoretical computer science with an engaging environment that fuels their desire to explore IT." data-jp="ワークショップの対象となる学生は「大学1年生（新入生）」です。理論的な基礎科目は修めているものの、実践的な開発スキルはまだ未熟な段階にあります。この時期に最も重要なのは、数理的な基礎理論と『手を動かす楽しさ』を結びつけ、IT分野への強烈な知的好奇心と自学自習のモチベーションを引き出すことです。"></p>
+
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-850/80 space-y-3">
+                        <h4 class="text-base retro text-slate-500 tracking-wider" data-en="Completed IT Prerequisites" data-jp="既修のITカリキュラム状況">Completed IT Prerequisites</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-base">
+                            <div class="flex items-center gap-2.5 text-slate-300">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                                <span data-en="C Programming (Syntax)" data-jp="C言語プログラミング（基礎）">C Programming (Syntax)</span>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-slate-300">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                                <span data-en="Discrete Mathematics" data-jp="離散数学">Discrete Mathematics</span>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-slate-300">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                                <span data-en="Algebra & Statistics" data-jp="線形代数・確率統計">Algebra & Statistics</span>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-slate-300">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                                <span data-en="AI/ML Fundamentals" data-jp="AI/機械学習基礎">AI/ML Fundamentals</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: The Rationale Map -->
+                <div class="lg:col-span-5 flex flex-col justify-between bg-slate-950 p-6 rounded-2xl border border-slate-850 space-y-6">
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-bold text-white uppercase tracking-wider flex items-center gap-2 border-b border-slate-900 pb-2">
+                            <i data-lucide="help-circle" class="text-red-500 w-5 h-5"></i>
+                            <span data-en="Why Not Web Applications?" data-jp="なぜWebアプリ開発ではないのか？">Why Not Web Applications?</span>
+                        </h3>
+                        <p class="text-base text-slate-400 leading-relaxed" data-en="Developing web or mobile applications requires an immediate cognitive overload: learning HTML/CSS, JavaScript pipelines, client-server models, databases, and secure APIs all at once. For freshers, this distracts from fundamental computer science logic." data-jp="一般的なWeb/モバイルアプリの開発は、HTML/CSS、JavaScript、クライアント・サーバー設計、データベース、APIなどの広範な技術群を一度に学ぶ必要があり、1年生にとって「認知的な過負荷（オーバーロード）」を引き起こします。結果、プログラムの本質的なロジックに集中できなくなります。"></p>
+                    </div>
+
+                    <div class="border-t border-slate-850 pt-4 space-y-3">
+                        <div class="flex items-start gap-3 bg-red-500/5 p-4 rounded-xl border border-red-500/10">
+                            <i data-lucide="gamepad-2" class="text-red-500 shrink-0 w-6 h-6 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-base font-bold text-white" data-en="The Solution: A Game in C" data-jp="解決策: C言語でのゲーム開発">The Solution: A Game in C</h4>
+                                <p class="text-base text-slate-400 mt-1" data-en="C is the language they know. Games provide instant visual feedback. Complex academic math and AI states map naturally to classic Mario mechanics." data-jp="彼らがすでに知っているC言語を使い、結果が視覚的にすぐ跳ね返るゲームを選択。マリオの世界を通じて抽象的な数学や論理を肉体化させます。"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- INTERACTIVE SIMULATION: LIVE CLASSROOM CONCEPT DEMO -->
+            <div class="bg-slate-900/60 p-6 sm:p-8 rounded-3xl border border-slate-800 card-glow space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <span class="px-3 py-1 text-base bg-red-500/10 text-red-400 border border-red-500/20 rounded-full font-bold uppercase tracking-wider inline-block" data-en="Concept Sandbox" data-jp="コンセプト・サンドボックス">Concept Sandbox</span>
+                        <h3 class="text-2xl font-bold text-white mt-1" data-en="Interactive Game Mechanics Visualizer" data-jp="双方向ゲーム・メカニクス可視化デモ">Interactive Game Mechanics Visualizer</h3>
+                        <p class="text-base text-slate-400 mt-1" data-en="Use WASD/Arrows to move Mario (🍄). Retrieve Key (🔑) to unlock Gate (🚧), bypass Goomba AI (👾), and rescue Peach (👑)." data-jp="WASDまたは矢印キーでマリオ（🍄）を動かします。鍵（🔑）を入手してゲート（🚧）を解除し、クリボー（👾）を避けてピーチ（👑）を救出しよう。"></p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 text-base bg-slate-950 rounded font-mono text-emerald-400 border border-slate-800 flex items-center gap-1.5">
+                            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                            LIVE RUNTIME TELEMETRY
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Left Column: Interactive Map Grid Frame -->
+                    <div class="lg:col-span-5 bg-slate-950 p-6 rounded-2xl border border-slate-850 flex flex-col justify-between items-center relative overflow-hidden min-h-[360px]">
+                        
+                        <!-- Overlay popup for game status -->
+                        <div id="t1-game-over-overlay" class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center space-y-4 hidden z-20">
+                            <h4 id="t1-game-over-title" class="text-2xl font-extrabold retro text-red-500">GAME OVER</h4>
+                            <p id="t1-game-over-reason" class="text-base text-slate-400 text-center px-6 max-w-sm leading-relaxed"></p>
+                            <button onclick="t1_initGame()" class="px-5 py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg text-base font-bold transition flex items-center gap-1.5">
+                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                                <span data-en="Restart Simulation" data-jp="シミュレーション再起動">Restart Simulation</span>
+                            </button>
+                        </div>
+
+                        <!-- 7x7 Game Board -->
+                        <div id="t1-grid-container" class="grid grid-cols-7 gap-1 border-2 border-slate-800 p-2 bg-slate-900/60 rounded-xl max-w-[260px]">
+                            <!-- Generated dynamically in javascript -->
+                        </div>
+
+                        <!-- Directional Keypad (For mobile/touch browsers) -->
+                        <div class="mt-6 flex flex-col items-center gap-1.5">
+                            <button onclick="t1_movePlayer(0, -1)" class="w-10 h-10 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                                <i data-lucide="chevron-up" class="w-5 h-5"></i>
+                            </button>
+                            <div class="flex gap-1.5">
+                                <button onclick="t1_movePlayer(-1, 0)" class="w-10 h-10 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                                </button>
+                                <div class="w-10 h-10 bg-slate-950 flex items-center justify-center text-base text-slate-600 select-none font-mono">🕹️</div>
+                                <button onclick="t1_movePlayer(1, 0)" class="w-10 h-10 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                            <button onclick="t1_movePlayer(0, 1)" class="w-10 h-10 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-slate-300 hover:bg-slate-800 hover:text-white transition">
+                                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Academic Mapping Indicators -->
+                    <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <!-- C Programming: Struct & Matrix -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-850 flex flex-col justify-between">
+                            <span class="text-base uppercase font-bold text-slate-500 tracking-wider flex items-center gap-1.5 mb-2">
+                                <i data-lucide="code" class="text-blue-400 w-4 h-4"></i>
+                                C Programming Data Scope
+                            </span>
+                            <pre id="t1-telemetry-c" class="mono text-sm text-blue-400 leading-relaxed bg-slate-900/40 p-3 rounded-lg border border-slate-900/60 overflow-x-auto min-h-[110px]"></pre>
+                        </div>
+
+                        <!-- Discrete Mathematics: Gate Status -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-850 flex flex-col justify-between">
+                            <div class="space-y-1">
+                                <span class="text-base uppercase font-bold text-slate-500 tracking-wider flex items-center gap-1.5">
+                                    <i data-lucide="binary" class="text-yellow-500 w-4 h-4"></i>
+                                    Discrete Mathematics (Boolean Gates)
+                                </span>
+                                <div class="space-y-2 mt-3 text-base">
+                                    <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
+                                        <span class="text-slate-400">Has Key (hasKey):</span>
+                                        <span id="t1-gate-key" class="font-bold font-mono">FALSE</span>
+                                    </div>
+                                    <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
+                                        <span class="text-slate-400">Gate State (🚧 / 🔓):</span>
+                                        <span id="t1-gate-door" class="font-bold font-mono">LOCKED</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-base text-slate-500 font-mono mt-2">// Evaluates gate logical conjunction state</p>
+                        </div>
+
+                        <!-- Algebra & Statistics: Euclidean Distance -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-850 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-base uppercase font-bold text-slate-500 tracking-wider flex items-center gap-1.5">
+                                    <i data-lucide="calculator" class="text-emerald-500 w-4 h-4"></i>
+                                    Algebra & Vector Math
+                                </span>
+                                <div class="space-y-2 mt-2 text-base">
+                                    <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
+                                        <span class="text-slate-400" data-en="Distance to Goomba:" data-jp="クリボーへの直線距離:">Distance to Goomba:</span>
+                                        <span id="t1-telemetry-distance" class="font-bold font-mono text-emerald-400">0.00</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-400" data-en="Algebraic Formula:" data-jp="使用される距離公式:">Algebraic Formula:</span>
+                                        <span class="mono text-sm text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded">sqrt(Δx² + Δy²)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI/ML: Finite State Machine -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-850 flex flex-col justify-between">
+                            <div class="space-y-2">
+                                <span class="text-base uppercase font-bold text-slate-500 tracking-wider flex items-center gap-1.5">
+                                    <i data-lucide="brain-circuit" class="text-red-400 w-4 h-4"></i>
+                                    AI/ML Finite State Machine
+                                </span>
+                                <div class="space-y-2 mt-2 text-base">
+                                    <div class="flex justify-between items-center border-b border-slate-900 pb-1.5">
+                                        <span class="text-slate-400">Goomba FSM State:</span>
+                                        <span id="t1-telemetry-fsm" class="font-bold uppercase font-mono px-2 py-0.5 rounded">PATROL</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-400">State Condition:</span>
+                                        <span class="text-base text-slate-400 italic">Distance &lt; 3.0 ? CHASE : PATROL</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theory to Game Mechanics Infographic -->
+            <div class="space-y-6">
+                <h3 class="text-center retro text-base text-slate-500 tracking-wider" data-en="How Academic Theory Maps to Mario Gameplay" data-jp="数理・IT科目がマリオのロジックに直結する仕組み">How Academic Theory Maps to Mario Gameplay</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    
+                    <!-- Mapping 1 -->
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-red-500/30 transition duration-300 space-y-3 text-base">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center"><i data-lucide="code" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-white text-lg" data-en="C Programming" data-jp="C言語プログラミング">C Programming</h4>
+                        <div class="text-base text-slate-400 font-mono" data-en="Apply: Structs & 2D Grids" data-jp="応用: 構造体 & 2次元配列">Apply: Structs & 2D Grids</div>
+                        <p class="text-base text-slate-500 leading-relaxed" data-en="Mario's player metrics and map arrays translate abstract code variables into physical game boundaries." data-jp="マリオの体力や座標を構造体で管理し、10x10のマップ配列上に描写。メモリ空間への書き換えを体験。"></p>
+                    </div>
+
+                    <!-- Mapping 2 -->
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-red-500/30 transition duration-300 space-y-3 text-base">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center"><i data-lucide="binary" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-white text-lg" data-en="Discrete Mathematics" data-jp="離散数学">Discrete Mathematics</h4>
+                        <div class="text-base text-slate-400 font-mono" data-en="Apply: Key-Gate Logic Gates" data-jp="応用: 鍵・扉論理ゲート">Apply: Key-Gate Logic Gates</div>
+                        <p class="text-xs sm:text-base text-slate-500 leading-relaxed" data-en="Boolean constraints evaluate gating triggers: Mario can pass the doorway 'W' only when the key item state matches 1 (True)." data-jp="「鍵(K)の所持 = True かつ ゲート(W)に衝突」という真偽値判定ロジックゲートを実装。数学の命題を物理化します。"></p>
+                    </div>
+
+                    <!-- Mapping 3 -->
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-red-500/30 transition duration-300 space-y-3 text-base">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center"><i data-lucide="calculator" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-white text-lg" data-en="Algebra & Stats" data-jp="線形代数・統計">Algebra & Statistics</h4>
+                        <div class="text-base text-slate-400 font-mono" data-en="Apply: Euclidean Distance" data-jp="応用: ユークリッド距離">Apply: Euclidean Distance</div>
+                        <p class="text-xs sm:text-base text-slate-500 leading-relaxed" data-en="Determining Goomba vision bounds. Applying distance equations to trigger changes in enemy speed and patrol states." data-jp="マリオとクリボーの距離を幾何距離の方程式（平方根）で算出。視野範囲に入ったかどうかをリアルタイムに計算。"></p>
+                    </div>
+
+                    <!-- Mapping 4 -->
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 hover:border-red-500/30 transition duration-300 space-y-3 text-base">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center"><i data-lucide="brain-circuit" class="w-6 h-6"></i></div>
+                        <h4 class="font-bold text-white text-lg" data-en="AI & ML Fundamentals" data-jp="AI・機械学習基礎">AI/ML Fundamentals</h4>
+                        <div class="text-base text-slate-400 font-mono" data-en="Apply: Finite State Machines" data-jp="応用: 有限状態機械 (FSM)">Apply: Finite State Machines</div>
+                        <p class="text-xs sm:text-base text-slate-500 leading-relaxed" data-en="Designing automated NPC agents that dynamically transition from passive patrolling to aggressive pursuing based on player coordinates." data-jp="クリボーが「巡回（Patrol）」から「追跡（Chase）」へ状態遷移するAIモデルを設計。自律型制御の基礎を学びます。"></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 2: THE ORIGINAL VERSION (PAST MODEL)     -->
+        <!-- ============================================ -->
+        <div id="content-2" class="hidden space-y-12 animate-in fade-in duration-300">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Rationale, Philosophy & Drawbacks -->
+                <div class="space-y-8 text-base">
+                    <div class="bg-slate-900/40 p-8 rounded-3xl border border-slate-850 card-glow">
+                        <h2 class="text-2xl font-bold text-yellow-500 mb-4 flex items-center gap-2">
+                            <i data-lucide="target"></i>
+                            <span data-en="V1: Goal-Oriented Scratch Building" data-jp="V1: ゴール指向のゼロベース構築">V1: Goal-Oriented Scratch Building</span>
+                        </h2>
+                        <div class="space-y-4 text-slate-300 leading-relaxed">
+                            <p data-en="The initial philosophy was built on 'learning by struggling'. We wanted students to build structural components from absolute zero using raw C compiler command lines." data-jp="初期の指導方針は「苦労から学ぶ」というものでした。C言語のコマンドラインコンパイラを使い、完全にゼロから仕組みを実装させるやり方です。"></p>
+                            <div class="border-l-4 border-slate-700 pl-4 italic bg-slate-950/40 p-3 rounded-r-xl">
+                                <span class="font-bold text-slate-400 text-base block" data-en="Original Policy" data-jp="当時の指導ポリシー">Original Policy</span>
+                                <p class="text-base text-slate-400 mt-1" data-en="Show students the final output image of the game mechanics. Provide raw programming syntax structures, and guide them step-by-step through the layout rules." data-jp="完成目標のゲーム画面だけを見せ、C言語の文法構造を講義し、1ステップずつ講師が説明しながらコードを書かせていました。"></p>
+                            </div>
+                            <p data-en="We hypothesized that struggling to debug raw memory boundaries would build critical problem-solving skills." data-jp="「メモリ範囲外や文法エラーに苦しみながらデバッグすることで、真の問題解決能力が養われる」と考えたのです。"></p>
+                        </div>
+                    </div>
+
+                    <!-- DRAWBACKS -->
+                    <div class="bg-red-950/20 p-8 rounded-3xl border border-red-900/30">
+                        <h2 class="text-2xl font-bold text-red-400 mb-4 flex items-center gap-2">
+                            <i data-lucide="alert-octagon"></i>
+                            <span data-en="Drawbacks: The Copy-Paste Trap" data-jp="直面した課題: コピペの罠とブラックボックス">Drawbacks: The Copy-Paste Trap</span>
+                        </h2>
+                        <div class="space-y-4 text-slate-300 leading-relaxed">
+                            <div class="flex gap-3">
+                                <span class="text-red-500 font-bold shrink-0 mt-0.5"><i data-lucide="slash" class="w-5 h-5"></i></span>
+                                <p data-en="Students spent 80% of class time hunting down missing semicolons and pointer syntax errors rather than mapping game loops or coordinate transforms." data-jp="学生は授業時間の80%を、セミコロンの打ち忘れやポインタ構文のエラー追跡に奪われ、座標空間やゲームループといった高度な概念に集中できませんでした。"></p>
+                            </div>
+                            <div class="flex gap-3">
+                                <span class="text-red-500 font-bold shrink-0 mt-0.5"><i data-lucide="user-x" class="w-5 h-5"></i></span>
+                                <p data-en="Because students struggled, the instructor had to dictate the exact code block line-by-line. In the end, students had working code, but zero understanding of why it was built that way." data-jp="学生の手が止まるため、講師が1行ずつ正解のコードを黒板に書くしかありません。結果、動くソースは完成するものの、「なぜそう動くのか」の理解はブラックボックスのままでした。"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VISUAL ILLUSTRATION: HAND-HOLDING CLASSROOM -->
+                <div class="bg-slate-900/80 p-6 rounded-3xl border border-slate-800 space-y-6 text-base">
+                    <h3 class="text-base retro text-slate-500 tracking-wide uppercase" data-en="Classroom Visual Illustration (V1)" data-jp="教室内の様子：旧指導スタイルの図解">Classroom Visual Illustration (V1)</h3>
+                    
+                    <!-- SVG/CSS Diagram -->
+                    <div class="bg-slate-950 rounded-2xl p-6 border border-slate-850 space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-900 pb-2">
+                            <span class="font-bold flex items-center gap-1.5"><i data-lucide="graduation-cap" class="w-4 h-4"></i> Instructor-Led (Passive Style)</span>
+                            <span class="text-red-500 uppercase font-bold text-base">No logical mastery</span>
+                        </div>
+
+                        <!-- Illustrated Layout -->
+                        <div class="space-y-4">
+                            <!-- Teacher lecturing -->
+                            <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 flex items-start gap-3">
+                                <div class="w-12 h-12 rounded-full bg-yellow-600/20 text-yellow-500 flex items-center justify-center font-bold text-base shrink-0">T</div>
+                                <div>
+                                    <h4 class="font-bold text-white text-base" data-en="Teacher (The Controller)" data-jp="講師（唯一の指示役）">Teacher (The Controller)</h4>
+                                    <p class="text-base text-slate-400 mt-0.5" data-en="Dictating every line: 'Type p->x += dx on line 42; don't forget the arrow syntax!'" data-jp="「42行目に p->x += dx と書きなさい。アロー演算子を忘れないように！」"></p>
+                                    <div class="mt-2 text-sm bg-slate-950 p-2 rounded border border-slate-850 text-red-400 font-mono">
+                                        map[p->y][p->x] = 'M';
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Passive Students copying -->
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center opacity-70 relative">
+                                    <div class="absolute -top-1 -right-1 bg-red-500/10 text-red-400 text-base px-2 py-0.5 rounded border border-red-500/20 uppercase font-bold">Copying</div>
+                                    <span class="text-base font-bold text-slate-300 block">Student A</span>
+                                    <span class="text-base text-slate-500 italic" data-en="Trying to locate compiler error..." data-jp="「コンパイルエラーが消えない…」">"Trying to locate compiler error..."</span>
+                                </div>
+                                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800 text-center opacity-70 relative">
+                                    <div class="absolute -top-1 -right-1 bg-red-500/10 text-red-400 text-base px-2 py-0.5 rounded border border-red-500/20 uppercase font-bold">Confused</div>
+                                    <span class="text-base font-bold text-slate-300 block">Student B</span>
+                                    <span class="text-base text-slate-500 italic" data-en="Typing line blindly without logic" data-jp="「言われた通りにタイピングするだけ」">"Typing line blindly without logic"</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Warning Indicator -->
+                        <div class="bg-red-500/5 p-3 rounded-xl border border-red-500/10 flex items-start gap-2.5 text-base text-red-400">
+                            <i data-lucide="frown" class="w-5 h-5 mt-0.5"></i>
+                            <p data-en="Outcome: Game functions operate, but students cannot trace the array memory paths or explain character movement equations during audits." data-jp="結果: ゲーム盤面はそれらしく動くものの、学生自身でメモリ配置や移動方程式を口頭説明させると、答えに詰まってしまう状態でした。"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 3: THE CURRENT VERSION (FORENSIC LAB)   -->
+        <!-- ============================================ -->
+        <div id="content-3" class="hidden space-y-12 animate-in fade-in duration-300">
+            
+            <!-- Strategic Upgrade Section -->
+            <div class="bg-blue-900/10 p-8 rounded-3xl border border-blue-500/20 card-glow-blue grid grid-cols-1 lg:grid-cols-3 gap-8 items-center text-base">
+                <div class="lg:col-span-2 space-y-4">
+                    <span class="px-3 py-1 text-base bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-full font-bold uppercase tracking-wider inline-block" data-en="v2.0 Architectural Pivot" data-jp="v2.0 教育方針の転換点">v2.0 Architectural Pivot</span>
+                    <h2 class="text-3xl font-extrabold text-white" data-en="The Modern Technology Trend Alignment" data-jp="現代開発トレンドへの適応">The Modern Technology Trend Alignment</h2>
+                    <p class="text-lg text-slate-300 leading-relaxed" data-en="In an era dominated by AI code generators, junior engineering demands have shifted. Writing basic syntax is a solved problem. The high-value skill is now architectural auditing and system comprehension. We rebuilt this workshop as a forensic audit lab." data-jp="AIによるコード自動生成が普及した現代において、基礎的なコーディングのみの価値は低下しました。今最も求められるのは、システム全体を俯瞰する「監査・査読能力」です。本ワークショップは、AIを『家庭教師』かつ『コード作成役』として扱い、学生を『監査役（アーキテクト）』へと育成します。"></p>
+                </div>
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <h4 class="text-base retro text-slate-500 tracking-wider">MODERN WORKFLOW</h4>
+                    <ul class="text-base space-y-2 text-slate-400 font-mono">
+                        <li class="flex items-center gap-2"><span class="text-blue-500">✔</span> AI generates templates</li>
+                        <li class="flex items-center gap-2"><span class="text-blue-500">✔</span> Humans audit the logic</li>
+                        <li class="flex items-center gap-2"><span class="text-blue-500">✔</span> Trace mathematical bounds</li>
+                        <li class="flex items-center gap-2"><span class="text-blue-500">✔</span> Explain "Why" to stakeholders</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CORE WORKSHOP TIMELINE: THE 5 SESSIONS -->
+            <div class="space-y-6 text-base">
+                <h3 class="text-center retro text-base text-red-500 tracking-widest uppercase" data-en="The Current 4-Session Curriculum" data-jp="現行：全4回のカリキュラム・シラバス">The Current 4-Session Curriculum</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Session 1 -->
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-base retro text-blue-400 font-bold block mb-1">SESSION 1</span>
+                            <h4 class="font-extrabold text-white text-lg" data-en="Foundation & Flow" data-jp="配列とマリオの配置">Foundation & Flow</h4>
+                            <p class="text-base text-slate-400 mt-2" data-en="Master structs, nests, and 2D arrays. Build maps in command interpreters." data-jp="2次元配列に「M」（マリオ）を配置。多重描画ループを理解。"></p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800 text-base text-red-400 font-mono" data-en="Audit: Boundary checks" data-jp="監査課題: 境界値チェック">Audit: Boundary checks</div>
+                    </div>
+                    <!-- Session 2 -->
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-base retro text-blue-400 font-bold block mb-1">SESSION 2</span>
+                            <h4 class="font-extrabold text-white text-lg" data-en="Predator & The Key" data-jp="クリボーと鍵ゲート">Predator & The Key</h4>
+                            <p class="text-base text-slate-400 mt-2" data-en="Goomba probability movement, state machine controls, and Key/Gate structures." data-jp="FSMによる自動巡回、及び「鍵(K)」を拾わないと通行不可能な扉。"></p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800 text-base text-red-400 font-mono" data-en="Audit: State transitions" data-jp="監査課題: 状態遷移バグの特定">Audit: State transitions</div>
+                    </div>
+                    <!-- Session 3 -->
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-base retro text-blue-400 font-bold block mb-1">SESSION 3</span>
+                            <h4 class="font-extrabold text-white text-lg" data-en="Skinning: Raylib UI" data-jp="Raylib UIへの移植">Skinning: Raylib UI</h4>
+                            <p class="text-base text-slate-400 mt-2" data-en="Port console arrays into graphical window pipelines with spatial scaling." data-jp="コンソール文字配列を、Raylibを用いた描画ウィンドウへとスケーリング。"></p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800 text-base text-red-400 font-mono" data-en="Audit: Coordinate scales" data-jp="監査課題: 空間座標変換計算">Audit: Coordinate scales</div>
+                    </div>
+                    <!-- Session 4 -->
+                    <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div>
+                            <span class="text-base retro text-blue-400 font-bold block mb-1">SESSION 4</span>
+                            <h4 class="font-extrabold text-white text-lg" data-en="Independent Architect" data-jp="自律型アーキテクチャ">Independent Architect</h4>
+                            <p class="text-base text-slate-400 mt-2" data-en="Construct unique custom features using AI prompting paradigms." data-jp="AIプロンプトを活用し、ワープ床や独自機能を追加実装。"></p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-800 text-base text-red-400 font-mono" data-en="Audit: System data flow" data-jp="監査課題: データフロー設計図">Audit: System data flow</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP-BY-STEP PEDAGOGICAL LOOP (OUTLINE OF A SESSION) -->
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 space-y-8 text-base">
+                <div class="text-center max-w-xl mx-auto space-y-2">
+                    <h3 class="text-2xl font-bold text-white flex justify-center items-center gap-2">
+                        <i data-lucide="refresh-cw" class="text-blue-500 animate-spin-slow"></i>
+                        <span data-en="The 4-Step Session Outline Loop" data-jp="1セッション内の活動プロセス（4段階ループ）">The 4-Step Session Outline Loop</span>
+                    </h3>
+                    <p class="text-base text-slate-400" data-en="Every 1.5-hour workshop session cycles through this rigid, student-first investigative framework." data-jp="各1.5時間のセッション中、学生は常にこのステップを踏むことで論理的に開発を主導します。">Every 1.5-hour workshop session cycles through this rigid, student-first investigative framework.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                    <!-- Step 1 -->
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-850 space-y-3 relative overflow-hidden">
+                        <div class="absolute -top-1 -right-1 bg-blue-500/20 text-blue-400 font-mono text-base px-3 py-1 rounded border border-blue-500/30 font-bold">STEP 01</div>
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center font-extrabold text-lg mb-2">1</div>
+                        <h4 class="font-bold text-white text-lg uppercase" data-en="Understand the Goal" data-jp="ゴールと仕組みの理解">Understand the Goal</h4>
+                        <p class="text-base text-slate-400 leading-relaxed" data-en="The teacher introduces the mathematical mechanic of the day (e.g., boundary lines, scale mapping, or distance calculations)." data-jp="講師がその日の課題となるゲームの挙動や数学的メカニズム（境界線や距離公式）を提示・解説します。"></p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-850 space-y-3 relative overflow-hidden">
+                        <div class="absolute -top-1 -right-1 bg-blue-500/20 text-blue-400 font-mono text-base px-3 py-1 rounded border border-blue-500/30 font-bold">STEP 02</div>
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center font-extrabold text-lg mb-2">2</div>
+                        <h4 class="font-bold text-white text-lg uppercase" data-en="AI Code Generation" data-jp="AIによるコード生成">AI Code Generation</h4>
+                        <p class="text-base text-slate-400 leading-relaxed" data-en="Students use structural prompt engineering guidelines to request functional modules directly from the AI tutor." data-jp="配布された設計プロンプトを基に、AIを動かして動作に必要な機能コードの雛形を一括生成します。"></p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-850 space-y-3 relative overflow-hidden">
+                        <div class="absolute -top-1 -right-1 bg-blue-500/20 text-blue-400 font-mono text-base px-3 py-1 rounded border border-blue-500/30 font-bold">STEP 03</div>
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center font-extrabold text-lg mb-2">3</div>
+                        <h4 class="font-bold text-white text-lg uppercase" data-en="AI Forensic Audit" data-jp="AIを活用した論理監査">AI Forensic Audit</h4>
+                        <p class="text-base text-slate-300 leading-relaxed" data-en="Students feed code snippets into the auditor AI, asking 'Explain WHY this is written like this' and validating array coordinates line-by-line." data-jp="生成コードを監査。AIに「なぜこの順序で変数が評価されているか」を深く問答し、1行ごとの整合性を自律的に監査・解読します。"></p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="bg-slate-950 p-5 rounded-2xl border border-slate-850 space-y-3 relative overflow-hidden border-t-2 border-t-emerald-500">
+                        <div class="absolute -top-1 -right-1 bg-emerald-500/20 text-emerald-400 font-mono text-base px-3 py-1 rounded border border-emerald-500/30 font-bold">STEP 04</div>
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-extrabold text-lg mb-2">4</div>
+                        <h4 class="font-bold text-white text-lg uppercase" data-en="Technical Slide Demo" data-jp="解説スライドの作成・発表">Technical Slide Demo</h4>
+                        <p class="text-base text-slate-300 leading-relaxed" data-en="Students design visual coordinate slides (mapping movement changes to grid boundaries) and present the logical design to teammates." data-jp="マリオの座標変化（x, y）や『門番ロジック』を図示した簡易スライドをその場で作成し、仲間にホワイトボードや画面共有で説明します。"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STUDENT MASTERED SHOWCASE: THE "BOUNCER" SLIDE MODEL -->
+            <div class="space-y-6 text-base">
+                <h3 class="text-center retro text-base text-blue-500" data-en="Interactive Student Mastery Demo: The Bouncer Logic" data-jp="学生によるマスター実演: 「バウンサー（門番）」ロジックのスライド構造">Interactive Student Mastery Demo: The Bouncer Logic</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Step 1: Coordinates -->
+                    <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4">
+                        <div class="h-40 bg-slate-950 rounded-xl flex items-center justify-center p-2 border border-slate-800">
+                            <div class="grid grid-cols-5 gap-1 w-full max-w-[120px]">
+                                <div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div>
+                                <div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-red-600 rounded-sm flex items-center justify-center text-[10px] font-bold">M</div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div>
+                                <div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div><div class="aspect-square bg-slate-800 rounded-sm"></div>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-white text-lg" data-en="1. The Grid Map Address" data-jp="1. グリッドの座標指定">1. The Grid Map Address</h4>
+                        <p class="text-base text-slate-400" data-en="Students explain: 'Mario is not just a render. He is a coordinate (x, y) matching a index in a 2D memory array matrix'." data-jp="学生の解説：「マリオはただの画像ではありません。2次元のメモリ配列上の特定の（x, y）インデックス座標そのものです」"></p>
+                    </div>
+
+                    <!-- Step 2: Controls -->
+                    <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4">
+                        <div class="h-40 bg-slate-950 rounded-xl flex items-center justify-center border border-slate-800">
+                            <div class="mono text-sm text-blue-400">
+                                W : y - 1 (Up)<br>
+                                S : y + 1 (Down)<br>
+                                A : x - 1 (Left)<br>
+                                D : x + 1 (Right)
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-white text-lg" data-en="2. Movement Key as Vector" data-jp="2. ベクトルとしてのキー入力">2. Movement Key as Vector</h4>
+                        <p class="text-base text-slate-400" data-en="Students explain: 'Pressing WASD initiates immediate algebraic operations, modifying coordinates by exactly ±1 step'." data-jp="学生の解説：「WASDキーを押すと、マリオの座標の数値が正確にプラス・マイナス1だけ変化する仕組みです」"></p>
+                    </div>
+
+                    <!-- Step 3: The Audit -->
+                    <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4 border-t-4 border-t-red-500">
+                        <div class="h-40 bg-slate-950 rounded-xl p-4 border border-slate-800 flex flex-col justify-center">
+                            <div class="mono text-sm text-slate-200">
+                                <span class="text-red-400 font-bold">if(p.y > 1)</span> {<br>
+                                &nbsp;&nbsp;p.y = p.y - 1;<br>
+                                }
+                            </div>
+                            <div class="mt-4 text-base text-slate-500 italic" data-en="// The Bouncer Logic Check" data-jp="// 安全を保証する「門番」の検証">// The Bouncer Logic Check</div>
+                        </div>
+                        <h4 class="font-bold text-red-400 text-lg" data-en="3. The Bouncer (Boundary Check)" data-jp="3. 境界確認（バウンサー）">3. The Bouncer (Boundary Check)</h4>
+                        <p class="text-base text-slate-300" data-en="Students demonstrate: 'The game asks: Does this calculation go out of range? If so, the Bouncer intercepts and blocks execution'." data-jp="学生の解説：「移動先の配列が境界外でないか事前に検証します。オーバーフローする危険があるなら『門番』がNOと言い、座標の書き換えを阻止します」"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TAB 4: OVERALL COMPARISON & VISION           -->
+        <!-- ============================================ -->
+        <div id="content-4" class="hidden space-y-12 animate-in fade-in duration-300">
+            
+            <!-- Comparison Matrix Grid -->
+            <div class="overflow-x-auto rounded-3xl border border-slate-800 card-shadow text-base">
+                <table class="w-full text-left border-collapse bg-slate-900/40">
+                    <thead class="bg-slate-900 border-b border-slate-800">
+                        <tr class="text-base uppercase tracking-widest text-slate-500">
+                            <th class="p-6">Feature</th>
+                            <th class="p-6">Original Model (Past v1)</th>
+                            <th class="p-6 text-red-500">Forensic Model (Modern v2)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 text-base text-slate-300">
+                        <tr class="hover:bg-slate-900/20 transition">
+                            <td class="p-6 font-bold text-white" data-en="Pedagogical Policy" data-jp="教育方針">Pedagogical Policy</td>
+                            <td class="p-6 text-slate-400" data-en="Goal-Oriented Scratch Building (Type everything yourself)" data-jp="ゴール指向のゼロベース構築 (手取り足取りタイピング)">Goal-Oriented Scratch Building (Type everything yourself)</td>
+                            <td class="p-6 text-slate-100 font-semibold text-lg" data-en="Forensic Reverse Engineering (Trace & Audit logic)" data-jp="リバースエンジニアリング & 監査 (ロジック分析と実演)">Forensic Reverse Engineering (Trace & Audit logic)</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/20 transition">
+                            <td class="p-6 font-bold text-white" data-en="Classroom Dynamic" data-jp="授業の進め方">Classroom Dynamic</td>
+                            <td class="p-6 text-slate-400" data-en="Teacher dictates syntax code directly; students copy" data-jp="講師がコードを黒板に書き写し、学生がコピー">Teacher dictates syntax code directly; students copy</td>
+                            <td class="p-6 text-slate-100 font-semibold text-lg" data-en="AI generates; students audit compiler safety and present logic" data-jp="AIが生成、学生が境界条件を監査し口頭発表">AI generates; students audit compiler safety and present logic</td>
+                        </tr>
+                        <tr class="hover:bg-slate-900/20 transition">
+                            <td class="p-6 font-bold text-white" data-en="Core Focus" data-jp="コアフォーカス">Core Focus</td>
+                            <td class="p-6 text-slate-400" data-en="Completing basic syntax statements" data-jp="文法の暗記・記述完了">Completing basic syntax statements</td>
+                            <td class="p-6 text-slate-100 font-semibold text-emerald-400 text-lg" data-en="Understanding and articulating the 'Why' of systems" data-jp="システム構造全体における「なぜ」の完全な理解・口頭説明">Understanding and articulating the 'Why' of systems</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Future Vision Box -->
+            <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-red-900/20 p-12 rounded-3xl border border-slate-800 text-center space-y-6">
+                <h2 class="text-4xl font-extrabold text-white tracking-tight" data-en="The Curriculum Vision" data-jp="カリキュラム全体のビジョン">The Curriculum Vision</h2>
+                <p class="max-w-2xl mx-auto text-slate-400 leading-relaxed text-base" data-en="Our ultimate goal is to shape modern IT students into highly capable Software Architects. We do not want students who merely paste lines of syntax they do not grasp. By using the Mario Forensic Lab framework, students learn to treat code as logic architectures, enabling them to confidently lead systems designs in an automated world." data-jp="私たちの目的は、ただ自動生成をなぞるプログラマーではなく、高度な判断力を有する『ソフトウェア・アーキテクト』の育成です。マリオの世界を通じ、学生は自律的にシステムの『なぜ』を解剖し、他者へ論理的に立証する確固たる自信を身につけます。AIが実装を担う時代だからこそ、人間はロジックの指揮官であらねばなりません。"></p>
+                <div class="pt-6">
+                    <span class="retro text-base text-red-500 block animate-pulse" data-en="EMPOWERING NEXT-GEN INTELLECT" data-jp="次世代のシステム思考を、今。">EMPOWERING NEXT-GEN INTELLECT</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="py-12 border-t border-slate-900 text-center text-base text-slate-600">
+        &copy; 2026 PKA IT Workshop | Forensic Evolutionary Model
+    </footer>
+
+    <!-- INTERACTIVE SCRIPT -->
+    <script>
+        // Track active navigation tab
+        let activeTab = 1;
+        let activeLanguage = 'en';
+
+        // Tab 1 Game state variables (Pre-requisites concept showcase)
+        const t1_mapSize = 7;
+        let t1_player = { x: 1, y: 3 };
+        let t1_goomba = { x: 5, y: 1, state: 'PATROL' };
+        let t1_key = { x: 1, y: 5 };
+        let t1_door = { x: 4, y: 3 };
+        let t1_goal = { x: 5, y: 5 };
+        let t1_hasKey = false;
+        let t1_isGameOver = false;
+        let t1_gameSuccess = false;
+
+        // Initialize Tab 1 Game Sandbox
+        function t1_initGame() {
+            t1_player = { x: 1, y: 3 };
+            t1_goomba = { x: 5, y: 1, state: 'PATROL' };
+            t1_key = { x: 1, y: 5 };
+            t1_door = { x: 4, y: 3 };
+            t1_goal = { x: 5, y: 5 };
+            t1_hasKey = false;
+            t1_isGameOver = false;
+            t1_gameSuccess = false;
+            
+            document.getElementById('t1-game-over-overlay').classList.add('hidden');
+            t1_renderGrid();
+            t1_updateTelemetry();
+        }
+
+        // Render Tab 1 Interactive Grid Map
+        function t1_renderGrid() {
+            const container = document.getElementById('t1-grid-container');
+            container.innerHTML = '';
+            
+            for (let y = 0; y < t1_mapSize; y++) {
+                for (let x = 0; x < t1_mapSize; x++) {
+                    const tile = document.createElement('div');
+                    tile.className = "w-8 h-8 sm:w-9 sm:h-9 bg-slate-950 flex items-center justify-center text-base rounded-md border border-slate-900 select-none";
+                    
+                    if (x === 0 || x === t1_mapSize - 1 || y === 0 || y === t1_mapSize - 1) {
+                        tile.textContent = '🧱';
+                        tile.className += " bg-slate-900/80 border-slate-850";
+                    } else if (t1_player.x === x && t1_player.y === y) {
+                        tile.textContent = '🍄';
+                        tile.className += " bg-red-500/10 border-red-500/30 animate-pulse";
+                    } else if (t1_goomba.x === x && t1_goomba.y === y) {
+                        tile.textContent = '👾';
+                        tile.className += " bg-yellow-500/10 border-yellow-500/30";
+                    } else if (t1_key.x === x && t1_key.y === y && !t1_hasKey) {
+                        tile.textContent = '🔑';
+                        tile.className += " bg-amber-500/10 border-amber-500/20";
+                    } else if (t1_door.x === x && t1_door.y === y) {
+                        tile.textContent = t1_hasKey ? '🔓' : '🚧';
+                        tile.className += " bg-blue-500/10 border-blue-500/20";
+                    } else if (t1_goal.x === x && t1_goal.y === y) {
+                        tile.textContent = '👑';
+                        tile.className += " bg-emerald-500/10 border-emerald-500/20";
+                    } else {
+                        tile.textContent = '·';
+                        tile.className += " text-slate-800 font-mono text-[10px]";
+                    }
+                    
+                    container.appendChild(tile);
+                }
+            }
+        }
+
+        // Move Player inside Tab 1 Simulator
+        function t1_movePlayer(dx, dy) {
+            if (t1_isGameOver) return;
+            
+            let targetX = t1_player.x + dx;
+            let targetY = t1_player.y + dy;
+            
+            // Wall boundaries check
+            if (targetX <= 0 || targetX >= t1_mapSize - 1 || targetY <= 0 || targetY >= t1_mapSize - 1) {
+                return; // Hit coordinate limits
+            }
+            
+            // Door Boolean gate logic check
+            if (targetX === t1_door.x && targetY === t1_door.y && !t1_hasKey) {
+                return; // Logical gate prevents stepping
+            }
+            
+            // Commit coordinates position
+            t1_player.x = targetX;
+            t1_player.y = targetY;
+            
+            // Boolean Flag State Change: Collect Key
+            if (t1_player.x === t1_key.x && t1_player.y === t1_key.y) {
+                t1_hasKey = true;
+            }
+            
+            // Goal State trigger
+            if (t1_player.x === t1_goal.x && t1_player.y === t1_goal.y) {
+                t1_isGameOver = true;
+                t1_gameSuccess = true;
+                t1_renderGrid();
+                t1_updateTelemetry();
+                showT1GameOver(true);
+                return;
+            }
+            
+            // Update FSM Goomba steps
+            t1_updateGoomba();
+            
+            // Check Collision failure state
+            if (t1_player.x === t1_goomba.x && t1_player.y === t1_goomba.y) {
+                t1_isGameOver = true;
+                t1_gameSuccess = false;
+                t1_renderGrid();
+                t1_updateTelemetry();
+                showT1GameOver(false);
+                return;
+            }
+            
+            t1_renderGrid();
+            t1_updateTelemetry();
+        }
+
+        // FSM Artificial Intelligence calculations
+        function t1_updateGoomba() {
+            let dx = t1_player.x - t1_goomba.x;
+            let dy = t1_player.y - t1_goomba.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            
+            if (dist < 3.0) {
+                // CHASE STATE (Euclidean alignment)
+                t1_goomba.state = 'CHASE';
+                let stepX = Math.sign(dx);
+                let stepY = Math.sign(dy);
+                
+                let nextX = t1_goomba.x + stepX;
+                let nextY = t1_goomba.y + stepY;
+                
+                // Prioritize step with greatest coordinate delta
+                if (Math.abs(dx) >= Math.abs(dy)) {
+                    if (nextX > 0 && nextX < t1_mapSize - 1 && !(nextX === t1_door.x && t1_goomba.y === t1_door.y && !t1_hasKey)) {
+                        t1_goomba.x = nextX;
+                    } else if (nextY > 0 && nextY < t1_mapSize - 1 && !(t1_goomba.x === t1_door.x && nextY === t1_door.y && !t1_hasKey)) {
+                        t1_goomba.y = nextY;
+                    }
+                } else {
+                    if (nextY > 0 && nextY < t1_mapSize - 1 && !(t1_goomba.x === t1_door.x && nextY === t1_door.y && !t1_hasKey)) {
+                        t1_goomba.y = nextY;
+                    } else if (nextX > 0 && nextX < t1_mapSize - 1 && !(nextX === t1_door.x && t1_goomba.y === t1_door.y && !t1_hasKey)) {
+                        t1_goomba.x = nextX;
+                    }
+                }
+            } else {
+                // PATROL STATE (Probability randomness)
+                t1_goomba.state = 'PATROL';
+                let dirs = [{x:0, y:-1}, {x:0, y:1}, {x:-1, y:0}, {x:1, y:0}];
+                let randomDir = dirs[Math.floor(Math.random() * dirs.length)];
+                let nextX = t1_goomba.x + randomDir.x;
+                let nextY = t1_goomba.y + randomDir.y;
+                
+                if (nextX > 0 && nextX < t1_mapSize - 1 && nextY > 0 && nextY < t1_mapSize - 1) {
+                    if (!(nextX === t1_door.x && nextY === t1_door.y && !t1_hasKey) && !(nextX === t1_goal.x && nextY === t1_goal.y)) {
+                        t1_goomba.x = nextX;
+                        t1_goomba.y = nextY;
+                    }
+                }
+            }
+        }
+
+        // Render live metrics and variables changes
+        function t1_updateTelemetry() {
+            // C Struct Rendering
+            const cStruct = `typedef struct {
+    int x = ${t1_player.x};
+    int y = ${t1_player.y};
+    bool hasKey = ${t1_hasKey ? 'true' : 'false'};
+} Player;`;
+            document.getElementById('t1-telemetry-c').textContent = cStruct;
+            
+            // Discrete Math Gate Elements
+            const keyEl = document.getElementById('t1-gate-key');
+            keyEl.textContent = t1_hasKey ? 'TRUE' : 'FALSE';
+            keyEl.className = t1_hasKey ? 'text-emerald-400 font-bold font-mono' : 'text-red-400 font-bold font-mono';
+            
+            const doorEl = document.getElementById('t1-gate-door');
+            doorEl.textContent = t1_hasKey ? 'UNLOCKED (🔓)' : 'LOCKED (🚧)';
+            doorEl.className = t1_hasKey ? 'text-emerald-400 font-bold font-mono' : 'text-red-400 font-bold font-mono';
+            
+            // Coordinate Distance Geometry
+            let dx = t1_player.x - t1_goomba.x;
+            let dy = t1_player.y - t1_goomba.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            document.getElementById('t1-telemetry-distance').textContent = dist.toFixed(2);
+            
+            // AI State Machine update
+            const fsmEl = document.getElementById('t1-telemetry-fsm');
+            fsmEl.textContent = t1_goomba.state;
+            if (t1_goomba.state === 'CHASE') {
+                fsmEl.className = "font-bold uppercase font-mono px-2 py-0.5 bg-red-500/10 text-red-400 border border-red-500/20";
+            } else {
+                fsmEl.className = "font-bold uppercase font-mono px-2 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20";
+            }
+        }
+
+        // Handle game outcome popups
+        function showT1GameOver(isSuccess) {
+            const overlay = document.getElementById('t1-game-over-overlay');
+            const title = document.getElementById('t1-game-over-title');
+            const reason = document.getElementById('t1-game-over-reason');
+            
+            overlay.classList.remove('hidden');
+            
+            if (isSuccess) {
+                title.textContent = "SAVED! 🎉";
+                title.className = "text-2xl font-extrabold retro text-emerald-400 animate-pulse";
+                if (activeLanguage === 'en') {
+                    reason.textContent = "Congratulations! You completed the Boolean conditions gate, managed coordinate checks, and bypassed FSM range constraints!";
+                } else {
+                    reason.textContent = "おめでとうございます！論理式ゲートの条件を突破し、境界チェックを破綻させずにプリンセスの元へたどり着きました！";
+                }
+            } else {
+                title.textContent = "DEFEATED 👾";
+                title.className = "text-2xl font-extrabold retro text-red-500";
+                if (activeLanguage === 'en') {
+                    reason.textContent = "Caught by the Goomba! The AI state transitioned to CHASE mode when Euclidean Distance fell below 3.0.";
+                } else {
+                    reason.textContent = "クリボーに捕獲されました！ユークリッド距離が3.0以下になったため、AIの状態遷移（FSM）が追跡（CHASE）モードに切り替わりました。";
+                }
+            }
+        }
+
+        // Language Switcher Engine
+        function setLang(lang) {
+            activeLanguage = lang; // Correctly track current language globally
+            
+            // Apply translating attributes
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+            
+            // Toggle active style on buttons
+            const enBtn = document.getElementById('btn-en');
+            const jpBtn = document.getElementById('btn-jp');
+            
+            if (lang === 'en') {
+                enBtn.className = "px-4 py-2 bg-red-600 rounded-lg text-base font-bold text-white transition";
+                jpBtn.className = "px-4 py-2 text-slate-400 rounded-lg text-base font-bold hover:text-white transition";
+            } else {
+                jpBtn.className = "px-4 py-2 bg-red-600 rounded-lg text-base font-bold text-white transition";
+                enBtn.className = "px-4 py-2 text-slate-400 rounded-lg text-base font-bold hover:text-white transition";
+            }
+
+            // Sync Tab 1 components
+            t1_updateTelemetry();
+        }
+
+        // Tab selection engine
+        function switchTab(tabId) {
+            activeTab = tabId; // store globally for arrow key events routing
+            // Deactivate all (1, 2, 3, 4)
+            [1, 2, 3, 4].forEach(id => {
+                document.getElementById('tab-' + id).classList.remove('tab-active');
+                document.getElementById('content-' + id).classList.add('hidden');
+            });
+            // Activate selected
+            document.getElementById('tab-' + tabId).classList.add('tab-active');
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+        }
+
+        // Global Keyboard Handler (Binds simulator game board on Tab 1)
+        window.addEventListener('keydown', function(e) {
+            let dx = 0;
+            let dy = 0;
+            
+            switch (e.key.toLowerCase()) {
+                case 'w':
+                case 'arrowup':
+                    dy = -1;
+                    break;
+                case 's':
+                case 'arrowdown':
+                    dy = 1;
+                    break;
+                case 'a':
+                case 'arrowleft':
+                    dx = -1;
+                    break;
+                case 'd':
+                case 'arrowright':
+                    dx = 1;
+                    break;
+                default:
+                    return; // ignore non-directional keystrokes
+            }
+            
+            // Block default scroll action on arrow keys
+            e.preventDefault();
+            
+            if (activeTab === 1) {
+                t1_movePlayer(dx, dy);
+            }
+        });
+
+        // Initialize Application
+        window.onload = function() {
+            lucide.createIcons();
+            setLang('en'); // Cleaned up outdated steppers and correctly called setLang
+            t1_initGame(); // Render Tab 1 Interactive Game Sandbox
+        }
+    </script>
+</body>
+</html>
