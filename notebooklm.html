@@ -70,6 +70,15 @@
             display: block;
             opacity: 1;
         }
+        .impact-sub-tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .impact-sub-tab-content.active {
+            display: block;
+            opacity: 1;
+        }
         .highlight-segment {
             transition: all 0.5s ease;
         }
@@ -84,7 +93,7 @@
 <body class="antialiased">
 
 <!-- Chosen Palette: Brilliant Blues & Soft Amber (Sky-600, Amber-500, Slate-50) -->
-<!-- Application Structure Plan: This web application uses a full-tabbed layout to divide the content logically into four key areas: Core Capabilities (Tab 1), Creative Studio (Tab 2), Other applications in teaching (Tab 3), and Interactive Knowledge Quiz (Tab 4). Each area has its own introductory text, interactive mockups, or live Chart.js charts. The newly added Tab 4 contains a fully functional 10-question quiz tracking real-time score, providing instant answers and helpful hints, all fully dynamic and translated on language toggle. This keeps the user highly engaged while reinforcing what they have learned. -->
+<!-- Application Structure Plan: This web application uses a full-tabbed layout to divide the content logically into four key areas: Core Capabilities (Tab 1), Creating Question Bank (Tab 2), Other applications in NotebookLM Studio (Tab 3), and Interactive Knowledge Quiz (Tab 4). Each area has its own introductory text, interactive mockups, or live Chart.js charts. Tab 2 now incorporates a realistic JLPT N3 question extraction workflow simulation alongside its prompt in the book resource segment, which helps educators easily understand the real-world value proposition. Tab 4 contains a fully functional 8-question quiz tracking real-time score. This keeps the user highly engaged while reinforcing what they have learned. -->
 <!-- Visualization & Content Choices: 1. Core Grounding Accuracy -> Goal: Compare -> Interactive Radar Chart (Chart.js) -> Represents performance on 5 key axes (Accuracy, Citations, Multi-Source capability, Context retention, Security) with translated multi-line wrapped labels to prevent UI overflow. 2. Creative Studio Output -> Goal: Organize & Showcase -> Dynamic Tab Component with bilingual state management -> Keeps multi-format utilities digestible. 3. Practical Time Savings -> Goal: Compare/Change -> Stacked Bar Chart -> Demonstrates concrete hours saved per week on administrative work. 4. Quiz Tab -> Goal: Test & Reinforce -> Interactive single-choice questions with bilingual feedback and scoring. NO SVG/Mermaid used. -->
 <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
@@ -105,7 +114,7 @@
 
     <header class="pt-24 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
         <h1 id="hero-title" class="text-3xl md:text-5xl font-extrabold text-textMain tracking-tight mb-2">
-            Giải Phóng Gánh Nặng <span class="text-primary">Xử Lý Tài Liệu</span>
+            Nâng cao hiệu quả <span class="text-primary">Xây Dựng Tài Liệu Giảng Dạy</span>
         </h1>
         <p id="hero-subtitle" class="max-w-2xl text-base md:text-lg text-textMuted mx-auto leading-relaxed">
             Chuyển hóa tri thức thô thành học liệu đa phương tiện sinh động và chuẩn xác.
@@ -117,11 +126,11 @@
             <button onclick="switchMainTab('core')" id="main-tab-btn-core" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-primary text-primary focus:outline-none transition-all">
                 Năng Lực Cốt Lõi
             </button>
-            <button onclick="switchMainTab('studio')" id="main-tab-btn-studio" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all">
-                Studio Sáng Tạo
-            </button>
             <button onclick="switchMainTab('impact')" id="main-tab-btn-impact" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all">
-                Những Ứng Dụng Khác Trong Giảng Dạy
+                Tạo ngân hàng câu hỏi
+            </button>
+            <button onclick="switchMainTab('studio')" id="main-tab-btn-studio" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all">
+                Các ứng dụng khác với NotebookLM Studio
             </button>
             <button onclick="switchMainTab('quiz')" id="main-tab-btn-quiz" class="main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-transparent text-textMuted hover:text-primary focus:outline-none transition-all">
                 Trắc Nghiệm Nhanh
@@ -179,11 +188,40 @@
                 <p id="core-visual-desc" class="text-xs text-textMuted mb-6">Trực quan hóa cách NotebookLM đối chiếu từ vựng & cấu trúc ngữ pháp từ tài liệu đính kèm để đưa ra phản hồi rõ ràng, hạn chế sai sót.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-xl">
-                    <!-- Left Column: Source Book Visual -->
+                    <!-- Left Column: Interactive AI Panel with Citations -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <!-- User Prompt Box -->
+                            <div class="bg-slate-100 p-3 rounded-lg border border-slate-200 text-xs md:text-sm">
+                                <div class="flex items-center space-x-2 mb-1.5">
+                                    <span class="text-sm">💬</span>
+                                    <span id="user-prompt-header" class="font-bold text-slate-700 text-xs">Câu hỏi gửi cho NotebookLM</span>
+                                </div>
+                                <p id="user-prompt-box" class="text-textMain italic font-medium">"Hãy giải thích cho tôi cấu trúc giới thiệu bản thân cơ bản trong Bài 1"</p>
+                            </div>
+
+                            <!-- AI Output response -->
+                            <div>
+                                <div class="flex items-center space-x-2 border-b border-gray-100 pb-2 mb-3">
+                                    <span class="text-lg">🤖</span>
+                                    <span id="ai-response-header" class="text-xs font-bold text-indigo-600">Câu trả lời của NotebookLM</span>
+                                </div>
+                                <div id="ai-response-box" class="bg-indigo-50/50 p-3 rounded-lg border border-indigo-100/60 text-xs md:text-sm text-textMain leading-relaxed">
+                                    <!-- Generated Dynamically based on language -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-2 border-t border-gray-100 text-[10px] text-textMuted italic flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                            <span id="core-visual-interactive-tip">* Hãy rê chuột hoặc bấm chọn các số chú thích màu xanh để kiểm tra nguồn gốc từ giáo trình</span>
+                            <span class="bg-green-100 text-green-800 font-bold px-1.5 py-0.5 rounded text-[8px] self-start sm:self-auto">Grounded AI Verification</span>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Source Book Visual -->
                     <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm relative overflow-hidden flex flex-col justify-between">
                         <div>
                             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-gray-100 pb-2 mb-3 gap-2">
-                                <span id="source-doc-header" class="text-xs font-bold text-primary">📄 翻訳・文法解説.pdf (Trang 14)</span>
+                                <span id="source-doc-header" class="text-xs font-bold text-primary">📄 Tham chiếu từ nguồn sách "みんなの日本語 初級Ⅰ 翻訳・文法解説" (Trang 14)</span>
                                 <a href="https://drive.google.com/file/d/1G65TRapUUgo_wdFyrP5eUJVYeSSEScvQ/view?usp=sharing" target="_blank" id="view-original-btn" class="text-[10px] bg-primary/10 hover:bg-primary/20 text-primary px-2 py-1 rounded font-bold transition-all flex items-center gap-1">
                                     🔍 Xem ảnh trang 14
                                 </a>
@@ -205,50 +243,181 @@
                                 <div id="segment-3" class="highlight-segment p-2 border-l-2 border-transparent rounded">
                                     <span class="font-bold text-amber-600">[3]</span>
                                     <p class="text-textMain leading-relaxed italic text-primary" id="source-grammar-rule3">
-                                        "<b>Ví dụ mẫu câu 1:</b> わたしは マイク・ミラーです (Tôi là Mike Miller)."
+                                        "<b>Ví dụ mẫu câu 1:</b> わたしは_mô_phỏng_trích_dẫn... は マイク・ミラーです (Tôi là Mike Miller)."
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <span class="text-[9px] text-gray-400 mt-4 block" id="source-book-caption">Giáo án gốc từ Minna no Nihongo sơ cấp I</span>
                     </div>
+                </div>
 
-                    <!-- Right Column: Interactive AI Panel with Citations -->
-                    <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
-                        <div class="space-y-4">
-                            <!-- User Prompt Box -->
-                            <div class="bg-slate-100 p-3 rounded-lg border border-slate-200 text-xs md:text-sm">
-                                <div class="flex items-center space-x-2 mb-1.5">
-                                    <span class="text-sm">💬</span>
-                                    <span id="user-prompt-header" class="font-bold text-slate-700 text-xs">Câu hỏi của Giảng viên</span>
+                <!-- Academic Grounded AI Conclusion statement -->
+                <p id="core-visual-conclusion" class="mt-4 text-xs md:text-sm text-textMain bg-sky-50/50 p-4 rounded-xl border border-sky-100 leading-relaxed font-semibold">
+                    NotebookLM có thể đọc chính xác và chỉ tổng hợp dựa trên kiến thức trong sách, không tự ý tổng hợp từ các nguồn ngoài và trích từ nguồn nào sẽ ghi rõ nguồn trích dẫn.
+                </p>
+            </div>
+        </div>
+
+        <!-- Tab 2: Tạo ngân hàng câu hỏi -->
+        <div id="main-tab-impact" class="main-tab-content">
+            <div class="text-center mb-10">
+                <h2 id="impact-title" class="text-2xl md:text-3xl font-bold text-textMain">Tạo Ngân Hàng Câu Hỏi</h2>
+                <p id="impact-desc" class="mt-3 text-sm md:text-base text-textMuted max-w-3xl mx-auto">
+                    NotebookLM hỗ trợ giảng viên chuẩn bị học liệu đa dạng và linh hoạt hơn cho lớp học.
+                </p>
+            </div>
+
+            <!-- Interactive Sub-Tab Card Selector Menu -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-8">
+                <!-- Sub-Tab Option 1 -->
+                <button onclick="switchImpactSubTab('extract')" id="impact-card-extract" class="p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-primary shadow-md w-full">
+                    <span class="text-3xl block mb-2">📁</span>
+                    <h3 id="app-card2-title" class="text-base font-bold text-textMain mb-1">Trích xuất từ sách để tạo ngân hàng câu hỏi</h3>
+                    <p id="app-card2-desc" class="text-xs text-textMuted font-normal">Trích xuất các câu hỏi, bài tập từ sách để tổng hợp thành một ngân hàng câu hỏi cho giáo viên.</p>
+                </button>
+                <!-- Sub-Tab Option 2 -->
+                <button onclick="switchImpactSubTab('grammar')" id="impact-card-grammar" class="p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-transparent hover:border-gray-200 w-full">
+                    <span class="text-3xl block mb-2">⚙️</span>
+                    <h3 id="app-card3-title" class="text-base font-bold text-textMain mb-1">Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp</h3>
+                    <p id="app-card3-desc" class="text-xs text-textMuted font-normal">Trích xuất ngữ pháp và từ vựng theo bài học để tạo thành ngân hàng dữ liệu, từ đó tạo ra các bài tập hoặc câu hỏi mới dựa trên vốn ngân hàng đó.</p>
+                </button>
+            </div>
+
+            <!-- Stacked interactive Mockups with tab visibility state -->
+            <div class="max-w-5xl mx-auto">
+                <!-- Mockup 1: Trích xuất câu hỏi từ nguồn sách -->
+                <div id="impact-content-extract" class="impact-sub-tab-content active">
+                    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                        <h3 id="extract-visual-title" class="text-lg font-bold text-textMain mb-1">Minh họa thực tế: Quy trình trích xuất câu hỏi từ nguồn sách</h3>
+                        <p id="extract-visual-desc" class="text-xs text-textMuted mb-6">Mô phỏng cách NotebookLM xử lý một yêu cầu trích xuất danh sách câu hỏi JLPT N3 từ tài liệu gốc.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-xl">
+                            <!-- Left: Prompt Window -->
+                            <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center space-x-2 border-b border-gray-100 pb-2 mb-3">
+                                        <span class="text-sm">💬</span>
+                                        <span id="extract-prompt-header" class="font-bold text-slate-700 text-xs">Prompt gửi cho NotebookLM (Yêu cầu trích xuất)</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed">現在選択されているソース（PDF）から、「言語知識（文字・漢字）」の問題をすべて抽出してください。
+
+抽出のルール：
+【中略】
+
+出力形式（Markdown）：
+【中略】</div>
                                 </div>
-                                <p id="user-prompt-box" class="text-textMain italic font-medium">"Hãy giải thích cho tôi cấu trúc giới thiệu bản thân cơ bản trong Bài 1"</p>
+                                <span class="text-[10px] text-gray-400 mt-4 block" id="extract-prompt-footer">* Trích xuất tự động theo mẫu yêu cầu</span>
                             </div>
 
-                            <!-- AI Output response -->
-                            <div>
-                                <div class="flex items-center space-x-2 border-b border-gray-100 pb-2 mb-3">
-                                    <span class="text-lg">🤖</span>
-                                    <span id="ai-response-header" class="text-xs font-bold text-indigo-600">NotebookLM AI Giáo Trình Trợ Lý</span>
+                            <!-- Right: Response Window -->
+                            <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center space-x-2 border-b border-gray-100 pb-2 mb-3">
+                                        <span class="text-lg">🤖</span>
+                                        <span id="extract-response-header" class="text-xs font-bold text-indigo-600">Câu trả lời nhận được từ NotebookLM</span>
+                                    </div>
+                                    <div class="space-y-3 max-h-[250px] overflow-y-auto pr-1">
+                                        <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[11px] leading-relaxed">
+                                            <p class="text-indigo-800 font-bold">ID: SUCCESS.pdf_029</p>
+                                            <p><b>カテゴリ:</b> 文字・漢字</p>
+                                            <p><b>出典:</b> SUCCESS.pdf 別冊 P.78</p>
+                                            <p class="font-bold my-1 text-slate-900">問題: **背中**がかゆい。</p>
+                                            <p><b>選択肢:</b> 1 おなか | 2 せなか | 3 まんなか | 4 いなか</p>
+                                            <p class="text-green-600 font-bold mt-1">正解: 2</p>
+                                        </div>
+                                        <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[11px] leading-relaxed">
+                                            <p class="text-indigo-800 font-bold">ID: SUCCESS.pdf_030</p>
+                                            <p><b>カテゴリ:</b> 文字・漢字</p>
+                                            <p><b>出典:</b> SUCCESS.pdf 別冊 P.78</p>
+                                            <p class="font-bold my-1 text-slate-900">問題: **恋愛**小説を読みます。</p>
+                                            <p><b>選択肢:</b> 1 れんあい | 2 へんあい | 3 こいあい | 4 れいあい</p>
+                                            <p class="text-green-600 font-bold mt-1">正解: 1</p>
+                                        </div>
+                                        <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[11px] leading-relaxed">
+                                            <p class="text-indigo-800 font-bold">ID: SUCCESS.pdf_031</p>
+                                            <p><b>カテゴリ:</b> 文字・漢字</p>
+                                            <p><b>出典:</b> SUCCESS.pdf 別冊 P.78</p>
+                                            <p class="font-bold my-1 text-slate-900">問題: アルバイトuを**募集**します。</p>
+                                            <p><b>選択肢:</b> 1 おu | 2 れんしゅう | 3 ぼしゅう | 4 しゅうしゅう</p>
+                                            <p class="text-green-600 font-bold mt-1">正解: 3</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="ai-response-box" class="bg-indigo-50/50 p-3 rounded-lg border border-indigo-100/60 text-xs md:text-sm text-textMain leading-relaxed">
-                                    <!-- Generated Dynamically based on language -->
-                                </div>
+                                <span class="text-[10px] text-green-700 font-bold mt-4 block" id="extract-response-footer">✓ 3 câu đại diện đã được cấu trúc hóa</span>
                             </div>
                         </div>
-                        <div class="mt-4 pt-2 border-t border-gray-100 text-[10px] text-textMuted italic flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                            <span id="core-visual-interactive-tip">* Hãy rê chuột hoặc bấm chọn các số chú thích màu xanh để kiểm tra nguồn gốc từ giáo trình</span>
-                            <span class="bg-green-100 text-green-800 font-bold px-1.5 py-0.5 rounded text-[8px] self-start sm:self-auto">Grounded AI Verification</span>
+                    </div>
+                </div>
+
+                <!-- Mockup 2: Tạo câu hỏi từ ngân hàng từ vựng & ngữ pháp -->
+                <div id="impact-content-grammar" class="impact-sub-tab-content">
+                    <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+                        <h3 id="grammar-visual-title" class="text-lg font-bold text-textMain mb-1">Minh họa thực tế: Quy trình tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp</h3>
+                        <p id="grammar-visual-desc" class="text-xs text-textMuted mb-6">Mô phỏng cách NotebookLM thiết lập bài tập ngữ pháp bài 36-40 dựa trên vốn từ vựng bài 1-20.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-xl">
+                            <!-- Left: Prompt Window -->
+                            <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center space-x-2 border-b border-gray-100 pb-2 mb-3">
+                                        <span class="text-sm">💬</span>
+                                        <span id="grammar-prompt-header" class="font-bold text-slate-700 text-xs">Prompt gửi cho NotebookLM (Yêu cầu liên kết từ vựng & ngữ pháp)</span>
+                                    </div>
+                                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 font-mono text-xs text-slate-800 whitespace-pre-wrap leading-relaxed">第36-40課の文法の練習問題を第1課～20課の語彙でテキストで作ってください。
+・全部で50問
+・問題形式：択一式、穴埋め問題、JLPTの★問題、言い換え問題</div>
+                                </div>
+                                <span class="text-[10px] text-gray-400 mt-4 block" id="grammar-prompt-footer">* Đối chiếu ràng buộc từ vựng theo bài học</span>
+                            </div>
+
+                            <!-- Right: Response Window -->
+                            <div class="bg-white p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center space-x-2 border-b border-gray-100 pb-2 mb-3">
+                                        <span class="text-lg">🤖</span>
+                                        <span id="grammar-response-header" class="text-xs font-bold text-indigo-600">Câu trả lời nhận được từ NotebookLM</span>
+                                    </div>
+                                    <div class="space-y-4 max-h-[250px] overflow-y-auto pr-1">
+                                        <!-- Q1 -->
+                                        <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[11px] leading-relaxed">
+                                            <p class="text-indigo-800 font-bold">## I. 択一式問題（全15問）</p>
+                                            <p class="text-slate-500 text-[10px] italic">正しいものを A〜D の中から1つ選びなさい。</p>
+                                            <p class="font-bold my-1 text-slate-900">**1.** (36課) 日本語が 話せる（　　）、毎日 勉強して います。</p>
+                                            <p class="text-slate-700">A.  ようで | B.  よう | C. に | D. な</p>
+                                            <p class="text-green-600 font-bold mt-0.5">正解: C</p>
+                                        </div>
+                                        <!-- Q2 -->
+                                        <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[11px] leading-relaxed">
+                                            <p class="text-indigo-800 font-bold">## III. 並べ替え問題（JLPT ★問題）（全10問）</p>
+                                            <p class="text-slate-500 text-[10px] italic">言葉を正しい順番に並べ替えて、★に入るものの番号を答えなさい。</p>
+                                            <p class="font-bold my-1 text-slate-900">**31.** (36課) わたしは ＿＿ ＿＿ ★ ＿＿ 毎日 勉強して います。</p>
+                                            <p class="text-slate-700">① 話せる　② 日本語が　③ ように　④ 早く</p>
+                                            <p class="text-green-600 font-bold mt-0.5">正解: ③ (② ① ③ ④)</p>
+                                        </div>
+                                        <!-- Q3 -->
+                                        <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[11px] leading-relaxed">
+                                            <p class="text-indigo-800 font-bold">## IV. 言い換え問題（全10問）</p>
+                                            <p class="text-slate-500 text-[10px] italic">最初の文とだいたい同じ意味になる文を、A〜Cの中から1つ選びなさい。</p>
+                                            <p class="font-bold my-1 text-slate-900">**41.** 毎日 少しずつ 日本語が わかります。（前は わかりませんでした）</p>
+                                            <p class="text-slate-700">A. 日本語が わかる ように なりました。<br>B. 日本語が わかる ように します。<br>C. 日本語が わかる ように して います。</p>
+                                            <p class="text-green-600 font-bold mt-0.5">正解: A</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-green-700 font-bold mt-4 block" id="grammar-response-footer">✓ 3 dạng Mondai đặc trưng đã được biên soạn</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tab 2: Creative Studio -->
+        <!-- Tab 3: Creative Studio -->
         <div id="main-tab-studio" class="main-tab-content">
             <div class="text-center mb-10">
-                <h2 id="studio-title" class="text-2xl md:text-3xl font-bold text-textMain">NotebookLM Studio: Hướng Dẫn Sử Dụng</h2>
+                <h2 id="studio-title" class="text-2xl md:text-3xl font-bold text-textMain">Các ứng dụng khác với NotebookLM Studio</h2>
                 <p id="studio-desc" class="mt-3 text-sm md:text-base text-textMuted max-w-3xl mx-auto">
                     Khai phá tiềm năng chuyển hóa bài giảng thông qua giao diện Studio đa phương tiện. Chọn các tab tương tác bên dưới để trải nghiệm.
                 </p>
@@ -271,7 +440,7 @@
                     <!-- Slide and Revise Sub-Tab -->
                     <div id="tab-slide" class="studio-tab-content active">
                         <h3 id="t1-title" class="text-xl font-bold text-textMain mb-2">Chức năng "Revise" (Hiệu chỉnh Slide)</h3>
-                        <p id="t1-desc" class="text-textMuted mb-6 text-xs md:text-sm">NotebookLM có thể tạo nhanh các bản phác thảo slide bài giảng tự động và hỗ trợ giảng viên hiệu chỉnh (revise) chính xác theo đúng ý đồ giảng dạy.</p>
+                        <p id="t1-desc" class="text-textMuted mb-6 text-xs md:text-sm">NotebookLM có thể tạo nhanh các bản phác thảo slide bài giảng tự động, hỗ trợ tạo nhanh khung bài học và các mẫu câu ví dụ để hỗ trợ tạo Slide, đồng thời hỗ trợ giảng viên hiệu chỉnh (revise) chính xác theo đúng ý đồ giảng dạy.</p>
                         
                         <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
                             <h4 id="slide-section-title" class="font-bold text-sm text-textMain mb-4">Mô phỏng: Slide bài học số 30</h4>
@@ -371,34 +540,6 @@
             </div>
         </div>
 
-        <!-- Tab 3: Other applications in teaching -->
-        <div id="main-tab-impact" class="main-tab-content">
-            <div class="text-center mb-10">
-                <h2 id="impact-title" class="text-2xl md:text-3xl font-bold text-textMain">Những Ứng Dụng Khác Trong Giảng Dạy</h2>
-                <p id="impact-desc" class="mt-3 text-sm md:text-base text-textMuted max-w-3xl mx-auto">
-                    NotebookLM hỗ trợ giảng viên chuẩn bị học liệu đa dạng và linh hoạt hơn cho lớp học.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                <div class="p-5 border border-gray-200 rounded-xl bg-white hover:shadow-md transition-shadow">
-                    <span class="text-3xl block mb-2">📋</span>
-                    <h3 id="app-card1-title" class="text-base font-bold text-textMain mb-1">Thiết lập cấu trúc slide</h3>
-                    <p id="app-card1-desc" class="text-xs text-textMuted">Tạo nhanh khung bài học và các mẫu câu ví dụ cho bài giảng.</p>
-                </div>
-                <div class="p-5 border border-gray-200 rounded-xl bg-white hover:shadow-md transition-shadow">
-                    <span class="text-3xl block mb-2">📁</span>
-                    <h3 id="app-card2-title" class="text-base font-bold text-textMain mb-1">Ngân hàng câu hỏi</h3>
-                    <p id="app-card2-desc" class="text-xs text-textMuted">Trích xuất các câu hỏi, bài tập từ sách để tổng hợp thành một ngân hàng câu hỏi cho giáo viên.</p>
-                </div>
-                <div class="p-5 border border-gray-200 rounded-xl bg-white hover:shadow-md transition-shadow">
-                    <span class="text-3xl block mb-2">⚙️</span>
-                    <h3 id="app-card3-title" class="text-base font-bold text-textMain mb-1">Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp</h3>
-                    <p id="app-card3-desc" class="text-xs text-textMuted">Trích xuất ngữ pháp và từ vựng theo bài học để tạo thành ngân hàng dữ liệu, từ đó tạo ra các bài tập hoặc câu hỏi mới dựa trên vốn ngân hàng đó.</p>
-                </div>
-            </div>
-        </div>
-
         <!-- Tab 4: Interactive Quiz -->
         <div id="main-tab-quiz" class="main-tab-content">
             <div class="text-center mb-10">
@@ -423,10 +564,10 @@
         const dict = {
             vi: {
                 navCore: "Năng Lực Cốt Lõi",
-                navStudio: "Studio Sáng Tạo",
-                navImpact: "Những Ứng Dụng Khác Trong Giảng Dạy",
+                navStudio: "Các ứng dụng khác với NotebookLM Studio",
+                navImpact: "Tạo ngân hàng câu hỏi",
                 navQuiz: "Trắc Nghiệm Nhanh",
-                heroTitle: 'Giải Phóng Gánh Nặng <span class="text-primary">Xử Lý Tài Liệu</span>',
+                heroTitle: 'Nâng cao hiệu quả <span class="text-primary">Xây Dựng Tài Liệu Giảng Dạy</span>',
                 heroSubtitle: 'Chuyển hóa tri thức thô thành học liệu đa phương tiện sinh động và chuẩn xác. Khám phá cách NotebookLM trở thành "bộ não thứ hai" của giảng viên.',
                 
                 coreTitle: "Năng Lực Cốt Lõi (Source-Grounded AI)",
@@ -450,28 +591,29 @@
                 coreVisualTitle: "Minh họa thực tế: Quy trình trích dẫn nguồn giáo trình Minna no Nihongo",
                 coreVisualDesc: "Trực quan hóa cách NotebookLM đối chiếu từ vựng & cấu trúc ngữ pháp từ tài liệu đính kèm để đưa ra phản hồi rõ ràng, hạn chế sai sót.",
                 coreVisualInteractiveTip: "* Hãy rê chuột hoặc bấm chọn các số chú thích màu xanh để làm nổi bật dòng văn gốc tương ứng phía bên trái",
-                sourceDocHeader: "📄 翻訳・文法解説.pdf (Trang 14)",
+                coreVisualConclusion: "NotebookLM có thể đọc chính xác và chỉ tổng hợp dựa trên kiến thức trong sách, không tự ý tổng hợp từ các nguồn ngoài và trích từ nguồn nào sẽ ghi rõ nguồn trích dẫn.",
+                sourceDocHeader: "📄 Tham chiếu từ nguồn sách " + "みんなの日本語 初級Ⅰ 翻訳・文法解説 (Trang 14)",
 
                 sourceGrammarRule1: "<b>Trợ từ は:</b> Đặt sau danh từ 1 để biểu thị danh từ đó là chủ đề của câu văn. Người nói thiết lập chủ đề muốn thảo luận...",
                 sourceGrammarRule2: "<b>Đuôi です:</b> Đứng sau danh từ để tạo thành vị ngữ, biểu thị sự khẳng định lịch sự hoặc phán đoán của người nói đối với người nghe.",
-                sourceGrammarRule3: "<b>Ví dụ mẫu câu 1:</b> わたしle は マイク・ミラーです (Tôi là Mike Miller).",
+                sourceGrammarRule3: "<b>Ví dụ mẫu câu 1:</b> わたしle  ha_mô_phỏng_trích_dẫn... は マイク • ミラーです (Tôi là Mike Miller).",
                 
-                userPromptHeader: "💬 Câu hỏi của Giảng viên",
+                userPromptHeader: "💬 Câu hỏi gửi cho NotebookLM",
                 userPromptBox: `"Hãy giải thích cho tôi cấu trúc giới thiệu bản thân cơ bản trong Bài 1"`,
                 viewOriginalBtn: "🔍 Xem ảnh trang 14",
                 sourceBookCaption: "Giáo án gốc từ Minna no Nihongo sơ cấp I",
 
-                aiResponseHeader: "🤖 NotebookLM AI Giáo Trình Trợ Lý",
+                aiResponseHeader: "🤖 Câu trả lời của NotebookLM",
                 aiResponseContent: "Dựa vào dữ liệu từ sách Giải thích Ngữ pháp Bài 1 trang 14, cấu trúc giới thiệu bản thân cơ bản bao gồm việc đặt trợ từ <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(1)' onmouseout='resetHighlights()'>ha [1]</span> sau chủ ngữ và kết thúc bằng vị ngữ chứa <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(2)' onmouseout='resetHighlights()'>desu [2]</span>. Minh họa chi tiết qua mẫu câu: <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(3)' onmouseout='resetHighlights()'>watashi wa Maiku Miraa desu [3]</span>.",
 
-                studioTitle: "NotebookLM Studio: Hướng Dẫn Sử Dụng",
+                studioTitle: "Các ứng dụng khác với NotebookLM Studio",
                 studioDesc: "Hỗ trợ chuyển hóa bài giảng thông qua giao diện Studio đa phương tiện. Chọn các tab tương tác bên dưới để trải nghiệm.",
                 tabBtnSlide: "📊 Slide & Revise",
                 tabBtnInfo: "🖼️ Hỗ trợ Infographic",
                 tabBtnVideo: "🎬 Kịch bản Video",
                 
                 t1Title: "Chức năng \"Revise\" (Hiệu chỉnh Slide)",
-                t1Desc: "NotebookLM có thể tạo nhanh các bản phác thảo slide bài giảng tự động và hỗ trợ giảng viên hiệu chỉnh (revise) chính xác theo đúng ý đồ giảng dạy.",
+                t1Desc: "NotebookLM có thể tạo nhanh các bản phác thảo slide bài giảng tự động, hỗ trợ tạo nhanh khung bài học và các mẫu câu ví dụ để hỗ trợ tạo Slide, đồng thời hỗ trợ giảng viên hiệu chỉnh (revise) chính xác theo đúng ý đồ giảng dạy.",
                 slideSectionTitle: "Mô phỏng: Slide bài học số 30",
                 beforeSlide: "Bản thảo thô chưa hiệu chỉnh",
                 afterSlide: "Slide đã hiệu chỉnh hoàn thiện",
@@ -497,23 +639,35 @@
                 videoLinkJaBtn: "🇯🇵 日本語ビデオを再生 (第33課)",
                 videoScriptList: [
                     "<b>Thể mệnh lệnh (命令形) và Thể cấm chỉ (禁止形):</b> Dùng để ra lệnh, bắt buộc hành vi hoặc cấm đoán nghiêm khắc.",
-                    "<b>Cấu trúc ～と書いてあります / ～ ...:</b> Diễn đạt cách đọc hoặc ý nghĩa biểu thị của một văn bản, chữ Hán.",
+                    "<b>Cấu trúc ～ ...:</b> Diễn đạt cách đọc hoặc ý nghĩa biểu thị của một văn bản, chữ Hán.",
                     "<b>Giải nghĩa X は Y という意味です:</b> Trình bày rõ ngữ nghĩa chi tiết của một từ vựng, ký hiệu hoặc biển báo.",
-                    "<b>Trích dẫn gián tiếp ～と言っていました:</b> Truyền đạt một cách khách quan lời nhắn hoặc phát ngôn của người thứ ba.",
+                    "<b>Trích dẫn gián tiếp ～言っていました:</b> Truyền đạt một cách khách quan lời nhắn hoặc phát ngôn của người thứ ba.",
                     "<b>Cầu khiến lịch sự ～...:</b> Nhờ đối phương nhắn lại lời thoại một cách lịch sự, tôn trọng."
                 ],
                 colScene: "Phân cảnh",
                 colVisual: "Hình ảnh (Storyboard)",
                 colAudio: "Lời dẫn (Voice-over)",
                 
-                impactTitle: "Những Ứng Dụng Khác Trong Giảng Dạy",
+                impactTitle: "Tạo ngân hàng câu hỏi",
                 impactDesc: "NotebookLM hỗ trợ giảng viên chuẩn bị học liệu đa dạng và linh hoạt hơn cho lớp học.",
-                appCard1Title: "Thiết lập cấu trúc slide",
-                appCard1Desc: "Tạo nhanh khung bài học và các mẫu câu ví dụ cho bài giảng.",
-                appCard2Title: "Ngân hàng câu hỏi",
+                appCard2Title: "Trích xuất từ sách để tạo ngân hàng câu hỏi",
                 appCard2Desc: "Trích xuất các câu hỏi, bài tập từ sách để tổng hợp thành một ngân hàng câu hỏi cho giáo viên.",
                 appCard3Title: "Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp",
                 appCard3Desc: "Trích xuất ngữ pháp và từ vựng theo bài học để tạo thành ngân hàng dữ liệu, từ đó tạo ra các bài tập hoặc câu hỏi mới dựa trên vốn ngân hàng đó.",
+
+                extractVisualTitle: "Minh họa thực tế: Quy trình trích xuất câu hỏi từ nguồn sách",
+                extractVisualDesc: "Mô phỏng cách NotebookLM xử lý một yêu cầu trích xuất danh sách câu hỏi JLPT N3 từ tài liệu gốc.",
+                extractPromptHeader: "Prompt gửi cho NotebookLM (Yêu cầu trích xuất)",
+                extractResponseHeader: "Câu trả lời nhận được từ NotebookLM",
+                extractPromptFooter: "* Trích xuất tự động theo mẫu yêu cầu",
+                extractResponseFooter: "✓ 3 câu đại diện đã được cấu trúc hóa",
+
+                grammarVisualTitle: "Minh họa thực tế: Quy trình tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp",
+                grammarVisualDesc: "Mô phỏng cách NotebookLM thiết lập bài tập ngữ pháp bài 36-40 dựa trên vốn từ vựng từ bài 1-20.",
+                grammarPromptHeader: "Prompt gửi cho NotebookLM (Yêu cầu liên kết từ vựng & ngữ pháp)",
+                grammarResponseHeader: "Câu trả lời nhận được từ NotebookLM",
+                grammarPromptFooter: "* Đối chiếu ràng buộc từ vựng theo bài học",
+                grammarResponseFooter: "✓ 3 dạng Mondai đặc trưng đã được biên soạn",
 
                 quizTitle: "Kiểm Tra Trắc Nghiệm Kiến Thức",
                 quizDesc: "Xác nhận lại mức độ hiểu biết của bạn về trợ lý học tập NotebookLM thông qua bộ câu hỏi tương tác dưới đây.",
@@ -530,15 +684,20 @@
                 qCompletionScore: "Tổng điểm của bạn:",
                 qPassMsg: "Tốt lắm! Bạn đã nắm rõ các tính năng cơ bản của trợ lý NotebookLM.",
                 qFailMsg: "Bạn có thể xem lại các nội dung trên trang và thực hiện lại bài trắc nghiệm để cải thiện điểm số.",
+                qEnterNameLabel: "Nhập tên của bạn để ghi nhận kết quả:",
+                qNamePlaceholder: "Họ và tên...",
+                qBtnSubmitResult: "Gửi kết quả",
+                qNameRequiredAlert: "Vui lòng nhập tên của bạn trước khi gửi kết quả.",
+                qResultSaved: "Đã lưu kết quả",
 
                 footerText: "Tài liệu học liệu tương tác song ngữ dành cho giảng viên và nhà đào tạo đại học."
             },
             ja: {
                 navCore: "核心機能",
-                navStudio: "スタジオ機能",
-                navImpact: "その他の指導応用",
+                navStudio: "NotebookLM Studioのその他の応用",
+                navImpact: "問題バンクの作成",
                 navQuiz: "ミニクイズ",
-                heroTitle: 'ドキュメント処理の <span class="text-primary">負担から解放</span>',
+                heroTitle: '教材作成の <span class="text-primary">効率向上</span>',
                 heroSubtitle: '退屈なデータ資料を視覚的で正確なマルチメディア教材に変換。NotebookLMがどのように教育者の「第二の脳」となるかをご紹介します。',
                 
                 coreTitle: "教育向けの核心機能（ソースグラウンディングAI）",
@@ -560,30 +719,31 @@
                 ],
 
                 coreVisualTitle: "実証：『みんなの日本語 第1課』に基づく正確なソース引用プロセス",
-                coreVisualDesc: "NotebookLMがアップロードされた『みんなの日本語』原本データと回答を1対1で突き合わせ、ハルシネーションを抑制して回答する仕組み。",
+                coreVisualDesc: "NotebookLM gap アップロードされた『みんなの日本語』原本データと回答 to 1対1で突き合わせ、ハルシネーションを抑制して回答する仕組み。",
                 coreVisualInteractiveTip: "* 右側のAI回答内にある青い引用リンクにホバーするかクリックすると、左側の原本に該当するテキストセグメントがハイライト表示されます",
-                sourceDocHeader: "📄 翻訳・文法解説.pdf (14ページ)",
+                coreVisualConclusion: "NotebookLMは原本の知識のみを正確に読み取り、要約します。外部のソースから無断で情報を補完することはなく、引用元を常に明記します。",
+                sourceDocHeader: "📄 『みんなの日本語 初級Ⅰ 翻訳・文法解説』からの参照 (14ページ)",
 
                 sourceGrammarRule1: "<b>助詞「は」:</b> 名詞1の後に付き、その名詞が文の主題であることを表します。話し手は話そうとする主題をはっきりと提示します...",
                 sourceGrammarRule2: "<b>文末「です」:</b> 名詞の後に付き、述語を形成して丁寧な断定を表現し、同時に聞き手に対する敬意を表します。",
                 sourceGrammarRule3: "<b>文型例文1:</b> わたしは マイク・ミラーです（私はマイク・ミラーです）。",
                 
-                userPromptHeader: "💬 講師からの質問",
+                userPromptHeader: "💬 NotebookLMへの質問",
                 userPromptBox: `"第1課の自己紹介の基本構造を説明してください"`,
                 viewOriginalBtn: "🔍 原本14ページの画像を表示",
                 sourceBookCaption: "『みんなの日本語 初級Ⅰ』の教材原本データ",
 
-                aiResponseHeader: "🤖 NotebookLM AI学習アシスタント",
+                aiResponseHeader: "🤖 NotebookLMの回答",
                 aiResponseContent: "『みんなの日本語』第1課の14ページ「文法解説」のデータによると、自己紹介 of 基本構造は、主題を示す助詞 <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(1)' onmouseout='resetHighlights()'>は [1]</span> を主語の後ろに配置し、丁寧な断定を表す文末 <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(2)' onmouseout='resetHighlights()'>です [2]</span> で文を終了させます。具体的な文型例は： <span class='bg-sky-100 hover:bg-sky-200 text-primary font-bold px-1.5 py-0.5 rounded cursor-pointer transition-colors border border-sky-300 mx-1' onmouseover='highlightSegment(3)' onmouseout='resetHighlights()'>わたしは マイク・ミラーです [3]</span> です。",
 
-                studioTitle: "NotebookLM Studio: 実践的活用ガイド",
+                studioTitle: "NotebookLM Studioのその他の応用",
                 studioDesc: "マルチメディア教材への変換をサポート。下のインタラクティブタブを選択して、機能をお試しください。",
                 tabBtnSlide: "📊 スライド & 校正",
                 tabBtnInfo: "🖼️ インフォグラフィック設計",
                 tabBtnVideo: "🎬 動画スクリプト設計",
                 
                 t1Title: "スライド校正（Revise）機能のデモ",
-                t1Desc: "NotebookLMは、ソース資料 từ 講義スライドの構成案を自動生成し、さらに教育者の意図に合わせて校正（Revise）することができます。",
+                t1Desc: "NotebookLMは、講義のアウトラインや例文スライドの迅速な構築をサポートし、教育者の意図に合わせて校正（Revise）することができます。",
                 slideSectionTitle: "実例デモ：第30課講義スライド",
                 beforeSlide: "校正前のラフ下書きスライド",
                 afterSlide: "校正・ブラッシュアップ後の完成版",
@@ -618,17 +778,29 @@
                 colVisual: "映像設計（ストーリーボード）",
                 colAudio: "ナレーション（ボイスオーバー）",
                 
-                impactTitle: "その他の指導応用",
+                impactTitle: "問題バンクの作成",
                 impactDesc: "NotebookLMは、教育者が授業に合わせて多様で柔軟な教材を準備することをサポートします。",
-                appCard1Title: "スライド講義構成の構築",
-                appCard1Desc: "講義アウトラインや例文スライドを迅速に構築できます。",
-                appCard2Title: "問題バンク",
-                appCard2Desc: "原本教材から演習問題やタスクを抽出し、授業にすぐに活用できる問題バンクを統合整理します。",
+                appCard2Title: "書籍から抽出して問題バンクを作成",
+                appCard2Desc: "書籍から問題や演習を抽出し、教師用の...",
                 appCard3Title: "語彙・文法バンクからの問題作成",
                 appCard3Desc: "各課に属する文法規則や新規語彙を体系的にデータ化し、蓄積されたバンクを基に新しい問題や課題を生成します。",
 
+                extractVisualTitle: "実証：書籍データからの試験問題自動抽出プロセス",
+                extractVisualDesc: "NotebookLMが提供された試験対策ドキュメントからJLPT N3語彙問題を自動抽出する流れ。",
+                extractPromptHeader: "NotebookLMへのプロンプト (抽出要求)",
+                extractResponseHeader: "出力された抽出結果 (NotebookLM of 回答)",
+                extractPromptFooter: "* 指定フォーマットに従った自動抽出結果",
+                extractResponseFooter: "✓ 指定形式に構造化された3問のサンプル",
+
+                grammarVisualTitle: "実証：語彙・文法バンクからの自動問題作成プロセス",
+                grammarVisualDesc: "語彙制限（1〜20課）を維持しながら、指定された文法（36〜40課）の課題を自動構築する流れ。",
+                grammarPromptHeader: "NotebookLMへのプロンプト (文法・語彙 of 制限付き問題生成)",
+                grammarResponseHeader: "出力された文法練習問題 (NotebookLMの回答)",
+                grammarPromptFooter: "* 語彙・文法の制限条件に基づくクロスチェック作成",
+                grammarResponseFooter: "✓ 3種類の出題形式サンプルが構造化出力されました",
+
                 quizTitle: "理解度確認ミニクイズ",
-                quizDesc: "NotebookLMの機能と活用方法についての理解度を確認するための全8問の双方向ミニクイズです。",
+                quizDesc: "NotebookLMの機能と活用方法についての理解度を確認するための全8問 of 双方向ミニクイズです。",
                 qCurrent: "質問",
                 qScore: "現在のスコア",
                 qCorrectLabel: "正解です！ 🎉",
@@ -642,19 +814,24 @@
                 qCompletionScore: "あなたのスコア:",
                 qPassMsg: "素晴らしい！NotebookLMのアシスタント機能をよく理解しています。",
                 qFailMsg: "解説を読み直し、もう一度クイズに挑戦してスコアを向上させましょう。",
+                qEnterNameLabel: "結果を記録するためにお名前を入力してください：",
+                qNamePlaceholder: "お名前...",
+                qBtnSubmitResult: "結果を送信",
+                qNameRequiredAlert: "結果を送信する前にお名前を入力してください。",
+                qResultSaved: "結果が保存されました",
 
-                footerText: "高等教育機関の講師、および研修開発コーディネーター向けに作成されたインタラクティブ教材。"
+                footerText: "高等教育機関 of 講師、および研修開発コーディネーター向けに作成されたインタラクティブ教材。"
             }
         };
 
         const reviseTextData = {
             vi: {
-                academic: `<h3 class="text-lg font-bold text-primary mb-2">Bài 1: Danh từ 1 は Danh từ 2 です</h3><ul class="list-disc pl-5 space-y-2"><li><b>Ý nghĩa:</b> Biểu thị câu khẳng định lịch sự (N1 là N2).</li><li><b>Nguyên tắc cấu trúc:</b> Trợ từ は liên kết chủ đề và です nằm ở cuối câu biểu thị thái độ kính trọng đối với người nghe.</li><li><b>Ví dụ tiêu biểu:</b> わたistas wa 学生です (Chúng tôi là sinh viên).</li></ul>`,
+                academic: `<h3 class="text-lg font-bold text-primary mb-2">Bài 1: Danh từ 1 は Danh từ 2 です</h3><ul class="list-disc pl-5 space-y-2"><li><b>Ý nghĩa:</b> Biểu thị câu khẳng định lịch sự (N1 là N2).</li><li><b>Nguyên tắc cấu trúc:</b> Trợ từ は liên kết chủ đề và です nằm ở cuối câu biểu thị thái độ kính trọng đối với người nghe.</li><li><b>Ví dụ tiêu biểu:</b> <b>わたistas wa 学生です</b> (Chúng tôi là sinh viên).</li></ul>`,
                 story: `<h3 class="text-lg font-bold text-primary mb-2">Làm Quen Với Tiếng Nhật Thật Đơn Giản</h3><p class="italic text-slate-200 font-medium">"Khi bạn muốn giới thiệu mình là ai trong tiếng Nhật, hãy tưởng tượng trợ từ は như một cây cầu chỉ thẳng vào chính bạn, và từ です giống như một cái cúi đầu chào lịch thiệp ở cuối câu. Ví dụ, khi anh Miller nói 'わたし...'"</p>`,
                 short: `<div class="font-bold text-lg text-primary mb-2">🔥 Ngữ pháp Bài 1 cốt lõi:</div><div class="flex flex-col sm:flex-row gap-3"><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">..: Chỉ chủ đề chủ ngữ</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">đơ: Khẳng định lịch sự</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">Ví dụ: わたし...</div></div>`
             },
             ja: {
-                academic: `<h3 class="text-lg font-bold text-primary mb-2">第1課：名詞1 は 名詞2 です</h3><ul class="list-disc pl-5 space-y-2"><li><b>文法的意味：</b> 丁寧な肯定判断（N1はN2である）を構築する基本文型。</li><li><b>構造적法則：</b> 主題提示の助詞「は」および文末の丁寧な叙述・断定を丁寧な「です」の呼応関係。</li><li><b>代表例文：</b> わたしたちは 学生です（私たちは学生です）。</li></ul>`,
+                academic: `<h3 class="text-lg font-bold text-primary mb-2">第1課：名詞1 は 名詞2 です</h3><ul class="list-disc pl-5 space-y-2"><li><b>文法的意味：</b> 丁寧な肯定判断（N1はN2である）を構築する基本文型。</li><li><b>構造적法則：</b> 主題提示の助詞「は」および文末の丁寧な叙述・断定 lặp lại trợ từ và です của câu.</li><li><b>代表例文：</b> わたしたちは 学生です（私たちは学生です）。</li></ul>`,
                 story: `<p class="italic text-slate-200 font-medium">「日本語で自己紹介するとき、助詞の『は』はまるでスポットライトのように、あなた自身を優しく指し示します。そして文末の『です』は、相手への丁寧なお辞儀のような役割を果たします。ミラーさんが『わたしは マイク・ミラーです』と名乗るとき、その美しい基本表現が相手の心を開く鍵となるのです。」</p>`,
                 short: `<div class="font-bold text-lg text-primary mb-2">🔥 第1課文法の要点：</div><div class="flex flex-col sm:flex-row gap-3"><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">は：主題提示</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">です：丁寧な肯定</div><div class="bg-slate-800 p-3 rounded-lg text-xs font-semibold">例文：わたしは ミラーです</div></div>`
             }
@@ -667,7 +844,7 @@
             ],
             ja: [
                 { scene: "シーン 1", visual: "メインタイトル画面：『第33課文法解説：命令形と禁止形』が表示。ホワイト của  ミニマルなテキストデザイン。", audio: "みなさん、こんにちは。このパートでは、第33課の命令表現や禁止表現の構造を詳細に学んでいきましょう..." },
-                { scene: "シーン 2", visual: "例文解説スライド：『X は Y という意味です』。ピクトグラムや各種記号の意味説明画面が表示。", audio: "この表現構造は、日常生活の標識やマーク、専門用語の意味内容を正確に説明する際に重宝します..." }
+                { scene: "シーン 2", visual: "例文解説スライド：『X は Y という意味です』。ピクトグラムや各種記号の意味説明画面が表示。", audio: "この表現構造 is、日常生活の標識やマーク、専門用語の意味内容を正確に説明する際に重宝します..." }
             ]
         };
 
@@ -687,16 +864,16 @@
                     explanation: "NotebookLM chỉ hoạt động dựa trên học liệu chuẩn (giáo trình, tệp PDF, video...) được chính bạn cung cấp để triệt tiêu lỗi ảo tưởng."
                 },
                 {
-                    q: "2. Năng lực 'Zero Hallucination' trong giáo dục đại học mang ý nghĩa cốt lõi nào?",
+                    q: "2. Năng lực 'Hạn chế tối đa ảo tưởng' trong NotebookLM mang ý nghĩa cốt lõi nào?",
                     options: [
-                        "AI không tự ý thêm thắt kiến thức ngoài tài liệu gốc",
+                        "AI không tự ý thêm thắt hay bịa đặt kiến thức ngoài tài liệu gốc",
                         "AI tự động sửa lỗi diễn đạt của học sinh",
                         "AI có thể dự đoán đề thi tương lai",
                         "AI trả lời nhanh chóng bằng 100 thứ tiếng"
                     ],
                     correct: 0,
-                    hint: "Liên quan đến độ tin cậy tuyệt đối của học thuật.",
-                    explanation: "Zero Hallucination đảm bảo AI bám sát hoàn toàn tài liệu gốc, không bị ảo tưởng hoặc bịa đặt kiến thức nằm ngoài nguồn."
+                    hint: "Liên quan đến việc AI bám sát hoàn toàn tài liệu gốc để đảm bảo độ tin cậy.",
+                    explanation: "Tính năng này đảm bảo AI tập trung truy xuất thông tin từ tài liệu gốc, không tự ý bịa đặt kiến thức nằm ngoài nguồn."
                 },
                 {
                     q: "3. Minh chứng rõ nét nhất bảo đảm tính liêm chính học thuật trong câu trả lời của NotebookLM là gì?",
@@ -723,16 +900,16 @@
                     explanation: "NotebookLM hỗ trợ đa dạng học liệu bao gồm PDF, Google Docs, link web và thậm chí cả lời thoại video YouTube."
                 },
                 {
-                    q: "5. Điểm đặc trưng nhất của chức năng 'Revise' trong phần Slide là gì?",
+                    q: "5. Chức năng 'Slide & Revise' của NotebookLM hỗ trợ giảng viên như thế nào?",
                     options: [
                         "Tự động đổi màu slide ngẫu nhiên",
-                        "Hiệu chỉnh cấu trúc, độ dài và tông giọng slide đúng ý đồ giảng dạy",
+                        "Tạo nhanh khung bài học, các mẫu câu ví dụ và hiệu chỉnh slide đúng ý đồ giảng dạy",
                         "Dịch tự động toàn bộ sang tiếng Anh",
                         "Xóa hoàn toàn slide bài học cũ"
                     ],
                     correct: 1,
                     hint: "Đọc mô tả chức năng Slide & Revise tại Studio sáng tạo.",
-                    explanation: "Chức năng Revise cho phép giảng viên hiệu chỉnh chính xác cấu trúc và thông tin chi tiết của slide theo đúng kịch bản mong muốn."
+                    explanation: "Slide & Revise hỗ trợ tạo nhanh khung bài học, mẫu câu ví dụ và hiệu chỉnh cấu trúc slide chính xác theo kịch bản mong muốn."
                 },
                 {
                     q: "6. Ba cấu trúc visual chính mà phần hỗ trợ Infographic đề xuất bóc tách bao gồm gì?",
@@ -747,15 +924,15 @@
                     explanation: "Hỗ trợ Infographic đề xuất 3 nhóm: Tiêu đề ngắn gọn, các bước cốt lõi và biểu tượng trực quan để tương thích với Canva."
                 },
                 {
-                    q: "7. Chức năng 'Ngân hàng câu hỏi' thực hiện nhiệm vụ gì để giải phóng sức lao động của giáo viên?",
+                    q: "7. Chức năng 'Trích xuất từ sách để tạo ngân hàng câu hỏi' thực hiện nhiệm vụ gì?",
                     options: [
                         "Tự động gửi email bài tập cho từng học sinh",
-                        "Trích xuất các câu hỏi, bài tập từ sách để tổng hợp",
+                        "Trích xuất các câu hỏi, bài tập từ sách gốc để tổng hợp thành ngân hàng câu hỏi",
                         "Chấm điểm trực tuyến tự động không cần xem bài",
                         "Tìm bài giảng từ các trường đại học khác"
                     ],
                     correct: 1,
-                    hint: "Đọc phần mô tả 'Ngân hàng câu hỏi' tại tab 3.",
+                    hint: "Đọc mô tả tính năng này trong tab Tạo ngân hàng câu hỏi.",
                     explanation: "NotebookLM tự động gom, trích xuất tất cả câu hỏi bài tập có sẵn trong tài liệu đã nạp để tổng hợp thành ngân hàng đề."
                 },
                 {
@@ -767,7 +944,7 @@
                         "Dịch từ vựng sang tiếng Pháp tự động"
                     ],
                     correct: 1,
-                    hint: "Xem mục ứng dụng thứ 3 của tab 3.",
+                    hint: "Xem mục ứng dụng thứ hai trong tab Tạo ngân hàng câu hỏi.",
                     explanation: "Hệ thống hỗ trợ phân tách kho từ vựng và ngữ pháp theo từng chương/bài để thiết kế bài kiểm tra mới dựa trên kho dữ liệu đó."
                 }
             ],
@@ -782,22 +959,22 @@
                     ],
                     correct: 1,
                     hint: "「教育向けの核心機能」の項目を確認してください。",
-                    explanation: "NotebookLMはハルシネーション（嘘の出力）を防ぐため、ユーザー自身が読み込ませた正確なソースのみに基づき動作します。"
+                    explanation: "NotebookLMは、ユーザー自身が読み込ませた正確なソースのみに基づき動作します。"
                 },
                 {
-                    q: "2. 教育現場における「ゼロ・ハルシネーション」の最大の意義は何ですか？",
+                    q: "2. NotebookLMにおける「ハルシネーション（情報の無断追加）の抑制」の最大の意義は何ですか？",
                     options: [
-                        "AIは提供された原本の外部から憶測で情報を追加しない",
+                        "AIは提供された原本の範囲内で情報を処理し、憶測で情報を追加しない",
                         "AIが受講生の文章表現の誤りを自動修正する",
                         "AIが将来のテスト傾向を自動で推測する",
                         "AIが100以上の言語で即座に応答を生成する"
                     ],
                     correct: 0,
                     hint: "学術的な信頼性をどのように守るかに関連しています。",
-                    explanation: "ハルシネーションをゼロに抑えることで、原本以外の不正確なデータが混入せず、教材の品質を堅牢に維持できます。"
+                    explanation: "不要な憶測データを排除し、原本以外の不正確なデータが混入しないようにします。"
                 },
                 {
-                    q: "3. NotebookLMの回答の透明性と整合性を証明する主な特徴は何ですか？",
+                    q: "3. NotebookLM of 回答の透明性と整合性を証明する主な特徴は何ですか？",
                     options: [
                         "多言語への自動翻訳能力",
                         "原文 of 該当箇所（ページ・行）を直接引用表記（Citations）すること",
@@ -806,7 +983,7 @@
                     ],
                     correct: 1,
                     hint: "NotebookLMは、回答が原本のどこに基づいているかをリンクで示します。",
-                    explanation: "回答に含まれる引用番号をクリックすることで、原本PDFの該当するテキスト位置を簡単に追跡・検証できます。"
+                    explanation: "回答に含まれる引用番号をクリックすることで、原本PDF of 該当するテキスト位置を簡単に追跡・検証できます。"
                 },
                 {
                     q: "4. NotebookLMにインポート可能なデータ形式には何がありますか？",
@@ -818,19 +995,19 @@
                     ],
                     correct: 1,
                     hint: "「柔軟なマルチソース管理」の項目を確認してください。",
-                    explanation: "PDF、Googleドキュメント、WebページのURL、さらにYouTube動画の音声書き起こしなど多岐にわたるソースに対応しています。"
+                    explanation: "PDF、Googleドキュメント、WebページのURL、さらにYouTube動画 of 音声書き起こしなど多岐にわたるソースに対応しています。"
                 },
                 {
-                    q: "5. スライド作成における「Revise」機能の主要な役割は何ですか？",
+                    q: "5. スライド作成における「Slide & Revise」機能は教育者をどのように支援しますか？",
                     options: [
                         "スライドの配色デザインをランダムに変更する",
-                        "教育者の指導意図に合わせて、構成やトーンを正確に校正する",
+                        "講義アウトラインや例文スライドの迅速な構築をサポートし、意図に合わせて校正する",
                         "自動的にスライド全体の英語翻訳を実行する",
                         "古い講義用スライドを全消去してリセットする"
                     ],
                     correct: 1,
                     hint: "「スタジオ機能」タブのスライド＆校正パートを確認してください。",
-                    explanation: "自動構築されたスライドの骨子をベースに、講師の細かい表現プランに沿って情報をリライト・修正してくれます。"
+                    explanation: "自動構築されたスライドの骨子をベースに、講師の細かい表現プランに沿って情報を構築、修正してくれます。"
                 },
                 {
                     q: "6. インフォグラフィックの視覚設計支援において、抽出が推奨されている3つの視覚構造は何ですか？",
@@ -845,15 +1022,15 @@
                     explanation: "Canvaなどのデザインツールに落とし込みやすくするため、キャッチコピー、ステップ、アイコンの3点を整理してくれます。"
                 },
                 {
-                    q: "7. 「問題バンク」の自動化機能は、講師のどのような業務負担を削減しますか？",
+                    q: "7. 「書籍から抽出して問題バンクを作成」機能は、講師のどのような業務負担を削減しますか？",
                     options: [
-                        "生徒個別への課題送信用メールの自動送信",
-                        "インポートした原本に存在する既存の演習問題やタスクの抽出と統合",
+                        "生徒個別への課題送信用メール of 自動送信",
+                        "原本教材から既存 of 演習問題やタスクを抽出して統合整理する",
                         "課題に対する自動採点・フィードバック",
                         "他大学の講義データのオンラインサーチ"
                     ],
                     correct: 1,
-                    hint: "「その他の指導応用」タブの問題バンクの記述を確認してください。",
+                    hint: "「問題バンクの作成」タブの問題バンクの記述を確認してください。",
                     explanation: "読み込ませた書籍内から練習問題を漏れなく抽出して一箇所に集約し、オリジナルの問題集の基礎を築きます。"
                 },
                 {
@@ -865,7 +1042,7 @@
                         "語彙を自動的にフランス語に翻訳する"
                     ],
                     correct: 1,
-                    hint: "「その他の指導応用」タブの3つ目の項目を確認してください。",
+                    hint: "「問題バンクの作成」タブの2つ目の項目を確認してください。",
                     explanation: "各課に登場する定型表現や必須単語をデータベース化（バンク化）し、それらを用いた全く新しい演習問題を生成できます。"
                 }
             ]
@@ -925,6 +1102,7 @@
             setLangText('core-visual-title', activeDict.coreVisualTitle);
             setLangText('core-visual-desc', activeDict.coreVisualDesc);
             setLangText('core-visual-interactive-tip', activeDict.coreVisualInteractiveTip);
+            setLangText('core-visual-conclusion', activeDict.coreVisualConclusion);
             setLangText('source-doc-header', activeDict.sourceDocHeader);
 
             // Document text rules
@@ -978,12 +1156,25 @@
 
             setLangText('impact-title', activeDict.impactTitle);
             setLangText('impact-desc', activeDict.impactDesc);
-            setLangText('app-card1-title', activeDict.appCard1Title);
-            setLangText('app-card1-desc', activeDict.appCard1Desc);
             setLangText('app-card2-title', activeDict.appCard2Title);
             setLangText('app-card2-desc', activeDict.appCard2Desc);
             setLangText('app-card3-title', activeDict.appCard3Title);
             setLangText('app-card3-desc', activeDict.appCard3Desc);
+
+            // New extraction visual elements translations
+            setLangText('extract-visual-title', activeDict.extractVisualTitle);
+            setLangText('extract-visual-desc', activeDict.extractVisualDesc);
+            setLangText('extract-prompt-header', activeDict.extractPromptHeader);
+            setLangText('extract-response-header', activeDict.extractResponseHeader);
+            setLangText('extract-prompt-footer', activeDict.extractPromptFooter);
+            setLangText('extract-response-footer', activeDict.extractResponseFooter);
+
+            setLangText('grammar-visual-title', activeDict.grammarVisualTitle);
+            setLangText('grammar-visual-desc', activeDict.grammarVisualDesc);
+            setLangText('grammar-prompt-header', activeDict.grammarPromptHeader);
+            setLangText('grammar-response-header', activeDict.grammarResponseHeader);
+            setLangText('grammar-prompt-footer', activeDict.grammarPromptFooter);
+            setLangText('grammar-response-footer', activeDict.grammarResponseFooter);
 
             // Quiz general labels translation
             setLangText('quiz-title', activeDict.quizTitle);
@@ -1029,6 +1220,31 @@
             const activeBtn = document.getElementById(`main-tab-btn-${tabId}`);
             if (activeBtn) {
                 activeBtn.className = "main-tab-btn px-4 py-3 font-bold text-sm md:text-base border-b-2 border-primary text-primary focus:outline-none transition-all";
+            }
+        }
+
+        // Sub-Tab Toggle within "Tạo ngân hàng câu hỏi" Tab
+        function switchImpactSubTab(subTabId) {
+            // Hide all impact sub-tab content wrappers
+            document.querySelectorAll('.impact-sub-tab-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('active');
+            });
+
+            // Show selected mockup section
+            document.getElementById(`impact-content-${subTabId}`).classList.remove('hidden');
+            document.getElementById(`impact-content-${subTabId}`).classList.add('active');
+
+            // Manage card button highlight styles
+            const cardExtract = document.getElementById('impact-card-extract');
+            const cardGrammar = document.getElementById('impact-card-grammar');
+
+            if (subTabId === 'extract') {
+                cardExtract.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-primary shadow-md w-full";
+                cardGrammar.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-transparent hover:border-gray-200 w-full";
+            } else {
+                cardGrammar.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-primary shadow-md w-full";
+                cardExtract.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-transparent hover:border-gray-200 w-full";
             }
         }
 
@@ -1090,7 +1306,7 @@
             const totalQuestions = questionsList.length;
 
             if (state.quiz.currentIdx >= totalQuestions) {
-                // Render completion screen (Passing score updated to 6 out of 8 questions)
+                // Render completion screen (Passing score is 6 out of 8 questions)
                 const isPassed = state.quiz.score >= 6;
                 board.innerHTML = `
                     <div class="text-center py-8 space-y-6">
@@ -1103,9 +1319,22 @@
                         <p class="text-sm text-textMuted max-w-md mx-auto">
                             ${isPassed ? langDict.qPassMsg : langDict.qFailMsg}
                         </p>
-                        <button onclick="restartQuiz()" class="px-6 py-3 bg-primary text-white font-bold rounded-xl text-sm shadow hover:bg-primary/90 transition-all">
-                            ${langDict.qBtnRestart}
-                        </button>
+                        
+                        ${isPassed ? `
+                        <div class="max-w-sm mx-auto space-y-3 p-4 bg-sky-50/50 rounded-xl border border-sky-100 text-left">
+                            <label for="participant-name" class="block text-xs font-bold text-textMain">${langDict.qEnterNameLabel}</label>
+                            <input type="text" id="participant-name" class="w-full p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-sm text-textMain" placeholder="${langDict.qNamePlaceholder}">
+                            <button onclick="submitResult()" class="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-xs transition-all shadow-sm">
+                                ${langDict.qBtnSubmitResult}
+                            </button>
+                        </div>
+                        ` : ''}
+
+                        <div class="pt-2">
+                            <button onclick="restartQuiz()" class="px-6 py-3 bg-primary text-white font-bold rounded-xl text-sm shadow hover:bg-primary/90 transition-all">
+                                ${langDict.qBtnRestart}
+                            </button>
+                        </div>
                     </div>
                 `;
                 return;
@@ -1222,6 +1451,27 @@
             state.quiz.selectedAns = null;
             state.quiz.isSubmitted = false;
             renderQuiz();
+        }
+
+        async function submitResult() {
+            const userName = document.getElementById('participant-name').value.trim();
+            if (!userName) {
+                alert(dict[state.lang].qNameRequiredAlert);
+                return;
+            }
+
+            await fetch(
+                "https://script.google.com/macros/s/AKfycbxO8LDlVjaWO3rQSJ62gzv1hIEz4BT1L4VbN6slE5xxXlTZK1TGF7QSpn9wG674_D9r/exec",
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        name: userName,
+                        score: state.quiz.score
+                    })
+                }
+            );
+
+            alert(dict[state.lang].qResultSaved);
         }
 
         function initCharts() {
