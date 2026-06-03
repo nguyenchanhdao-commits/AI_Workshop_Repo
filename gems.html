@@ -252,7 +252,7 @@
                         <div class="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base">
                             <p class="font-semibold text-slate-800 dark:text-slate-200">Gemini Gemsの基本定義：</p>
                             <p>
-                                <strong>Gemini Gems</strong>は、Google of 対話型AI「Gemini」のカスタムおよび再利用可能なバージョンです。特定のタスクに合わせて役割（ペルソナ）、振る舞い、制約事項、ナレッジソースなどのシステムプロンプトを固定保存し、いつでも呼び出すことができます。
+                                <strong>Gemini Gems</strong>は、Googleの対話型AI「Gemini」のカスタムおよび再利用可能なバージョンです。特定のタスクに合わせて役割（ペルソナ）、振る舞い、制約事項、ナレッジソースなどのシステムプロンプトを固定保存し、いつでも呼び出すことができます。
                             </p>
                             <p>
                                 通常のAIチャットでは、長いやり取りの中でモデルが初期設定を忘れてしまう「コンテキストの喪失」が発生しますが、Gemsは指示文をコアにロックするため、最初から最後まで安定した一貫性のある動作を維持します。
@@ -526,7 +526,7 @@
                                         <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3">
                                             <i class="fa-solid fa-arrows-maximize"></i>
                                         </div>
-                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">コンテキスト制限 of 超越</p>
+                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">コンテキスト制限の超越</p>
                                         <p class="text-xs text-slate-500">Gemini単体の10ファイル制限を超え、NotebookLMを経由して最大300のデータソースを一度に読み込み可能です。</p>
                                     </div>
                                     <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
@@ -568,7 +568,7 @@
                                     <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
                                     <div>
                                         <p class="font-bold text-slate-900 dark:text-white">Lựa chọn cách thiết lập chỉ dẫn</p>
-                                        <p class="text-xs mt-1">Chọn ghi mô tả ngắn rồi bấm nút đũa thần nhờ AI tối ưu viết hộ, hoặc tự tay viết thủ công theo cấu trúc công thức PACKED nâng cao.</p>
+                                        <p class="text-xs mt-1">Nhờ AI tối ưu viết hộ, hoặc tự tay viết thủ công theo cấu trúc công thức PACKED nâng cao.</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-3">
@@ -616,7 +616,7 @@
                                     <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
                                     <div>
                                         <p class="font-bold text-slate-900 dark:text-white">セットアップ手法の選択</p>
-                                        <p class="text-xs mt-1">指示文の書き方は2通りあります。簡単な一文を入力して魔法 of アイコンをクリックしAIに詳細化させる（ガイド機能）か、PACKEDフレームワークを駆使して手動で細かく構築します。</p>
+                                        <p class="text-xs mt-1">指示文の書き方は2通りあります。自分自身で内容を入力するか、AIに詳細化させる（ガイド機能）か、PACKEDフレームワークを駆使して手動で細かく構築します。</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-3">
@@ -863,8 +863,10 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
                 <div class="relative z-10 w-full">
                     <span class="bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 inline-block">AI Playground Simulator</span>
                     <h2 class="text-2xl md:text-3xl font-extrabold mb-2">Trình Tạo Đề Thi & Chỉ Dẫn Thử Nghiệm</h2>
+                    <h2 class="text-2xl md:text-3xl font-extrabold mb-2">試験問題ジェネレーター＆シミュレーター </h2>
                     <p class="text-xs md:text-sm text-indigo-200 max-w-2xl mb-8">
-                        Chạy mô phỏng "JLPT N3 Vocabulary Architect Gem" để xem kết quả tạo bài kiểm tra tự động từ nguồn dữ liệu dưới dạng Markdown.
+                        Chạy mô phỏng "JLPT N3 Vocabulary Architect Gem" để xem kết quả tạo bài kiểm tra tự động từ nguồn dữ liệu dưới dạng Markdown.<br>
+                        「JLPT N3語彙作成Gems」のシミュレーションを実行し、知識ベースからMarkdown形式で自動生成された試験問題結果を確認します。
                     </p>
 
                     <!-- Single Column: Exam Architect Simulation Chat -->
@@ -876,15 +878,15 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
                                 <div>
                                     <label class="block text-slate-400 font-semibold mb-1">Phân loại từ vựng / 語彙カテゴリ</label>
                                     <select id="sim-subject" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-purple-500">
-                                        <option value="Từ vựng N3 - Danh từ (名詞)">Từ vựng N3 - Danh từ (名詞)</option>
-                                        <option value="Từ vựng N3 - Động từ (動詞)">Từ vựng N3 - Động từ (動詞)</option>
+                                        <option value="N3 - Danh từ (名詞)">N3 - Danh từ (名詞)</option>
+                                        <option value="N3 - Động từ (動詞)">N3 - Động từ (動詞)</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-slate-400 font-semibold mb-1">Mục tiêu luyện tập / 練習ターゲット</label>
                                     <select id="sim-level" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-purple-500">
-                                        <option value="Luyện tập rút gọn (Mondai 1, 2, 3)">Luyện tập rút gọn (Mondai 1, 2, 3)</option>
-                                        <option value="Đề khảo sát đầy đủ (5 Mondai)">Đề khảo sát đầy đủ (5 Mondai)</option>
+                                        <option value="Luyện tập rút gọn (Mondai 1, 2, 3)">Luyện tập rút gọn / 簡易演習 (問題1、2、3)</option>
+                                        <option value="Đề khảo sát đầy đủ (5 Mondai)">Đề khảo sát đầy đủ / 本試験形式 (5つの大問すべて)</option>
                                     </select>
                                 </div>
                             </div>
@@ -1517,21 +1519,21 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
 
 ---
 
-## ANSWER KEY & CITATION (ĐÁP ÁN & TRÍCH DẪN ĐỐI CHIẾU)
+## ĐÁP ÁN & TRÍCH DẪN ĐỐI CHIẾU / 解答と出典
 
-* **Question 1:** 正解: 1 (きょうりょく)
+* 1: 正解: 1 (きょうりょく)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 14 từ tệp nguồn. Từ 「協力」có cách đọc chính xác là 「きょうりょく」./ 問題バンクの14番から直接抽出。「協力」の正しい読み方は「きょうりょく」です。
   - *[Nguồn / ソース: file N3_Mondai1_Bank.pdf, câu 14 / 14番]*
 
-* **Question 2:** 正解: 1 (どうにゅう)
+* 2: 正解: 1 (どうにゅう)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 32 từ tệp nguồn. Từ 「導入」có cách đọc chính xác là 「どうにゅう」./ 問題バンクの32番から直接抽出。「導入」の正しい読み方は「どうにゅう」です。
   - *[Nguồn / ソース: file N3_Mondai1_Bank.pdf, câu 32 / 32番]*
 
-* **Question 3:** 正解: 2 (共同)
+* 3: 正解: 2 (共同)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 8 từ tệp nguồn. Từ 「きょうどう 共同」mang nghĩa cùng nhau hợp tác làm gì đó./ 問題バンクの8番から直接抽出。「きょうどう 共同」は一緒に協力して何かをする意味です。
   - *[Nguồn / ソース: file N3_Mondai2_Bank.pdf, câu 8 / 8番]*
 
-* **Question 4:** 正解: 2 (共同)
+* 4: 正解: 2 (共同)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 55 từ tệp nguồn. Ngữ cảnh "Mọi người cùng nhau làm việc vì chuẩn bị muộn" phù hợp với từ 「共同」./ 問題バンクの55番から直接抽出。準備が遅れているため、みんなで協力して作業を行うという文脈に最も適しているのは「共同」です。
   - *[Nguồn / ソース: file N3_Mondai3_Bank.pdf, câu 55 / 55番]*
 `;
@@ -1581,37 +1583,31 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
 
 ---
 
-## ANSWER KEY & CITATION (ĐÁP ÁN & TRÍCH DẪN ĐỐI CHIẾU)
+## ĐÁP ÁN & TRÍCH DẪN ĐỐI CHIẾU / 解答と出典
 
-* **Question 1:** 正解: 1 (きょうりょく)
+* 1: 正解: 1 (きょうりょく)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 14 từ tệp nguồn. Từ 「協力」có cách đọc chính xác là 「きょうりょく」./ 問題バンクの14番から直接抽出。「協力」の正しい読み方は「きょうりょく」です。
   - *[Nguồn / ソース: file N3_Mondai1_Bank.pdf, câu 14 / 14番]*
 
-* **Question 2:** 正解: 2 (共同)
+* 2: 正解: 2 (共同)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 8 từ tệp nguồn. Từ 「きょうどう 共同」mang nghĩa cùng nhau hợp tác làm việc./ 問題バンクの8番から直接抽出。「きょうどう 共同」は一緒に協力して何かをする意味です。
   - *[Nguồn / ソース: file N3_Mondai2_Bank.pdf, câu 8 / 8番]*
 
-* **Question 3:** 正解: 2 (共同)
+* 3: 正解: 2 (共同)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 55 từ tệp nguồn. Ngữ cảnh hợp tác thực hiện công việc phù hợp với từ 「共同」./ 問題バンクの55番から直接抽出。準備が遅れているため、みんなで協力して作業を行うという文脈に最も適しているのは「共同」です。
   - *[Nguồn / ソース: file N3_Mondai3_Bank.pdf, câu 55 / 55番]*
 
-* **Question 4:** 正解: 2 (チェンジした)
+* 4: 正解: 2 (チェンジした)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 19 từ tệp nguồn. 「交代する」đồng nghĩa với việc luân phiên thay thế, chuyển giao./ 問題バンクの19番から直接抽出。「交代する」は交替で何かを変える、チェンジすることと同義です。
   - *[Nguồn / ソース: file N3_Mondai4_Bank.pdf, câu 19 / 19番]*
 
-* **Question 5:** 正解: 3 (二人で共同の事業を始めることにした。)
+* 5: 正解: 3 (二人で共同の事業を始めることにした。)
   - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 4 từ tệp nguồn. Quy tắc kết hợp danh từ ghép 「共同の事業」 tạo nghĩa tự nhiên nhất./ 問題バンクの4番から直接抽出。「共同の事業」という名詞の組み合わせが最も自然な意味を成しています。
   - *[Nguồn / ソース: file N3_Mondai5_Bank.pdf, câu 4 / 4番]*
 `;
             }
 
-            contentDiv.innerHTML = `<span class="text-indigo-400 font-bold">[SYSTEM]</span> Đang kết nối tài khoản Google Workspace...<br>
-<span class="text-emerald-400 font-bold">[SUCCESS]</span> Tìm thấy kho dữ liệu tham chiếu gắn kèm: <code class="text-pink-400">NotebookLM: ${subject}</code><br>
-<span class="text-slate-400">[PROCESS]</span> Phân tích ngữ cảnh ranh giới (Grounding) và định cấu trúc thiết lập: <code class="text-yellow-400">${level}</code>...<br>
-<span class="text-indigo-400 font-bold">[AI GENERATING]</span> Sinh đề kiểm tra từ vựng N3 bám sát tài liệu nguồn dưới dạng Markdown thô...<br><br>
-<div class="border-t border-slate-800 pt-3 mt-3 text-slate-300 font-mono text-xs overflow-x-auto">
-<pre class="text-slate-300">${simulatedOutput}</pre>
-</div>`;
+            contentDiv.innerHTML = `<pre class="text-slate-300">${simulatedOutput}</pre></div>`;
             terminalBox.scrollTop = terminalBox.scrollHeight;
         }
     </script>
