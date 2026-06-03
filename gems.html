@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotebookLM & Gemini Gems Integration Guide</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f5f7ff',
+                            100: '#ebf0ff',
+                            200: '#d6e0ff',
+                            500: '#4f46e5',
+                            600: '#4338ca',
+                            700: '#3730a3',
+                            800: '#1e1b4b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glassmorphism {
+            background: rgba(15, 23, 42, 0.85);
+        }
+        .language-pane {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Premium Navigation Bar -->
+    <nav class="sticky top-0 z-50 glassmorphism border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Identity -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                        <i class="fa-solid fa-brain text-lg animate-pulse"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 text-lg">AI Second Brain</span>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">NotebookLM + Gemini Gems</p>
+                    </div>
+                </div>
+
+                <!-- Language Control Center (Dynamic Switcher) -->
+                <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800/50">
+                    <button id="btn-vn" onclick="setLanguage('vn')" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all duration-250 bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm">
+                        <span class="w-4 h-3 bg-red-600 inline-block rounded-sm relative overflow-hidden"><span class="absolute inset-x-0 top-[25%] bottom-[25%] left-[25%] right-[25%] bg-yellow-400 clip-star" style="clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></span></span>
+                        <span>Tiếng Việt</span>
+                    </button>
+                    <button id="btn-jp" onclick="setLanguage('jp')" class="px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all duration-250 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                        <span class="w-4 h-3 bg-white inline-block rounded-sm border border-slate-300 relative"><span class="absolute w-1.5 h-1.5 rounded-full bg-red-600 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span></span>
+                        <span>日本語</span>
+                    </button>
+                </div>
+
+                <!-- Dark/Light Theme Control & GitHub Mockup -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent hover:border-slate-200 dark:hover:border-slate-800 transition-all">
+                        <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                    </button>
+                    <a href="#playground" class="hidden md:flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium text-xs px-4 py-2.5 rounded-xl shadow-md transition-all">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <span>Playground Builder</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Top Hero Banner -->
+    <header class="relative bg-gradient-to-b from-indigo-50 via-slate-50 to-transparent dark:from-slate-900/40 dark:via-slate-950 to-transparent py-12 border-b border-slate-200/50 dark:border-slate-800/50 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-flex items-center space-x-1.5 bg-indigo-100/80 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 px-3 py-1 rounded-full text-xs font-bold tracking-wide mb-4">
+                <i class="fa-solid fa-bolt text-[10px]"></i>
+                <span id="hero-tag">Tài liệu hướng dẫn 2026 / ロードマップ</span>
+            </span>
+            <h1 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-4xl mx-auto leading-tight">
+                Thiết kế Bộ Não Phụ AI Từ NotebookLM & Gemini Gems
+            </h1>
+            <p id="hero-subtitle" class="mt-4 text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                Kiến trúc hỗ trợ tối ưu hóa quy trình làm việc. Kết hợp cơ sở dữ liệu đối chiếu chính xác của NotebookLM với sự tùy biến linh hoạt từ Gemini Gems.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content Layout Section -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Interactive Navigation Anchor Links -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-10 pb-4 border-b border-slate-200/40 dark:border-slate-800/40">
+            <a href="#sec1" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-regular fa-question-circle text-indigo-500 mr-1"></i> <span class="nav-txt-1">1. Định nghĩa Gems</span></a>
+            <a href="#sec2" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-link text-indigo-500 mr-1"></i> <span class="nav-txt-2">2. Cách kết hợp & Lợi ích</span></a>
+            <a href="#sec3" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-list-check text-indigo-500 mr-1"></i> <span class="nav-txt-3">3. Các bước thiết lập</span></a>
+            <a href="#sec4" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-flask text-indigo-500 mr-1"></i> <span class="nav-txt-4">4. Công thức PACKED</span></a>
+            <a href="#sec5" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-1"></i> <span class="nav-txt-5">5. Bản vẽ Đề thi mẫu</span></a>
+        </div>
+
+        <!-- Section Grid Workspace -->
+        <div id="content-container" class="grid grid-cols-1 gap-12">
+            
+            <!-- SECTION 1 -->
+            <section id="sec1" class="scroll-mt-24">
+                <div class="grid grid-cols-1 gap-8 transition-all language-pane" id="grid-sec1">
+                    
+                    <!-- Vietnamese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-vn">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">1</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Gemini Gems là gì & Khi nào nên sử dụng?</h2>
+                        </div>
+                        
+                        <div class="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base">
+                            <p class="font-semibold text-slate-800 dark:text-slate-200">Định nghĩa Gemini Gems:</p>
+                            <p>
+                                <strong>Gemini Gems</strong> là phiên bản chatbot được tùy biến và có thể tái sử dụng dựa trên mô hình ngôn ngữ lớn Gemini của Google. Chúng cho phép bạn lưu các chỉ dẫn, nhân cách (persona), hành vi và nguồn tri thức cố định để áp dụng đồng bộ trong các cuộc hội thoại tiếp theo.
+                            </p>
+                            <p>
+                                Thông thường, các phiên chat AI tiêu chuẩn sẽ dần quên mất chỉ dẫn ban đầu (trôi ngữ cảnh - context drift) khi cuộc trò chuyện kéo dài. Gems hỗ trợ giải quyết vấn đề này bằng việc duy trì bộ chỉ dẫn lõi, tối ưu hóa quy trình làm việc lặp lại.
+                            </p>
+
+                            <!-- VISUAL COMPARISON: Traditional Chat vs. GEMS (VN) -->
+                            <div class="mt-6 border-t border-slate-200/60 dark:border-slate-800/60 pt-6">
+                                <p class="font-bold text-sm text-slate-900 dark:text-white mb-4 flex items-center">
+                                    <i class="fa-solid fa-chart-simple text-indigo-500 mr-2"></i>
+                                    So sánh thực tế: Phiên chat AI thông thường và quy trình thiết lập cố định của Gems
+                                </p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans">
+                                    <!-- Traditional Chat Card -->
+                                    <div class="border border-red-200 dark:border-red-950 bg-red-50/20 dark:bg-red-950/10 p-5 rounded-2xl">
+                                        <div class="flex items-center space-x-2 text-red-600 dark:text-red-400 font-bold text-xs uppercase tracking-wider mb-3">
+                                            <i class="fa-solid fa-triangle-exclamation"></i>
+                                            <span>Mô hình Chat thông thường</span>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-red-100 dark:border-red-950/40 text-xs">
+                                                <p class="text-slate-400 font-mono text-[10px] mb-1">Mỗi khi mở Tab chat mới (Phiên chat 1, 2, 50...):</p>
+                                                <p class="text-slate-700 dark:text-slate-300 italic font-medium">
+                                                    "Hãy đóng vai giảng viên sư phạm tiếng Nhật luyện thi JLPT N3. Dùng văn phong chuẩn mực sư phạm. Hãy chia nhỏ thành 5 Mondai từ vựng theo chuẩn và chỉ lấy từ vựng trong kho đính kèm..."
+                                                </p>
+                                            </div>
+                                            <div class="text-slate-400 text-center py-1">
+                                                <i class="fa-solid fa-arrow-down text-sm animate-bounce"></i>
+                                            </div>
+                                            <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-red-100 dark:border-red-950/40 text-xs">
+                                                <p class="text-slate-400 font-mono text-[10px] mb-1">Tin nhắn tiếp theo từ người dùng:</p>
+                                                <p class="text-slate-800 dark:text-slate-200 font-semibold">"Thiết kế 1 đề thi thử từ vựng JLPT N3 ngắn"</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-[11px] text-red-500/80 mt-3 italic"><i class="fa-solid fa-xmark-circle mr-1"></i> Hạn chế: Người dùng phải liên tục sao chép và dán lại chỉ dẫn phức tạp, dễ gây sai lệch hoặc thiếu sót các tiêu chí của 5 dạng Mondai.</p>
+                                    </div>
+
+                                    <!-- Gems Workflow Card -->
+                                    <div class="border border-emerald-200 dark:border-emerald-950 bg-emerald-50/20 dark:bg-emerald-950/10 p-5 rounded-2xl">
+                                        <div class="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider mb-3">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            <span>Mô hình Tối ưu hóa với GEMS</span>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="bg-indigo-600 text-white p-3 rounded-xl shadow-sm text-xs relative overflow-hidden">
+                                                <div class="absolute right-2 top-2 text-indigo-400 text-lg opacity-25"><i class="fa-solid fa-lock"></i></div>
+                                                <p class="font-mono text-[10px] text-indigo-200 mb-1">Cấu hình một lần duy nhất (Gems Builder):</p>
+                                                <p class="font-medium italic">
+                                                    Nhân cách giáo viên, cấu trúc cố định của 5 dạng Mondai từ vựng và kết nối NotebookLM nguồn đã được lưu trữ cố định.
+                                                </p>
+                                            </div>
+                                            <div class="text-slate-400 text-center py-1">
+                                                <i class="fa-solid fa-arrow-down text-sm"></i>
+                                            </div>
+                                            <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-emerald-100 dark:border-emerald-950/40 text-xs">
+                                                <p class="text-slate-400 font-mono text-[10px] mb-1">Mở Tab Gem và gõ trực tiếp:</p>
+                                                <p class="text-slate-800 dark:text-slate-200 font-semibold">"Thiết kế 1 đề thi thử từ vựng JLPT N3 ngắn"</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-[11px] text-emerald-600 dark:text-emerald-400 mt-3 italic"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Hiệu quả: Tiết kiệm tối đa thời gian mồi cấu trúc, AI tự động xuất ra đề thi đúng chuẩn 5 Mondai bằng từ vựng chuẩn nguồn.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- EDUCATOR-SPECIFIC EXAMPLES (VN) -->
+                            <div class="mt-6 bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60">
+                                <p class="font-bold text-xs text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-3">💡 Khi nào người làm giáo dục nên áp dụng Gems?</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-book-open text-indigo-500 mr-1.5"></i> Soạn đề kiểm tra theo định dạng chuẩn</p>
+                                        <p class="text-slate-500 text-xs">Xây dựng Gems cố định cấu trúc bài thi học thuật (như JLPT, SAT, IELTS) để tự động hóa việc lên đề từ ngân hàng câu hỏi nguồn.</p>
+                                    </div>
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-star-half-stroke text-indigo-500 mr-1.5"></i> Chấm điểm nhất quán theo Rubric</p>
+                                        <p class="text-slate-500 text-xs">Cố định thang điểm và quy chế phản hồi học sinh để đảm bảo việc đánh giá bài làm luôn khách quan, đồng bộ và đúng barem.</p>
+                                    </div>
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-1.5"></i> Biên soạn học liệu phân hóa</p>
+                                        <p class="text-slate-500 text-xs">Tạo lập hệ thống bài tập rèn luyện cá nhân hóa theo trình độ học viên từ một kho tài liệu lý thuyết trung tâm duy nhất.</p>
+                                    </div>
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-circle-question text-indigo-500 mr-1.5"></i> Hỗ trợ giải đáp học vụ theo Syllabus</p>
+                                        <p class="text-slate-500 text-xs">Cài đặt bot giải đáp quy chế, hạn nộp bài, phân bổ điểm dựa trên tệp đề cương hướng dẫn môn học đã đính kèm.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Japanese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-jp">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">1</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Gemini Gemsとは？いつ使うべきか？</h2>
+                        </div>
+                        
+                        <div class="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base">
+                            <p class="font-semibold text-slate-800 dark:text-slate-200">Gemini Gemsの基本定義：</p>
+                            <p>
+                                <strong>Gemini Gems</strong>は、Googleの対話型AI「Gemini」のカスタムおよび再利用可能なバージョンです。特定のタスクに合わせて役割（ペルソナ）、振る舞い、制約事項、ナレッジソースなどのシステムプロンプトを固定保存し、いつでも呼び出すことができます。
+                            </p>
+                            <p>
+                                通常のAIチャットでは、長いやり取りの中でモデルが初期設定を忘れてしまう「コンテキストの喪失」が発生しますが、Gemsは指示文をコアにロックするため、最初から最後まで安定した一貫性のある動作を維持します。
+                            </p>
+
+                            <!-- VISUAL EXAMPLE: Traditional Chat vs. GEMS (JP) -->
+                            <div class="mt-6 border-t border-slate-200/60 dark:border-slate-800/60 pt-6">
+                                <p class="font-bold text-sm text-slate-900 dark:text-white mb-4 flex items-center">
+                                    <i class="fa-solid fa-chart-simple text-purple-500 mr-2"></i>
+                                    視覚的比較：通常のAIチャット vs. Gemsのワークフロー
+                                </p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans">
+                                    <!-- Traditional Chat Card (JP) -->
+                                    <div class="border border-red-200 dark:border-red-950 bg-red-50/20 dark:bg-red-950/10 p-5 rounded-2xl">
+                                        <div class="flex items-center space-x-2 text-red-600 dark:text-red-400 font-bold text-xs uppercase tracking-wider mb-3">
+                                            <i class="fa-solid fa-triangle-exclamation"></i>
+                                            <span>通常のAIチャット（都度コピペ）</span>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-red-100 dark:border-red-950/40 text-xs">
+                                                <p class="text-slate-400 font-mono text-[10px] mb-1">新しいスレッドを開始するたび（1回目、2回目、50回目...）：</p>
+                                                <p class="text-slate-700 dark:text-slate-300 italic font-medium">
+                                                    「日本語教育の専門家として、JLPT N3の語彙試験を作成してください。5つの問題形式（大問1〜大問5）に則り、添付された知識ソース内のみを使用してください...」
+                                                </p>
+                                            </div>
+                                            <div class="text-slate-400 text-center py-1">
+                                                <i class="fa-solid fa-arrow-down text-sm animate-bounce"></i>
+                                            </div>
+                                            <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-red-100 dark:border-red-950/40 text-xs">
+                                                <p class="text-slate-400 font-mono text-[10px] mb-1">ユーザーからの実際の質問：</p>
+                                                <p class="text-slate-800 dark:text-slate-200 font-semibold">「JLPT N3語彙の小テストを1つ作って」</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-[11px] text-red-500/80 mt-3 italic"><i class="fa-solid fa-xmark-circle mr-1"></i> デメリット：毎回複雑な前提指示を手動でコピペしなければならず、5つの大問構成を厳格に維持することが難しくなります。</p>
+                                    </div>
+
+                                    <!-- Gems Workflow Card (JP) -->
+                                    <div class="border border-emerald-200 dark:border-emerald-950 bg-emerald-50/20 dark:bg-emerald-950/10 p-5 rounded-2xl">
+                                        <div class="flex items-center space-x-2 text-emerald-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider mb-3">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                            <span>Gemsによる効率的なワークフロー</span>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="bg-purple-600 text-white p-3 rounded-xl shadow-sm text-xs relative overflow-hidden">
+                                                <div class="absolute right-2 top-2 text-purple-400 text-lg opacity-25"><i class="fa-solid fa-lock"></i></div>
+                                                <p class="font-mono text-[10px] text-purple-200 mb-1">Gems Builderで1回登録するだけ：</p>
+                                                <p class="font-medium italic">
+                                                    指導ペルソナ、語彙5大問の出題規則、および添付されたNotebookLMの連携設定がすでに「長期保存」されています。
+                                                </p>
+                                            </div>
+                                            <div class="text-slate-400 text-center py-1">
+                                                <i class="fa-solid fa-arrow-down text-sm"></i>
+                                            </div>
+                                            <div class="bg-white dark:bg-slate-950 p-3 rounded-xl border border-emerald-100 dark:border-emerald-950/40 text-xs">
+                                                <p class="text-slate-400 font-mono text-[10px] mb-1">専用のGemを開いて入力するだけ：</p>
+                                                <p class="text-slate-800 dark:text-slate-200 font-semibold">「京都観光に関連するキーワードリストを作成して」</p>
+                                            </div>
+                                        </div>
+                                        <p class="text-[11px] text-emerald-600 dark:text-emerald-400 mt-3 italic"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> メリット：前提指示のコピペは不要。常に正確な大問構成と範囲内の指定語彙のみに基づき、自動でテストを生成します。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- EDUCATOR-SPECIFIC EXAMPLES (JP) -->
+                            <div class="mt-6 bg-slate-50 dark:bg-slate-950 p-5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60">
+                                <p class="font-bold text-xs text-purple-600 dark:text-purple-400 uppercase tracking-wider mb-3">💡 教育従事者はいつGemsを導入すべきか？</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-sm">
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-book-open text-purple-500 mr-1.5"></i> 規格化された小テストの自動作成</p>
+                                        <p class="text-slate-500 text-xs">JLPT、SAT、IELTSなどの標準テスト形式に沿って、アップロードした問題バンクから毎回自動でテスト問題を生成。</p>
+                                    </div>
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-star-half-stroke text-purple-500 mr-1.5"></i> 評価ルーブリックに基づく均質なフィードバック</p>
+                                        <p class="text-slate-500 text-xs">記述問題や課題の採点時に、設定された評価指針を一貫して適用し、ばらつきのない論理的なアドバイスを提供。</p>
+                                    </div>
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-graduation-cap text-purple-500 mr-1.5"></i> 理解度レベルに合わせた補足教材の作成</p>
+                                        <p class="text-slate-500 text-xs">主教材データを基に、学生の理解度に応じて難易度の異なる補習用練習問題をスムーズに作成。</p>
+                                    </div>
+                                    <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-circle-question text-purple-500 mr-1.5"></i> シラバス連動型の学務問い合わせ対応</p>
+                                        <p class="text-slate-500 text-xs">履修規約、提出課題의 ール、テスト日程などの問い合わせに、シラバス資料の記載範囲でのみ回答する窓口を開設。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 2 -->
+            <section id="sec2" class="scroll-mt-24">
+                <div class="grid grid-cols-1 gap-8 transition-all language-pane" id="grid-sec2">
+                    
+                    <!-- Vietnamese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-vn">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">2</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Cách liên kết NotebookLM với Gems & Lợi ích mang lại</h2>
+                        </div>
+                        
+                        <div class="space-y-6 text-slate-600 dark:text-slate-300 text-sm md:text-base">
+                            <p>
+                                Sự kết hợp này hướng tới việc xây dựng một <strong>"đối tác AI hỗ trợ nhiều giai đoạn" (Multi-stage AI partner)</strong>: trong đó NotebookLM đóng vai trò lưu trữ kho dữ liệu chuẩn xác làm cơ sở tham chiếu, còn Gemini Gems đóng vai trò thực thi linh hoạt các chỉ dẫn đó vào công việc thực tế.
+                            </p>
+
+                            <!-- NEW VISUAL EXAMPLE: NotebookLM (Database) vs. Gemini Gems (Executor) -->
+                            <div class="bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 p-6 my-6">
+                                <p class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-4 text-center">
+                                    <i class="fa-solid fa-sitemap mr-1"></i> Sơ đồ tương tác dữ liệu và hành vi
+                                </p>
+                                
+                                <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 items-center">
+                                    <!-- Left: NotebookLM (The Storage Backend) -->
+                                    <div class="lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl relative shadow-sm">
+                                        <div class="flex items-center space-x-2.5 mb-3">
+                                            <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                                                <i class="fa-solid fa-database text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-extrabold text-xs text-slate-900 dark:text-white">NotebookLM</p>
+                                                <p class="text-[10px] text-slate-400">Kho dữ liệu học thuật / データベース</p>
+                                            </div>
+                                        </div>
+                                        <ul class="space-y-2 text-xs text-slate-500 leading-normal">
+                                            <li class="flex items-start"><i class="fa-solid fa-file-pdf text-red-500 mr-2 mt-0.5 shrink-0"></i> <span>Lưu trữ tệp bài giảng, từ vựng học thuật thô.</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-spell-check text-green-500 mr-2 mt-0.5 shrink-0"></i> <span>Tóm tắt bài học, trích xuất nguồn dẫn đối chiếu chính xác.</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-shield-halved text-blue-500 mr-2 mt-0.5 shrink-0"></i> <span>Hạn chế tối đa hiện tượng AI bịa đặt thông tin.</span></li>
+                                        </ul>
+                                        <div class="absolute -bottom-2 -right-2 bg-indigo-500 text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase">Kho dữ liệu</div>
+                                    </div>
+
+                                    <!-- Middle: Connection Bridge -->
+                                    <div class="lg:col-span-1 flex flex-col items-center justify-center py-2 lg:py-0">
+                                        <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center shadow-inner">
+                                            <i class="fa-solid fa-arrow-right lg:rotate-0 rotate-90 text-xs"></i>
+                                        </div>
+                                        <span class="text-[9px] text-slate-400 font-mono mt-1 text-center leading-tight">Liên kết ngữ cảnh</span>
+                                    </div>
+
+                                    <!-- Right: Gemini Gems (The Executor) -->
+                                    <div class="lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl relative shadow-sm">
+                                        <div class="flex items-center space-x-2.5 mb-3">
+                                            <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                                                <i class="fa-solid fa-gears text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-extrabold text-xs text-slate-900 dark:text-white">Gemini Gems</p>
+                                                <p class="text-[10px] text-slate-400">Trợ lý thực thi hành vi / 実行エンジン</p>
+                                            </div>
+                                        </div>
+                                        <ul class="space-y-2 text-xs text-slate-500 leading-normal">
+                                            <li class="flex items-start"><i class="fa-solid fa-user-tie text-purple-500 mr-2 mt-0.5 shrink-0"></i> <span>Đóng vai nhân cách sư phạm chỉ định sẵn.</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-code text-indigo-500 mr-2 mt-0.5 shrink-0"></i> <span>Biên soạn tài liệu ôn tập và đề thi học thuật.</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-pen-nib text-pink-500 mr-2 mt-0.5 shrink-0"></i> <span>Thực thi quy chế chấm bài nhất quán theo cấu trúc.</span></li>
+                                        </ul>
+                                        <div class="absolute -bottom-2 -right-2 bg-purple-500 text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase">Người thực thi</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200">Lợi ích của việc tích hợp:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                        <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3">
+                                            <i class="fa-solid fa-sync"></i>
+                                        </div>
+                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Cập nhật tự động</p>
+                                        <p class="text-xs text-slate-500">Gems liên kết trực tiếp đến đối tượng notebook động. Khi bạn chỉnh sửa tài liệu trong NotebookLM, Gem sẽ tự động cập nhật dữ liệu mới.</p>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                        <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3">
+                                            <i class="fa-solid fa-expand"></i>
+                                        </div>
+                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Mở rộng giới hạn tải tệp</p>
+                                        <p class="text-xs text-slate-500">Vượt qua giới hạn 10 tệp của Gemini thông thường, hỗ trợ nạp tới 300 nguồn tài liệu (gói Pro) thông qua cấu trúc NotebookLM.</p>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800/80 rounded-2xl">
+                                        <div class="w-8 h-8 rounded-lg bg-pink-100 dark:bg-pink-950 text-pink-600 dark:text-pink-400 flex items-center justify-center mb-3">
+                                            <i class="fa-solid fa-shield-halved"></i>
+                                        </div>
+                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Hạn chế tối đa sai lệch thông tin</p>
+                                        <p class="text-xs text-slate-500">Gemini hỗ trợ phản hồi dựa trên nguồn dữ liệu xác thực, giảm thiểu hiện tượng AI tự suy đoán thông tin ngoài tài liệu gốc.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Japanese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-jp">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">2</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">NotebookLMとGemsの連携＆なぜ併用すべきなのか？</h2>
+                        </div>
+                        
+                        <div class="space-y-6 text-slate-600 dark:text-slate-300 text-sm md:text-base">
+                            <p>
+                                この連携は、<strong>「フルスタックAIパートナー」</strong>の構築に例えられます。NotebookLMが事実を正確に保存する「データベース」となり、Gemini Gemsがそれを形にする「実務エンジン」として機能します。
+                            </p>
+
+                            <!-- NEW VISUAL EXAMPLE: NotebookLM (Database) vs. Gemini Gems (Executor) (JP) -->
+                            <div class="bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 p-6 my-6">
+                                <p class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-widest mb-4 text-center">
+                                    <i class="fa-solid fa-sitemap mr-1"></i> データとアクションの統合概念図
+                                </p>
+                                
+                                <div class="grid grid-cols-1 lg:grid-cols-7 gap-4 items-center">
+                                    <!-- Left: NotebookLM (The Storage Backend) (JP) -->
+                                    <div class="lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl relative shadow-sm">
+                                        <div class="flex items-center space-x-2.5 mb-3">
+                                            <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                                                <i class="fa-solid fa-database text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-extrabold text-xs text-slate-900 dark:text-white">NotebookLM</p>
+                                                <p class="text-[10px] text-slate-400">データベース / 知識ベース</p>
+                                            </div>
+                                        </div>
+                                        <ul class="space-y-2 text-xs text-slate-500 leading-normal">
+                                            <li class="flex items-start"><i class="fa-solid fa-file-pdf text-red-500 mr-2 mt-0.5 shrink-0"></i> <span>講義ノート、指定語彙などの学習リソースを蓄積。</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-spell-check text-green-500 mr-2 mt-0.5 shrink-0"></i> <span>学習ソースを要約し、正確な引用元の特定。</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-shield-halved text-blue-500 mr-2 mt-0.5 shrink-0"></i> <span>AIが根拠のない事実を捏造することを防ぎます。</span></li>
+                                        </ul>
+                                        <div class="absolute -bottom-2 -right-2 bg-indigo-500 text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase">ナレッジベース</div>
+                                    </div>
+
+                                    <!-- Middle: Connection Bridge (JP) -->
+                                    <div class="lg:col-span-1 flex flex-col items-center justify-center py-2 lg:py-0">
+                                        <div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 flex items-center justify-center shadow-inner">
+                                            <i class="fa-solid fa-arrow-right lg:rotate-0 rotate-90 text-xs"></i>
+                                        </div>
+                                        <span class="text-[9px] text-slate-400 font-mono mt-1 text-center leading-tight">コンテキスト連携</span>
+                                    </div>
+
+                                    <!-- Right: Gemini Gems (The Executor) (JP) -->
+                                    <div class="lg:col-span-3 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 p-5 rounded-2xl relative shadow-sm">
+                                        <div class="flex items-center space-x-2.5 mb-3">
+                                            <div class="w-8 h-8 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+                                                <i class="fa-solid fa-gears text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <p class="font-extrabold text-xs text-slate-900 dark:text-white">Gemini Gems</p>
+                                                <p class="text-[10px] text-slate-400">アクション実行 / ペルソナ設定</p>
+                                            </div>
+                                        </div>
+                                        <ul class="space-y-2 text-xs text-slate-500 leading-normal">
+                                            <li class="flex items-start"><i class="fa-solid fa-user-tie text-purple-500 mr-2 mt-0.5 shrink-0"></i> <span>教育の専門家としてのトーンを設定維持。</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-code text-indigo-500 mr-2 mt-0.5 shrink-0"></i> <span>指定語彙データソースに基づく試験問題の作成。</span></li>
+                                            <li class="flex items-start"><i class="fa-solid fa-pen-nib text-pink-500 mr-2 mt-0.5 shrink-0"></i> <span>採点基準に則ったフィードバックの書き出し。</span></li>
+                                        </ul>
+                                        <div class="absolute -bottom-2 -right-2 bg-purple-500 text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase">実務エンジン</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4">
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200">連携がもたらす3つの革新的なメリット:</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                        <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3">
+                                            <i class="fa-solid fa-rotate"></i>
+                                        </div>
+                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">リアルタイム自動同期</p>
+                                        <p class="text-xs text-slate-500">ノートブック内の資料を追加・更新するだけで、Gem側の参照データも自動かつ即時に同期されます。</p>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                        <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3">
+                                            <i class="fa-solid fa-arrows-maximize"></i>
+                                        </div>
+                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">コンテキスト制限 of 超越</p>
+                                        <p class="text-xs text-slate-500">Gemini単体の10ファイル制限を超え、NotebookLMを経由して最大300のデータソースを一度に読み込み可能です。</p>
+                                    </div>
+                                    <div class="p-4 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                                        <div class="w-8 h-8 rounded-lg bg-pink-100 dark:bg-pink-950 text-pink-600 dark:text-pink-400 flex items-center justify-center mb-3">
+                                            <i class="fa-solid fa-circle-check"></i>
+                                        </div>
+                                        <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">ハルシネーション（嘘）の抑制</p>
+                                        <p class="text-xs text-slate-500">一般的なネット情報に依存せず、アップロードした検証済みドキュメントのみを根拠に回答を精緻に組み立てます。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 3 -->
+            <section id="sec3" class="scroll-mt-24">
+                <div class="grid grid-cols-1 gap-8 transition-all language-pane" id="grid-sec3">
+                    
+                    <!-- Vietnamese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-vn">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">3</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Quy trình 5 bước xây dựng Custom Gem tùy chỉnh</h2>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 text-sm text-slate-600 dark:text-slate-300">
+                            <div class="lg:col-span-3 space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">Truy cập giao diện Builder</p>
+                                        <p class="text-xs mt-1">Đăng nhập vào <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded text-pink-500">gemini.google.com/app</code>, chọn thẻ "Explore Gems" bên góc trái và click nút "+ New Gem" ở màn hình quản lý.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">Lựa chọn cách thiết lập chỉ dẫn</p>
+                                        <p class="text-xs mt-1">Chọn ghi mô tả ngắn rồi bấm nút đũa thần nhờ AI tối ưu viết hộ, hoặc tự tay viết thủ công theo cấu trúc công thức PACKED nâng cao.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">Khai báo cấu hình Metadata</p>
+                                        <p class="text-xs mt-1">Đặt tên rõ ràng cho Gem, thêm mô tả công dụng khái quát và gắn các công cụ phụ trợ (Default Tools) như tìm kiếm chuyên sâu, tạo ảnh.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">Gắn kho tri thức (Knowledge Base)</p>
+                                        <p class="text-xs mt-1">Tại phần Knowledge, bấm "+" để chọn Notebook từ tài khoản NotebookLM, liên kết Google Drive hoặc upload trực tiếp từ máy tính.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">Kiểm thử và lưu hoàn tất</p>
+                                        <p class="text-xs mt-1">Chạy thử ở bảng kiểm duyệt bên phải (Preview). Nếu đã phản hồi đúng chuẩn, bấm "Save" để hoàn tất và pin Gem lên thanh công cụ.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pro Tip box for VN steps -->
+                            <div class="lg:col-span-2 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900 p-5 rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <div class="text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase tracking-wide mb-2"><i class="fa-solid fa-brain mr-1"></i> Mẹo Pro: Thẻ Nhớ Ngoài (Memory Card)</div>
+                                    <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                                        Hãy tạo một tệp Google Doc có tên là "Memory Card - [Tên Gem]" trong Google Drive và liên kết tệp đó vào Gem của bạn. 
+                                        <br><br>
+                                        Bất cứ khi nào bạn cập nhật thông tin chỉnh sửa quy trình giảng dạy hay quy chuẩn học tập mới trong Google Doc đó, Gem sẽ thừa hưởng kiến thức mới ngay trong phiên chat kế tiếp mà không cần cài đặt lại!
+                                    </p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-indigo-100 dark:border-indigo-900/60 text-[10px] text-slate-400 font-mono">
+                                    *Áp dụng phù hợp cho các bộ quy chuẩn nội bộ
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Japanese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-jp">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">3</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">カスタムGemを作成する5つのステップ</h2>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 text-sm text-slate-600 dark:text-slate-300">
+                            <div class="lg:col-span-3 space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">Gem Builderへのアクセス</p>
+                                        <p class="text-xs mt-1"><code class="bg-slate-100 dark:bg-slate-800 px-1 rounded text-pink-500">gemini.google.com/app</code>にログイン後、左側の「Explore Gems」から管理画面を開き、右下の「+ New Gem」をクリックします。</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">セットアップ手法の選択</p>
+                                        <p class="text-xs mt-1">指示文の書き方は2通りあります。簡単な一文を入力して魔法 of アイコンをクリックしAIに詳細化させる（ガイド機能）か、PACKEDフレームワークを駆使して手動で細かく構築します。</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">メタデータ＆設定の入力</p>
+                                        <p class="text-xs mt-1">Gemの名前と説明を記述します。さらにオプションとして、画像生成、ディープリサーチなど、あらかじめ使用する規定ツールを設定します。</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">知識ベースの紐付け</p>
+                                        <p class="text-xs mt-1">「Knowledge」欄の「+」を押して、同じGoogleアカウントで構築されたNotebookLM、またはGoogleドライブ内のフォルダを直接リンクします。</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
+                                    <div>
+                                        <p class="font-bold text-slate-900 dark:text-white">プレビュー検証・保存</p>
+                                        <p class="text-xs mt-1">右側のプレビュー画面でいくつか質問を投げて動作検証をします。問題がなければ「Save」を押し、左サイドバーにピン留めします。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Pro Tip box for JP steps -->
+                            <div class="lg:col-span-2 bg-purple-50/50 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900 p-5 rounded-2xl flex flex-col justify-between">
+                                <div>
+                                    <div class="text-purple-600 dark:text-purple-400 font-bold text-xs uppercase tracking-wide mb-2"><i class="fa-solid fa-lightbulb mr-1"></i> プロ技術：「メモリーカード」ハック</div>
+                                    <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                                        「Memory Card - [Gem名]」というタイトルのGoogleドキュメントをGoogleドライブに作成し、そのファイルをGemに紐付けます。
+                                        <br><br>
+                                        指導方針やカリキュラム内容が変わった際、Gemの本体プロンプトを編集しなくても、そのGoogleドキュメントを直接編集するだけで、リアルタイムでAIの判断ポリシーが自動上書き反映されます。
+                                    </p>
+                                </div>
+                                <div class="mt-4 pt-3 border-t border-purple-100 dark:border-purple-900/60 text-[10px] text-slate-400 font-mono">
+                                    ※ 指導マニュアル・学校規約の同期に最適
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 4 -->
+            <section id="sec4" class="scroll-mt-24">
+                <div class="grid grid-cols-1 gap-8 transition-all language-pane" id="grid-sec4">
+                    
+                    <!-- Vietnamese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-vn">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">4</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Công thức chỉ dẫn "PACKED" chuẩn xác</h2>
+                        </div>
+                        
+                        <p class="text-slate-600 dark:text-slate-300 mb-6 text-sm md:text-base">
+                            Để hỗ trợ duy trì định hướng nhất quán của Gem trong các cuộc hội thoại, bạn có thể phân chia chỉ dẫn thành 5 phần theo công thức <strong>PACKED</strong>:
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-indigo-500 mb-2">P</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Persona (Nhân cách)</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">Xác định rõ vai trò sư phạm chuyên biệt, phong cách giảng dạy, giọng điệu trò chuyện của AI.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-indigo-500 mb-2">A</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Assignment (Nhiệm vụ)</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">Nêu bật công việc thiết kế các dạng Mondai đề thi từ vựng theo quy chuẩn khảo thí JLPT.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-indigo-500 mb-2">C</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Context (Ranh giới)</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">Ràng buộc hạn chế chặt chẽ: chỉ lấy từ vựng có sẵn trong tài liệu nguồn đính kèm.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-indigo-500 mb-2">K</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Knowledge (Tri thức)</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">Hướng dẫn Gem truy xuất tệp từ vựng tiếng Nhật từ NotebookLM để xây dựng câu hỏi.</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-indigo-500 mb-2">ED</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Engage & Deliver (Trình bày)</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">Thiết lập cấu trúc kết quả đề thi đầu ra phân bổ rõ theo 5 Mondai kèm phần đáp án.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Japanese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-jp">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">4</span>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">高精度なプロンプト設計を実現する「PACKED」フォーマット</h2>
+                        </div>
+                        
+                        <p class="text-slate-600 dark:text-slate-300 mb-6 text-sm md:text-base">
+                            チャットが長期化してもGemの目的や精度を維持するために、システム指示文は必ず以下の5つの要素（<strong>PACKED</strong>）に構造化して定義します：
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-purple-500 mb-2">P</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Persona（ペルソナ）</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">AIの専門的立場、勤続年数、トーン、会話態度を明確に定義します。</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-purple-500 mb-2">A</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Assignment（任務）</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">GEMSがJLPT評価基準に基づき語彙大問を作成する範囲を設定します。</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-purple-500 mb-2">C</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Context（コンテキスト）</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">ハルシネーションの禁止や、不必要な回答仮定を省くための境界線を定めます。</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-purple-500 mb-2">K</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Knowledge（ナレッジ）</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">添付したNotebookLMから優先的にデータを検索し、根拠の出典方法を指定します。</p>
+                            </div>
+                            <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
+                                <div class="text-2xl font-black text-purple-500 mb-2">ED</div>
+                                <p class="font-bold text-xs text-slate-900 dark:text-white mb-1">Engagement & Delivery</p>
+                                <p class="text-[11px] text-slate-500 leading-relaxed">語彙試験大問1から大問5の構成に基づく評価基準を指定・固定化します。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SECTION 5 -->
+            <section id="sec5" class="scroll-mt-24">
+                <div class="grid grid-cols-1 gap-8 transition-all language-pane" id="grid-sec5">
+                    
+                    <!-- Vietnamese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-vn">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold">5</span>
+                                <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Bản thiết kế thực tế: "Kiến trúc sư đề thi từ vựng JLPT N3"</h2>
+                            </div>
+                            <button onclick="copyPrompt('vn-prompt-code')" class="px-3 py-1.5 rounded-lg text-xs bg-slate-100 hover:bg-indigo-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-indigo-600 dark:text-indigo-400 font-semibold transition-all">
+                                <i class="fa-regular fa-copy mr-1"></i> Sao chép Prompts
+                            </button>
+                        </div>
+                        
+                        <p class="text-slate-600 dark:text-slate-300 text-sm mb-4 leading-relaxed">
+                            Dưới đây là mã nguồn chỉ dẫn chi tiết bạn có thể sao chép trực tiếp vào ô cấu hình của Custom Gem để biến mô hình thành một trợ lý thiết kế đề thi Từ vựng JLPT N3, xuất ra định dạng Markdown rõ ràng, đánh số liên tục và trắc nghiệm số (1, 2, 3, 4) truy xuất trực tiếp và giới hạn dữ liệu trong kho tài liệu đính kèm của NotebookLM:
+                        </p>
+
+                        <!-- Code box -->
+                        <div class="relative bg-slate-950 p-5 rounded-2xl border border-slate-800 font-mono text-[11px] sm:text-xs text-indigo-400 overflow-x-auto leading-relaxed max-h-96">
+                            <pre id="vn-prompt-code" class="text-slate-300 whitespace-pre-wrap"># NHÂN CÁCH (PERSONA)
+Bạn là Giảng viên tiếng Nhật cao cấp và là Chuyên gia Khảo thí Ngôn ngữ chuyên về kỳ thi Năng lực Nhật ngữ JLPT. Bạn am hiểu sâu sắc cấu trúc, ma trận kiến thức và phân bổ độ khó của đề thi JLPT N3 thực tế. Phong cách làm việc của bạn chuẩn mực, sư phạm và có tính chính xác cao.
+
+# NHIỆM VỤ (ASSIGNMENT)
+Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ vựng (文字・語彙) trình độ JLPT N3 dưới dạng mã nguồn Markdown rõ ràng. Đề thi bắt buộc phải xây dựng đầy đủ theo cấu trúc chuẩn gồm 5 Mondai dưới đây:
+- Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+- Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+- Mondai 3: （　）に入れるのに最もよいものを１・２・３・４から一つ選びなさい。
+- Mondai 4: ＿＿＿の ことばに 意味が 最も 近iものを １・２・３・４から一つ選びなさい。
+- Mondai 5: 次の ことばの 使い方が 最mよいものを １・２・３・４から一つ選びなさい。
+
+# QUY TẮC ĐỊNH DẠNG & ĐẦU RA CHẶT CHẼ (OUTPUT FORMAT & LAYOUT)
+1. ĐỊNH DẠNG ĐẦU RA: Toàn bộ đầu ra phải được định dạng hoàn toàn bằng cấu trúc văn bản Markdown chuẩn (Sử dụng tiêu đề h1, h2, h3, danh sách và khối mã nếu cần) để các mô hình LLM dễ dàng đọc, phân tích và trích xuất cấu trúc.
+2. ĐÁNH SỐ LIÊN TỤC: Tất cả các câu hỏi trong toàn bộ đề thi phải được đánh số thứ tự liên tục tăng dần từ số 1 cho đến câu hỏi cuối cùng xuyên suốt các Mondai (Ví dụ: Câu 1, Câu 2 thuộc Mondai 1; Câu 3 thuộc Mondai 2; Câu 4 thuộc Mondai 3... thay vì đặt lại số thứ tự trong mỗi Mondai).
+3. ĐỒNG BỘ TRẮC NGHIỆM SỐ: Tất cả các câu hỏi trong đề thi phải thuộc dạng trắc nghiệm khách quan với đúng 4 phương án lựa chọn được ký hiệu tương ứng bằng các chữ số 1, 2, 3, 4 (Tuyệt đối không dùng chữ cái A, B, C, D hay các ký hiệu khác).
+
+# HẠN CHẾ DỮ LIỆU CHẶT CHẼ (CONTEXT & CONSTRAINTS)
+1. CHỈ SỬ DỤNG TỪ VỰNG TRONG NGUỒN: Toàn bộ từ vựng, chữ Kanji, ngữ cảnh câu và đáp án lựa chọn sử dụng trong đề thi PHẢI được lấy trực tiếp từ dữ liệu trong kho NotebookLM đính kèm. Tuyệt đối không tự ý bổ sung từ vựng mới hoặc các mẫu câu nằm ngoài tài liệu nguồn.
+2. KHÔNG TỰ SUY ĐOÁN: Nếu số lượng từ vựng trong kho đính kèm không đủ để thiết lập một Mondai cụ thể, hãy thông báo rõ cho người dùng thay vì tự bịa ra từ mới để bù đắp.
+
+# GIAO THỨC TRUY XUẤT (KNOWLEDGE)
+- Quét toàn bộ kho tài liệu từ vựng JLPT N3 được đính kèm thông qua NotebookLM trước khi bắt đầu đặt câu hỏi.
+- Biên soạn phần Đáp án chi tiết giải thích nghĩa của câu hỏi, từ vựng đúng và trích dẫn trong ngoặc vuông dẫn trực tiếp về tệp nguồn gốc trong NotebookLM (Ví dụ: "[Nguồn: Tệp Từ vựng Danh từ N3, dòng 45]").</pre>
+                        </div>
+                    </div>
+
+                    <!-- Japanese Panel -->
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-jp">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center space-x-3">
+                                <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">5</span>
+                                <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">実践的なブループリント：「JLPT N3語彙試験作成アーキテクト」 GEMS</h2>
+                            </div>
+                            <button onclick="copyPrompt('jp-prompt-code')" class="px-3 py-1.5 rounded-lg text-xs bg-slate-100 hover:bg-purple-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-purple-600 dark:text-purple-400 font-semibold transition-all">
+                                <i class="fa-regular fa-copy mr-1"></i> プロンプトをコピー
+                            </button>
+                        </div>
+                        
+                        <p class="text-slate-600 dark:text-slate-300 text-sm mb-4 leading-relaxed">
+                            以下は、カスタムGemの指示設定にそのままコピー＆ペーストして使用できるシステムプロンプトの構成案です。連携されたNotebookLMからのみ語彙問題を作成します：
+                        </p>
+
+                        <!-- Code box -->
+                        <div class="relative bg-slate-950 p-5 rounded-2xl border border-slate-800 font-mono text-[11px] sm:text-xs text-purple-400 overflow-x-auto leading-relaxed max-h-96">
+                            <pre id="jp-prompt-code" class="text-purple-300 whitespace-pre-wrap"># ペルソナ (PERSONA)
+あなたは、高度な日本語教師であり、日本語能力試験（JLPT）対策を専門とする学術評価スペシャリストです。JLPT N3語彙試験（文字・語彙）の試験構成、語彙データベース、および問題の難易度配分を深く理解しています。正確で丁寧な解説作成を得意としています。
+
+# 任務 (ASSIGNMENT)
+ユーザーの要望に基づき、JLPT N3語彙（文字・語彙）の模擬テストを自動作成します。問題構成は、以下の公式5大問規格を厳格に維持してください。
+- 問題1：＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+- 問題2：＿＿＿の ことばは どう 書きますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+- 問題3：（　）に入れるのに最もよいものを１・２・３・４から一つ選びなさい。
+- 問題4：＿＿＿の ことばに 意味が 最も 近いものを １・２・３・４から一つ選びなさい。
+- 問題5：次の ことばの 使い方が 最も よいものを １・２・３・４から一つ選びなさい。
+
+# 出力規則とフォーマット (OUTPUT FORMAT & LAYOUT)
+1. 出力形式：すべての出力は、整理されたMarkdown（マークダウン）テキスト形式で行ってください。h1、h2、h3、リストなどを駆使し、他のLLMモデルがパース・構造分析を容易に行えるクリーンな構造にしてください。
+2. 通し番号での表記：問題番号は、大問（Mondai 1〜5）をまたいで「1」から最後の問題までシリアルな連番（通し番号）で表記してください（Mondaiごとに問題番号を「1」にリセットしないでください）。
+3. 全問選択肢「1・2・3・4」形式：すべての問題は選択式（ trắc nghiệm ）とし、選択肢は「1, 2, 3, 4」の数字表記で完全に統一してください（A、B、C、Dや丸数字などは使用しないでください）。
+
+# 厳格な制約条件 (CONTEXT & CONSTRAINTS)
+1. 指定ソースの完全準拠：テストに含まれるすべての語彙、例文、漢字、解答選択肢は、紐づけられたNotebookLMノートブック内に存在する語彙データからのみ抽出してください。外部の一般語彙や独自の例文を無断で作成して追加することを固く禁じます。
+2. 捏造の禁止：指示されたソース内の語彙数が特定大問の構成に不足している場合は、独自に推測して語彙を捏造せず、その旨をユーザーにレポートしてください。
+
+# 知識ベースの連携手順 (KNOWLEDGE)
+- 連携されたNotebookLMから関連データを事前に走査し、指定語彙情報のみをベースにテストを作成します。
+- 解答解説を作成する際、NotebookLM内の該当する語彙ファイル名を括弧付きで併記してください（例："[ソース: N3名詞リスト, 45行目]"）。</pre>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- PLAYGROUND SECTION: Dual Action Simulator -->
+        <section id="playground" class="scroll-mt-24 mt-16">
+            <div class="bg-gradient-to-r from-indigo-900 to-purple-900 text-white rounded-3xl p-6 md:p-10 shadow-xl relative overflow-hidden">
+                <!-- Background decor SVGs -->
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-500 rounded-full blur-3xl opacity-30"></div>
+                <div class="absolute -left-10 -top-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-30"></div>
+
+                <div class="relative z-10">
+                    <span class="bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 inline-block">AI Playground Simulator</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold mb-2">Trình Tạo Đề Thi & Chỉ Dẫn Thử Nghiệm</h2>
+                    <p class="text-xs md:text-sm text-indigo-200 max-w-2xl mb-8">
+                        Thiết kế thử nghiệm một Gem luyện thi theo công thức PACKED tùy chỉnh, sau đó chạy mô phỏng "JLPT N3 Vocabulary Architect Gem" để xem kết quả tạo bài kiểm tra tự động từ nguồn dữ liệu dưới dạng Markdown.
+                    </p>
+
+                    <!-- Interactive Grid Split -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <!-- Tool 1: Custom PACKED Instructions Builder -->
+                        <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-5 md:p-6">
+                            <h3 class="font-bold text-sm uppercase tracking-wider text-indigo-400 mb-4 pb-2 border-b border-slate-800"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i> 1. PACKED Prompts Customizer</h3>
+                            
+                            <div class="space-y-3 text-xs">
+                                <div>
+                                    <label class="block text-slate-400 font-semibold mb-1">P - Persona (Nhân cách / ペルソナ)</label>
+                                    <input id="in-persona" type="text" value="An expert Japanese pedagogical evaluator specialized in JLPT N3 vocabulary matrix" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 font-semibold mb-1">A - Assignment (Nhiệm vụ / 任務)</label>
+                                    <input id="in-assignment" type="text" value="Formulate systematic mock test papers in raw Markdown format, continuously numbered 1 to N, using options 1, 2, 3, 4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 font-semibold mb-1">C - Context & Constraints (Điều kiện / 制約)</label>
+                                    <input id="in-context" type="text" value="Only use verified vocabulary items present in the uploaded source. All questions must be multiple-choice with options 1, 2, 3, 4, numbered sequentially starting from 1." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 font-semibold mb-1">K - Knowledge Source (Tài liệu / 知識)</label>
+                                    <input id="in-knowledge" type="text" value="Query the linked 'NotebookLM: JLPT N3 Vocabulary Bank 2026' as the sole database." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-slate-400 font-semibold mb-1">ED - Output Format (Trình bày / 形式)</label>
+                                    <input id="in-format" type="text" value="Structure as clear Markdown headers: Mondai 1 (＿＿＿の ことばは どう 読みますか。), Mondai 2 (＿＿＿の ことばは どう 書きますか。), Mondai 3 (（　）に入れるのに...), Mondai 4 (＿＿＿の ことばに 意味が...), Mondai 5 (次の...). Options must be 1, 2, 3, 4." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                            </div>
+
+                            <button onclick="generateCustomPacked()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                                <i class="fa-solid fa-sync mr-1.5 animate-spin"></i> Ghép chỉ dẫn Prompt / プロンプト生成
+                            </button>
+
+                            <!-- Results generated container -->
+                            <div id="packed-output-card" class="mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 hidden">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[10px] text-emerald-400 font-mono font-bold uppercase"><i class="fa-solid fa-circle-check mr-1"></i> Generated Custom Prompt</span>
+                                    <button onclick="copyPrompt('packed-result')" class="text-slate-400 hover:text-white text-xs"><i class="fa-regular fa-copy"></i></button>
+                                </div>
+                                <p id="packed-result" class="font-mono text-[10px] text-slate-300 whitespace-pre-wrap select-all leading-normal"></p>
+                            </div>
+                        </div>
+
+                        <!-- Tool 2: Exam Architect Simulation Chat -->
+                        <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-5 md:p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-sm uppercase tracking-wider text-purple-400 mb-4 pb-2 border-b border-slate-800"><i class="fa-solid fa-microchip mr-2"></i> 2. Live Exam Gem Simulator</h3>
+                                
+                                <div class="space-y-4">
+                                    <div class="grid grid-cols-2 gap-3 text-xs">
+                                        <div>
+                                            <label class="block text-slate-400 font-semibold mb-1">Phân loại từ vựng / 語彙カテゴリ</label>
+                                            <select id="sim-subject" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-purple-500">
+                                                <option value="Từ vựng N3 - Danh từ (Noun / 名詞)">Từ vựng N3 - Danh từ</option>
+                                                <option value="Từ vựng N3 - Động từ (Verb / 動詞)">Từ vựng N3 - Động từ</option>
+                                                <option value="Từ vựng N3 - Tính từ (Adjective / 形容詞)">Từ vựng N3 - Tính từ</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-slate-400 font-semibold mb-1">Mục tiêu luyện tập / 練習ターゲット</label>
+                                            <select id="sim-level" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-purple-500">
+                                                <option value="Mini Mock Test (Đầy đủ 5 Mondai)">Mini Mock Test (5 Mondai)</option>
+                                                <option value="Trắc nghiệm chuyên sâu Mondai 1 & 2">Chuyên sâu Mondai 1 & 2</option>
+                                                <option value="Thử thách ngữ cảnh Mondai 3 & 5">Thử thách Mondai 3 & 5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <button onclick="simulateExamGeneration()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
+                                        <i class="fa-solid fa-paper-plane mr-1.5"></i> Chạy lập đề kiểm tra / 模擬試験生成開始
+                                    </button>
+                                </div>
+
+                                <!-- Terminal Output -->
+                                <div id="terminal-box" class="mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 text-[10px] sm:text-xs font-mono text-slate-300 min-h-48 overflow-y-auto max-h-64 leading-relaxed relative font-sans">
+                                    <div id="terminal-initial" class="text-slate-500 flex flex-col items-center justify-center pt-8 text-center">
+                                        <i class="fa-solid fa-terminal text-2xl mb-2 opacity-45"></i>
+                                        <p>Nhấp nút phía trên để chạy giả lập máy quét dữ liệu NotebookLM và tạo mẫu đề thi bằng custom Gem...</p>
+                                    </div>
+                                    <div id="terminal-content" class="hidden text-slate-300">
+                                        <!-- Typed dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Custom Floating Toast Alerts -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 border border-slate-800 dark:border-slate-200 text-xs font-semibold transition-all duration-300">
+        <i class="fa-solid fa-check-circle text-emerald-500 text-sm"></i>
+        <span id="toast-message">Đã sao chép thành công!</span>
+    </div>
+
+    <!-- Premium Footer Block -->
+    <footer class="bg-slate-100 dark:bg-slate-950/60 border-t border-slate-200/50 dark:border-slate-800/50 py-10 mt-16 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-3">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white"><i class="fa-solid fa-brain text-xs"></i></div>
+                        <span class="font-extrabold text-slate-900 dark:text-white text-sm">AI Second Brain Stack</span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed max-w-sm">
+                        Tài liệu hướng dẫn giúp định hình tư duy thiết kế hệ thống hỗ trợ thông minh dựa trên giải pháp công nghệ của Google.
+                    </p>
+                </div>
+                <div class="md:col-span-2 flex justify-end items-center space-x-4">
+                    <div class="text-right">
+                        <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">Google Workspace Updates - Phiên bản 2026</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Được xây dựng độc lập và tối ưu hóa hệ thống.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Controller JS -->
+    <script>
+        // Set Theme Defaults
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-icon').className = 'fa-solid fa-sun text-lg text-yellow-400';
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.getElementById('theme-icon').className = 'fa-solid fa-moon text-lg';
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon text-lg';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                icon.className = 'fa-solid fa-sun text-lg text-yellow-400';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Language toggle controller
+        let currentLang = 'vn';
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Buttons array resetting
+            const btns = {
+                vn: document.getElementById('btn-vn'),
+                jp: document.getElementById('btn-jp')
+            };
+
+            for (let key in btns) {
+                btns[key].className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all duration-250 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+            }
+
+            // Highlighting active button
+            if (lang === 'vn') {
+                btns.vn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all duration-250 bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm";
+            } else {
+                btns.jp.className = "px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition-all duration-250 bg-white dark:bg-slate-800 text-purple-600 dark:text-purple-400 shadow-sm";
+            }
+
+            // Setting layout classes dynamically - Single pane layout always
+            const grids = ['grid-sec1', 'grid-sec2', 'grid-sec3', 'grid-sec4', 'grid-sec5'];
+            
+            grids.forEach(id => {
+                const element = document.getElementById(id);
+                element.className = "grid grid-cols-1 gap-8 transition-all language-pane";
+            });
+
+            // Toggle language elements visibility
+            const vnElements = document.querySelectorAll('.lang-vn');
+            const jpElements = document.querySelectorAll('.lang-jp');
+
+            if (lang === 'vn') {
+                vnElements.forEach(el => el.style.display = 'block');
+                jpElements.forEach(el => el.style.display = 'none');
+                setHeroText('vn');
+            } else if (lang === 'jp') {
+                vnElements.forEach(el => el.style.display = 'none');
+                jpElements.forEach(el => el.style.display = 'block');
+                setHeroText('jp');
+            }
+        }
+
+        // Translation for dynamic hero titles and anchors
+        function setHeroText(lang) {
+            const h1 = document.getElementById('hero-title');
+            const p = document.getElementById('hero-subtitle');
+            const tag = document.getElementById('hero-tag');
+
+            const navs = {
+                n1: document.querySelector('.nav-txt-1'),
+                n2: document.querySelector('.nav-txt-2'),
+                n3: document.querySelector('.nav-txt-3'),
+                n4: document.querySelector('.nav-txt-4'),
+                n5: document.querySelector('.nav-txt-5')
+            };
+
+            if (lang === 'vn') {
+                h1.innerText = "Kiến trúc Bộ Não Phụ AI Từ NotebookLM & Gemini Gems";
+                p.innerText = "Kiến trúc hỗ trợ tối ưu hóa quy trình làm việc. Kết hợp cơ sở dữ liệu đối chiếu chính xác của NotebookLM với sự tùy biến linh hoạt từ Gemini Gems.";
+                tag.innerText = "Tài liệu hướng dẫn 2026";
+                
+                navs.n1.innerText = "1. Định nghĩa Gems";
+                navs.n2.innerText = "2. Kết hợp & Lợi ích";
+                navs.n3.innerText = "3. Thiết lập";
+                navs.n4.innerText = "4. Công thức PACKED";
+                navs.n5.innerText = "5. Bản vẽ Đề thi mẫu";
+            } else if (lang === 'jp') {
+                h1.innerText = "NotebookLM & Gemini Gems統合による高性能AIブレインの構築";
+                p.innerText = "リサーチと創造を切り分け、業務を最適化。NotebookLMの「検証に基づく正確な事実理解」と、Gemini Gemsの「一貫性のある柔軟なコンテンツ創出力」を直結させた実用的な連携システム。";
+                tag.innerText = "2026年 ロードマップ";
+
+                navs.n1.innerText = "1. Gemsの定義";
+                navs.n2.innerText = "2. 連携と利点";
+                navs.n3.innerText = "3. 設定手順";
+                navs.n4.innerText = "4. PACKED指示文";
+                navs.n5.innerText = "5. 問題作成テスト";
+            }
+        }
+
+        // Initialize display states
+        setLanguage('vn');
+
+        // Copy Clipboard logic
+        function copyPrompt(elementId) {
+            const preElement = document.getElementById(elementId);
+            const textToCopy = preElement.innerText;
+
+            // Support fallback copy for iframe context limitations
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast("Đã sao chép nội dung thành công! / コピーしました！");
+            } catch (err) {
+                showToast("Sao chép thất bại / コピーに失敗しました");
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toast-message');
+            msgSpan.innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
+        }
+
+        // Interactive tool 1: Generator for PACKED template
+        function generateCustomPacked() {
+            const persona = document.getElementById('in-persona').value;
+            const assignment = document.getElementById('in-assignment').value;
+            const context = document.getElementById('in-context').value;
+            const knowledge = document.getElementById('in-knowledge').value;
+            const format = document.getElementById('in-format').value;
+
+            const promptResult = `# SYSTEM INSTRUCTION - CUSTOM GEM
+# PERSONA
+- Role: ${persona}
+
+# ASSIGNMENT
+- Main Task: ${assignment}
+
+# CONTEXT & LIMITS
+- Guardrails: ${context}
+
+# KNOWLEDGE PROTOCOL
+- Source Grounding: ${knowledge}
+
+# ENGAGEMENT & DELIVERY
+- Format Structure: ${format}`;
+
+            document.getElementById('packed-result').innerText = promptResult;
+            document.getElementById('packed-output-card').classList.remove('hidden');
+            showToast("Đã ghép chỉ dẫn Prompt thành công!");
+        }
+
+        // Interactive tool 2: Live simulation typing exam generator
+        function simulateExamGeneration() {
+            const subject = document.getElementById('sim-subject').value;
+            const level = document.getElementById('sim-level').value;
+
+            const terminalBox = document.getElementById('terminal-box');
+            const initialDiv = document.getElementById('terminal-initial');
+            const contentDiv = document.getElementById('terminal-content');
+
+            initialDiv.classList.add('hidden');
+            contentDiv.classList.remove('hidden');
+            contentDiv.innerHTML = `<span class="text-indigo-400 font-bold">[SYSTEM]</span> Đang kiểm tra liên kết tài khoản Google...<br>
+<span class="text-emerald-400 font-bold">[SUCCESS]</span> Tìm thấy NotebookLM gắn kèm: <code class="text-pink-400">NotebookLM: ${subject}</code><br>
+<span class="text-slate-400">[PROCESS]</span> Thiết lập luồng kiểm thử từ kho dữ liệu từ vựng gốc...<br>
+<span class="text-slate-400">[PROCESS]</span> Phân tích định dạng kiểm tra: <code class="text-yellow-400">${level}</code>...<br>
+<span class="text-indigo-400 font-bold">[AI GENERATING]</span> Chạy hệ thống kiểm định tạo bài thi từ vựng N3 dưới dạng Markdown...<br><br>
+<div class="border-t border-slate-800 pt-3 mt-3 text-slate-300 font-mono text-xs overflow-x-auto">
+<pre class="text-slate-300">
+# JLPT N3 Vocabulary Practice Test
+
+### Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+
+1. お互いに**協力**して、仕事を進めましょう。
+   1) きょうりょく
+   2) ごうりょく
+   3) けいりょく
+   4) きょうりく
+
+2. この工場では新しい機械を**導入**しました。
+   1) どうにゅう
+   2) とうにゅう
+   3) どうにゅう
+   4) とにゅう
+
+### Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+
+3. 友だちと**きょうどう**で会社を作りました。
+   1) 協同
+   2) 共同
+   3) 今日同
+   4) 共道
+
+### Mondai 3: （　）に入れるのに最もよいものを１・２・３・４から一つ選びなさい。
+
+4. 会議の準備が遅れているので、みんなで（　）作業を行った。
+   1) 交代
+   2) 共同
+   3) 別々
+   4) 勝手
+
+### Mondai 4: ＿＿＿の ことばに 意味が 最も 近いものを １・２・３・４から一つ選びなさい。
+
+5. 彼は仕事のやり方を**交代**した。
+   1) 変えた
+   2) チェンジした
+   3) 整理した
+   4) 計画した
+
+### Mondai 5: 次の ことばの 使い方が 最も よiものを １・２・３・４から一つ選びなさい。
+
+6. **共同**
+   1) 彼は一人でビルを共同した。
+   2) 昨日、私たちは山の上で共同に会った。
+   3) 二人で共同の事業を始めることにした。
+   4) 車が共同で動かなくなってしまった。
+
+---
+
+## ANSWER KEY & CITATION (ĐÁP ÁN & TRÍCH DẪN)
+
+* **Question 1:** 正解: 1 (きょうりょく)
+  - *Giải thích:* 「協力」có cách đọc chính xác là 「きょうりょく」.
+  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 24]*
+
+* **Question 2:** 正解: 1 (どうにゅう)
+  - *Giải thích:* 「導入」có cách đọc chính xác là 「どうにゅう」.
+  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 89]*
+
+* **Question 3:** 正解: 2 (共同)
+  - *Giải thích:* Từ 「きょうどう 共同」mang nghĩa cùng nhau hợp tác làm gì đó.
+  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 90]*
+
+* **Question 4:** 正解: 2 (共同)
+  - *Giải thích:* Ngữ cảnh "Mọi người cùng nhau làm việc vì chuẩn bị muộn" phù hợp với từ 「共同」.
+  - *[Nguồn: ${subject} - file N3_Verb_Interaction.pdf, dòng 11]*
+
+* **Question 5:** 正解: 2 (チェンジした)
+  - *Giải thích:* 「交代する」đồng nghĩa với việc thay đổi, luân phiên thay thế.
+  - *[Nguồn: ${subject} - file N3_Verb_Interaction.pdf, dòng 12]*
+
+* **Question 6:** 正解: 3 (二人で共同の事業を始めることにした。)
+  - *Giải thích:* Quy tắc sử dụng danh từ ghép 「共同の事業」 (sự nghiệp chung) hoàn toàn tự nhiên về mặt ngữ pháp.
+  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 89]*
+</pre>
+</div>`;
+            terminalBox.scrollTop = terminalBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
