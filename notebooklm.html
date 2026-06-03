@@ -6,6 +6,8 @@
     <title>NotebookLM: Trợ Lý AI Cho Giảng Viên | 教育者のためのAIパートナー</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
@@ -101,10 +103,21 @@
     <nav class="fixed w-full z-50 glass-card">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center font-bold text-xl text-primary">
-                    🧠 NotebookLM Edu
+                <!-- Phần bên trái: Nút quay lại và Logo -->
+                <div class="flex items-center space-x-3">
+                    <!-- Nút quay lại trang chủ index.html -->
+                    <a href="index.html" 
+                    class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 bg-white/50 hover:bg-slate-100 border border-gray-300 hover:border-primary transition-all shadow-sm"
+                    title="Quay lại trang chủ">
+                        <i class="fa-solid fa-arrow-left text-base"></i>
+                    </a>
+                    
+                    <div class="flex-shrink-0 flex items-center font-bold text-xl text-primary">
+                        🧠 NotebookLM Edu
+                    </div>
                 </div>
                 
+                <!-- Phần bên phải: Chuyển đổi ngôn ngữ -->
                 <div class="flex items-center space-x-2">
                     <button onclick="toggleLanguage('vi')" id="lang-btn-vi" class="px-3 py-1.5 rounded-lg text-xs font-bold border border-primary bg-primary text-white shadow-sm transition-all">🇻🇳 VI</button>
                     <button onclick="toggleLanguage('ja')" id="lang-btn-ja" class="px-3 py-1.5 rounded-lg text-xs font-bold border border-gray-300 text-textMain hover:border-primary transition-all">🇯🇵 JA</button>
@@ -272,7 +285,7 @@
             <!-- Interactive Sub-Tab Card Selector Menu -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-8">
                 <!-- Sub-Tab Option 1 -->
-                <button onclick="switchImpactSubTab('extract')" id="impact-card-extract" class="p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-primary shadow-md w-full">
+                <button onclick="switchImpactSubTab('extract')" id="impact-card-extract" class="p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-sky-100 border-primary shadow-md w-full">
                     <span class="text-3xl block mb-2">📁</span>
                     <h3 id="app-card2-title" class="text-base font-bold text-textMain mb-1">Trích xuất từ sách để tạo ngân hàng câu hỏi</h3>
                     <p id="app-card2-desc" class="text-xs text-textMuted font-normal">Trích xuất các câu hỏi, bài tập từ sách để tổng hợp thành một ngân hàng câu hỏi cho giáo viên.</p>
@@ -280,8 +293,9 @@
                 <!-- Sub-Tab Option 2 -->
                 <button onclick="switchImpactSubTab('grammar')" id="impact-card-grammar" class="p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-transparent hover:border-gray-200 w-full">
                     <span class="text-3xl block mb-2">⚙️</span>
-                    <h3 id="app-card3-title" class="text-base font-bold text-textMain mb-1">Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp</h3>
+                    <h3 id="app-card3-title" class="text-base font-bold text-textMain mb-1">Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp cho trước</h3>
                     <p id="app-card3-desc" class="text-xs text-textMuted font-normal">Trích xuất ngữ pháp và từ vựng theo bài học để tạo thành ngân hàng dữ liệu, từ đó tạo ra các bài tập hoặc câu hỏi mới dựa trên vốn ngân hàng đó.</p>
+                    <p id="app-card3-disclaimer" class="text-xs text-red-600 font-semibold italic">Lưu ý: Trong trường hợp tạo mới, cần kiểm tra lại độ chính xác của các câu hỏi được tạo ra.</p>
                 </button>
             </div>
 
@@ -349,7 +363,7 @@
                 <!-- Mockup 2: Tạo câu hỏi từ ngân hàng từ vựng & ngữ pháp -->
                 <div id="impact-content-grammar" class="impact-sub-tab-content">
                     <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-                        <h3 id="grammar-visual-title" class="text-lg font-bold text-textMain mb-1">Minh họa thực tế: Quy trình tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp</h3>
+                        <h3 id="grammar-visual-title" class="text-lg font-bold text-textMain mb-1">Minh họa thực tế: Quy trình tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp cho trước</h3>
                         <p id="grammar-visual-desc" class="text-xs text-textMuted mb-6">Mô phỏng cách NotebookLM thiết lập bài tập ngữ pháp bài 36-40 dựa trên vốn từ vựng bài 1-20.</p>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-4 rounded-xl">
@@ -380,16 +394,16 @@
                                             <p class="text-indigo-800 font-bold">I. 択一式問題（全15問）</p>
                                             <p class="text-slate-500 text-[10px] italic">正しいものを A〜D の中から1つ選びなさい。</p>
                                             <p class="font-bold my-1 text-slate-900">1. (36課) 日本語が 話せる（　　）、毎日 勉強して います。</p>
-                                            <p class="text-slate-700">1.  ようで | 2.  よう | 3. に | 4. な</p>
-                                            <p class="text-green-600 font-bold mt-0.5">正解: 3</p>
+                                            <p class="text-slate-700">1.  ようで | 2.  ように | 3. に | 4. な</p>
+                                            <p class="text-green-600 font-bold mt-0.5">正解: 2</p>
                                         </div>
                                         <!-- Q2 -->
                                         <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[13px] leading-relaxed">
                                             <p class="text-indigo-800 font-bold">III. 並べ替え問題（JLPT ★問題）（全10問）</p>
                                             <p class="text-slate-500 text-[10px] italic">言葉を正しい順番に並べ替えて、★に入るものの番号を答えなさい。</p>
-                                            <p class="font-bold my-1 text-slate-900">31. (36課) わたしは ＿＿ ＿＿ ★ ＿＿  勉強して います。</p>
-                                            <p class="text-slate-700">1 話せる　2 日本語が　3 ように　4 毎日</p>
-                                            <p class="text-green-600 font-bold mt-0.5">正解: 3 (2 1 3 4)</p>
+                                            <p class="font-bold my-1 text-slate-900">31. (39課) お金が ＿＿ ＿＿ ★ ＿＿ 買えません</p>
+                                            <p class="text-slate-700">1 カメラ　2 が　3 なくて　4 新しい</p>
+                                            <p class="text-green-600 font-bold mt-0.5">正解: 1 (3 4 1 2)</p>
                                         </div>
                                         <!-- Q3 -->
                                         <div class="p-3 bg-indigo-50/40 rounded border border-indigo-100/60 font-mono text-[13px] leading-relaxed">
@@ -444,7 +458,8 @@
                                 <div class="bg-white p-5 rounded-lg border border-red-100 shadow-sm flex flex-col justify-between h-40">
                                     <div>
                                         <span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px] uppercase">Before / Trước</span>
-                                        <h5 id="before-slide-title" class="font-bold text-sm text-textMain mt-2">Bản thảo thô chưa hiệu chỉnh</h5>
+                                        <h5 id="before-slide-title" class="font-bold text-sm text-textMain mt-2">Bản thảo ban đầu chưa hiệu chỉnh</h5>
+                                        <p id="before-slide-desc" class="text-xs text-textMuted mt-1">Nội dung ban đầu do AI tạo ra từ nội dung bài học số 30.</p>
                                     </div>
                                     <a href="https://drive.google.com/file/d/18Ey8S4fstpzgRp4LTH7Vf9hVlD8chcva/view?usp=drive_link" target="_blank" class="w-full text-center py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg text-xs transition-all inline-block mt-3" id="before-slide-btn">Xem Slide Before</a>
                                 </div>
@@ -453,6 +468,7 @@
                                     <div>
                                         <span class="bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded text-[10px] uppercase">After / Sau</span>
                                         <h5 id="after-slide-title" class="font-bold text-sm text-textMain mt-2">Slide đã hiệu chỉnh hoàn thiện</h5>
+                                        <p id="after-slide-desc" class="text-xs text-textMuted mt-1">Phiên bản slide đã được giảng viên hiệu chỉnh để phù hợp với style giảng dạy.</p>
                                     </div>
                                     <a href="https://drive.google.com/file/d/1HArPu06lJ4UmKrzDPSWfwL-9KX-r7-YM/view?usp=drive_link" target="_blank" class="w-full text-center py-2 bg-primary text-white font-bold rounded-lg text-xs hover:bg-primary/90 transition-all inline-block mt-3" id="after-slide-btn">Xem Slide After</a>
                                 </div>
@@ -549,6 +565,12 @@
 
     </main>
 
+    <!-- Custom Floating Toast Alerts -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 bg-slate-900 text-white dark:bg-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-xl flex items-center space-x-2 border border-slate-800 dark:border-slate-200 text-xs font-semibold transition-all duration-300">
+        <i class="fa-solid fa-check-circle text-emerald-500 text-sm"></i>
+        <span id="toast-message">Đã sao chép thành công!</span>
+    </div>
+
     <footer class="bg-gray-950 text-white py-12 text-center">
         <p id="footer-text" class="text-xs md:text-sm text-gray-400">Tài liệu học liệu tương tác song ngữ dành cho giảng viên và nhà đào tạo đại học.</p>
     </footer>
@@ -608,8 +630,10 @@
                 t1Title: "Chức năng \"Revise\" (Hiệu chỉnh Slide)",
                 t1Desc: "NotebookLM có thể tạo nhanh các bản phác thảo slide bài giảng tự động, hỗ trợ tạo nhanh khung bài học và các mẫu câu ví dụ để hỗ trợ tạo Slide, đồng thời hỗ trợ giảng viên hiệu chỉnh (revise) chính xác theo đúng ý đồ giảng dạy.",
                 slideSectionTitle: "Mô phỏng: Slide bài học số 30",
-                beforeSlide: "Bản thảo thô chưa hiệu chỉnh",
+                beforeSlide: "Bản thảo ban đầu chưa hiệu chỉnh",
+                beforeSlideDesc: "Nội dung ban đầu do AI tạo ra từ nội dung bài học số 30.",
                 afterSlide: "Slide đã hiệu chỉnh hoàn thiện",
+                afterSlideDesc: "Phiên bản slide đã được giảng viên hiệu chỉnh để phù hợp với style giảng dạy.",
                 viewSlideBtnBefore: "Xem Slide Before",
                 viewSlideBtnAfter: "Xem Slide After",
                 
@@ -648,8 +672,9 @@
                 impactDesc: "NotebookLM hỗ trợ giảng viên chuẩn bị học liệu đa dạng và linh hoạt hơn cho lớp học.",
                 appCard2Title: "Trích xuất từ sách để tạo ngân hàng câu hỏi",
                 appCard2Desc: "Trích xuất các câu hỏi, bài tập từ sách để tổng hợp thành một ngân hàng câu hỏi cho giáo viên.",
-                appCard3Title: "Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp",
+                appCard3Title: "Tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp cho trước",
                 appCard3Desc: "Trích xuất ngữ pháp và từ vựng theo bài học để tạo thành ngân hàng dữ liệu, từ đó tạo ra các bài tập hoặc câu hỏi mới dựa trên vốn ngân hàng đó.",
+                appCard3Disclaimer: "Lưu ý: Trong trường hợp tạo mới, cần kiểm tra lại độ chính xác của các câu hỏi được tạo ra.",
 
                 extractVisualTitle: "Minh họa thực tế: Quy trình trích xuất câu hỏi từ nguồn sách",
                 extractVisualDesc: "Mô phỏng cách NotebookLM xử lý một yêu cầu trích xuất danh sách câu hỏi JLPT N3 từ tài liệu gốc.",
@@ -658,7 +683,7 @@
                 extractPromptFooter: "* Trích xuất tự động theo mẫu yêu cầu",
                 extractResponseFooter: "✓ 3 câu đại diện đã được cấu trúc hóa",
 
-                grammarVisualTitle: "Minh họa thực tế: Quy trình tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp",
+                grammarVisualTitle: "Minh họa thực tế: Quy trình tạo câu hỏi từ ngân hàng từ vựng và ngữ pháp cho trước",
                 grammarVisualDesc: "Mô phỏng cách NotebookLM thiết lập bài tập ngữ pháp bài 36-40 dựa trên vốn từ vựng từ bài 1-20.",
                 grammarPromptHeader: "Prompt gửi cho NotebookLM (Yêu cầu liên kết từ vựng & ngữ pháp)",
                 grammarResponseHeader: "Câu trả lời nhận được từ NotebookLM",
@@ -742,7 +767,9 @@
                 t1Desc: "NotebookLMは、講義のアウトラインや例文スライドの迅速な構築をサポートし、教育者の意図に合わせて校正（Revise）することができます。",
                 slideSectionTitle: "実例デモ：第30課講義スライド",
                 beforeSlide: "校正前のラフ下書きスライド",
+                beforeSlideDesc: "第30課の内容からAIが自動生成した初期スライドの内容。",
                 afterSlide: "校正・ブラッシュアップ後の完成版",
+                afterSlideDesc: "教育者が意図するスタイルに合わせて校正されたスライドの完成版。",
                 viewSlideBtnBefore: "校正前スライドを表示",
                 viewSlideBtnAfter: "校正後スライドを表示",
                 
@@ -780,9 +807,10 @@
                 impactTitle: "問題バンクの作成",
                 impactDesc: "NotebookLMは、教育者が授業に合わせて多様で柔軟な教材を準備することをサポートします。",
                 appCard2Title: "書籍から抽出して問題バンクを作成",
-                appCard2Desc: "書籍から問題や演習を抽出し、教師用の...",
-                appCard3Title: "語彙・文法バンクからの問題作成",
+                appCard2Desc: "書籍から問題や練習問題を抽出して、教師向けの問題バンクを構築します。",
+                appCard3Title: "既存の語彙・文法バンクからの問題作成",
                 appCard3Desc: "各課に属する文法規則や新規語彙を体系的にデータ化し、蓄積されたバンクを基に新しい問題や課題を生成します。",
+                appCard3Disclaimer: "※注意：新規作成の場合、生成された問題の正確性を再度確認する必要があります。",
 
                 extractVisualTitle: "実証：書籍データからの試験問題自動抽出プロセス",
                 extractVisualDesc: "NotebookLMが提供された試験対策ドキュメントからJLPT N3語彙問題を自動抽出する流れ。",
@@ -1127,7 +1155,9 @@
             setLangText('t1-desc', activeDict.t1Desc);
             setLangText('slide-section-title', activeDict.slideSectionTitle);
             setLangText('before-slide-title', activeDict.beforeSlide);
+            setLangText('before-slide-desc', activeDict.beforeSlideDesc);
             setLangText('after-slide-title', activeDict.afterSlide);
+            setLangText('after-slide-desc', activeDict.afterSlideDesc);
             setLangText('before-slide-btn', activeDict.viewSlideBtnBefore);
             setLangText('after-slide-btn', activeDict.viewSlideBtnAfter);
 
@@ -1162,6 +1192,7 @@
             setLangText('app-card2-desc', activeDict.appCard2Desc);
             setLangText('app-card3-title', activeDict.appCard3Title);
             setLangText('app-card3-desc', activeDict.appCard3Desc);
+            setLangText('app-card3-disclaimer', activeDict.appCard3Disclaimer);
 
             // New extraction visual elements translations
             setLangText('extract-visual-title', activeDict.extractVisualTitle);
@@ -1242,10 +1273,10 @@
             const cardGrammar = document.getElementById('impact-card-grammar');
 
             if (subTabId === 'extract') {
-                cardExtract.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-primary shadow-md w-full";
+                cardExtract.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-sky-100 border-primary shadow-md w-full";
                 cardGrammar.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-transparent hover:border-gray-200 w-full";
             } else {
-                cardGrammar.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-primary shadow-md w-full";
+                cardGrammar.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-sky-100 border-primary shadow-md w-full";
                 cardExtract.className = "p-5 border-2 rounded-xl text-left transition-all focus:outline-none bg-white border-transparent hover:border-gray-200 w-full";
             }
         }
@@ -1458,7 +1489,7 @@
         async function submitResult() {
             const userName = document.getElementById('participant-name').value.trim();
             if (!userName) {
-                alert(dict[state.lang].qNameRequiredAlert);
+                showToast(dict[state.lang].qNameRequiredAlert);
                 return;
             }
 
@@ -1467,13 +1498,27 @@
                 {
                     method: "POST",
                     body: JSON.stringify({
+                        type: "notebooklm_quiz_result",
                         name: userName,
                         score: state.quiz.score
                     })
                 }
             );
 
-            alert(dict[state.lang].qResultSaved);
+            showToast(dict[state.lang].qResultSaved);
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const msgSpan = document.getElementById('toast-message');
+            msgSpan.innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3000);
         }
 
         function initCharts() {
@@ -1503,7 +1548,7 @@
                     labels: dict.vi.radarLabels,
                     datasets: [{
                         label: 'NotebookLM',
-                        data: [100, 100, 90, 95, 100],
+                        data: [90, 95, 88, 85, 85],
                         fill: true,
                         backgroundColor: 'rgba(2, 132, 199, 0.15)',
                         borderColor: '#0284c7',
@@ -1514,7 +1559,7 @@
                         borderWidth: 2
                     }, {
                         label: 'AI Chatbot Phổ Thông',
-                        data: [50, 20, 60, 40, 30],
+                        data: [65, 45, 70, 75, 72],
                         fill: true,
                         backgroundColor: 'rgba(245, 158, 11, 0.15)',
                         borderColor: '#f59e0b',

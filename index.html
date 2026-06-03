@@ -1,127 +1,260 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIWS Project Hub</title>
+    <title>AIWS Project Hub - AI Ready</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333333;
-            --primary-color: #2563eb;
-            --accent-color: #3b82f6;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            padding: 40px 20px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            zoom: 1.125;
         }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+        /* Custom smooth transition for language switcher */
+        .lang-node {
+            transition: all 0.3s ease-in-out;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 50px;
+        /* Toast notification animations */
+        .toast-notification {
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            opacity: 0;
         }
-
-        header h1 {
-            font-size: 2.5rem;
-            color: #1e293b;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            color: #64748b;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .card h2 {
-            font-size: 1.4rem;
-            margin-top: 0;
-            color: #1e293b;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            color: #64748b;
-            flex-grow: 1;
-        }
-
-        .go-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: var(--primary-color);
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .card:hover .go-link {
-            color: var(--accent-color);
+        .toast-notification.show {
+            transform: translateX(0);
+            opacity: 1;
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
 
-    <div class="container">
-        <header>
-            <h1>Artificial Intelligence Workshop Series (AIWS)</h1>
-            <p>Welcome to the AIWS hub. Explore our curated projects, tools, and workshop notes focusing on cutting-edge AI technologies and systems.</p>
-        </header>
-
-        <main class="grid">
-            <a href="notebooklm.html" class="card">
-                <div>
-                    <h2>NotebookLM</h2>
-                    <p>Discover how Google's AI-powered notebook helps you synthesize documents, generate summaries, and interact with your notes.</p>
+    <!-- Navigation / Header -->
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-blue-500/20">
+                    AI
                 </div>
-                <span class="go-link">Explore Module &rarr;</span>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">AIWS Hub</span>
+                    <p class="text-xs text-slate-400 font-medium">Global Education Unit</p>
+                </div>
+            </div>
+            
+            <!-- Language Selector Switcher -->
+            <div class="flex items-center bg-slate-100 p-1 rounded-full border border-slate-200">
+                <button onclick="switchLanguage('vi')" id="btn-vi" class="px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 bg-white text-blue-600 shadow-sm flex items-center gap-2">
+                    <span>🇻🇳</span> Tiếng Việt
+                </button>
+                <button onclick="switchLanguage('ja')" id="btn-ja" class="px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+                    <span>🇯🇵</span> 日本語
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex-grow">
+        
+        <!-- Hero Vision Section -->
+        <section class="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-100 mb-12 relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-80 h-80 bg-blue-50 rounded-full blur-3xl opacity-70 pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-indigo-50 rounded-full blur-3xl opacity-70 pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-3xl">
+                <!-- AI Ready Badge -->
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                    <span data-vi="Tầm nhìn AI Ready" data-ja="AI Ready のビジョン">Tầm nhìn AI Ready</span>
+                </span>
+                
+                <!-- Main Header Title -->
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
+                    <span data-vi="Định hình tương lai giảng dạy cùng" data-ja="教育の未来を創造する">Định hình tương lai giảng dạy cùng</span> 
+                    <span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">AI Workshop Series</span>
+                </h1>
+                
+                <!-- Strategy Narrative paragraph -->
+                <p class="text-base sm:text-lg text-slate-600 leading-relaxed mb-6" data-vi="Trong kỷ nguyên công nghệ số, hướng tới mục tiêu trở thành một tổ chức 'AI Ready' (Sẵn sàng cho AI) đã trở thành khẩu hiệu hành động cốt lõi của các doanh nghiệp hàng đầu hiện nay. Nhận thức sâu sắc xu thế đó, bộ phận GEU tích cực tiên phong ứng dụng trí tuệ nhân tạo trực tiếp vào các hoạt động dạy, học và vận hành thực tiễn." data-ja="デジタル時代において、組織が「AI Ready」（AIを使いこなす準備が整った状態）になることは、今日の先進企業の核となる行動スローガンです。この潮流を深く理解し、GEU部門は人工知能（AI）を教育・学習活動、および日々の運営に直接、積極的に取り入れています。">
+                    Trong kỷ nguyên công nghệ số, hướng tới mục tiêu trở thành một tổ chức 'AI Ready' (Sẵn sàng cho AI) đã trở thành khẩu hiệu hành động cốt lõi của các doanh nghiệp hàng đầu hiện nay. Nhận thức sâu sắc xu thế đó, bộ phận GEU tích cực tiên phong ứng dụng trí tuệ nhân tạo trực tiếp vào các hoạt động dạy, học và vận hành thực tiễn.
+                </p>
+                <p class="text-base sm:text-lg text-slate-600 leading-relaxed" data-vi="Chuỗi Workshop AI này được thiết kế đặc biệt nhằm hỗ trợ và trang bị kỹ năng thực chiến dành cho những thành viên chưa có cơ hội tiếp xúc sâu với hai trợ lý AI cực kỳ đắc lực từ Google: NotebookLM và Gemini Gems." data-ja="本AIワークショップシリーズは、Googleの2大強力AIアシスタントである「NotebookLM」と「Gemini Gems」にまだ触れる機会のなかったメンバー向けに、実践的なスキルを習得してもらうよう特別に設計されました。">
+                    Chuỗi Workshop AI này được thiết kế đặc biệt nhằm hỗ trợ và trang bị kỹ năng thực chiến dành cho những thành viên chưa có cơ hội tiếp xúc sâu với hai trợ lý AI cực kỳ đắc lực từ Google: NotebookLM và Gemini Gems.
+                </p>
+            </div>
+        </section>
+
+        <!-- Redirect Directory Cards Grid -->
+        <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h7"></path></svg>
+            <span data-vi="Khám phá các chuyên đề" data-ja="コンテンツの探索">Khám phá các chuyên đề</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            
+            <!-- Card 1: NotebookLM -->
+            <a href="notebooklm.html" class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-5 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                        N
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">NotebookLM</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-4" data-vi="Tìm hiểu cách cuốn sổ tay số thông minh của Google giúp bạn tổng hợp thông tin, tóm tắt tài liệu phức tạp và tự động tạo podcast thảo luận cực kỳ trực quan." data-ja="Googleのインテリジェントなデジタルノートブックが、情報の合成、複雑なドキュメントの要約、インタラクティブな議論の自動生成をどのように支援するかを学びます。">
+                        Tìm hiểu cách cuốn sổ tay số thông minh của Google giúp bạn tổng hợp thông tin, tóm tắt tài liệu phức tạp và tự động tạo podcast thảo luận cực kỳ trực quan.
+                    </p>
+                </div>
+                <div class="flex items-center text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
+                    <span data-vi="Xem chi tiết" data-ja="詳細を見る">Xem chi tiết</span> &rarr;
+                </div>
             </a>
 
-            <a href="gems.html" class="card">
+            <!-- Card 2: Gemini Gems -->
+            <a href="gems.html" class="group bg-white rounded-2xl p-6 border border-slate-100 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 flex flex-col justify-between">
                 <div>
-                    <h2>Gemini Gems</h2>
-                    <p>Explore custom versions of Gemini tailored for specific tasks, specialized workflows, and enhanced productivity.</p>
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold mb-5 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
+                        G
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Gemini Gems</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-4" data-vi="Hướng dẫn xây dựng các trợ lý chuyên biệt tùy biến cao, giúp tối ưu hóa tiến trình soạn giáo án, chuẩn bị bài giảng và các tác vụ lặp đi lặp lại." data-ja="カスタマイズ可能な専用AIアシスタントの構築をガイドし、指導案の作成、授業準備、および反復的なタスクの最適化を支援します。">
+                        Hướng dẫn xây dựng các trợ lý chuyên biệt tùy biến cao, giúp tối ưu hóa tiến trình soạn giáo án, chuẩn bị bài giảng và các tác vụ lặp đi lặp lại.
+                    </p>
                 </div>
-                <span class="go-link">Explore Module &rarr;</span>
+                <div class="flex items-center text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">
+                    <span data-vi="Xem chi tiết" data-ja="詳細を見る">Xem chi tiết</span> &rarr;
+                </div>
             </a>
-        </main>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-xs">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="mb-2">&copy; 2026 GEU - Global Education Unit. All rights reserved.</p>
+            <p data-vi="Định hướng đổi mới & kiến tạo tri thức số hướng tới kỷ nguyên AI Ready." data-ja="AI Readyの時代へ向けた、教育のデジタル革新と知の創造。">
+                Định hướng đổi mới & kiến tạo tri thức số hướng tới kỷ nguyên AI Ready.
+            </p>
+        </div>
+    </footer>
+
+    <!-- ALERTS NOTIFICATION WRAPPER -->
+    <div class="fixed top-6 right-6 z-50 flex flex-col gap-3 pointer-events-none max-w-md w-full px-4 sm:px-0">
+        
+        <!-- ERROR ALERT (Chưa nhập tên) -->
+        <div id="errorAlert" class="toast-notification bg-white border-l-4 border-rose-500 rounded-xl shadow-xl shadow-rose-500/5 p-4 flex gap-3 items-start pointer-events-auto">
+            <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
+                ⚠️
+            </div>
+            <div class="flex-grow">
+                <h4 class="font-bold text-sm text-rose-900" data-vi="Có lỗi xảy ra" data-ja="エラーが発生しました">
+                    Có lỗi xảy ra
+                </h4>
+                <p class="text-xs text-rose-700/80 mt-1" data-vi="Vui lòng kiểm tra lại: Bạn chưa nhập họ tên!" data-ja="お名前が入力されていません。入力後に再度お試しください。">
+                    Vui lòng kiểm tra lại: Bạn chưa nhập họ tên!
+                </p>
+            </div>
+            <button onclick="dismissAlert('errorAlert')" class="text-slate-400 hover:text-slate-600 font-bold text-lg leading-none">&times;</button>
+        </div>
+
+        <!-- SUCCESS ALERT (Thành công) -->
+        <div id="successAlert" class="toast-notification bg-white border-l-4 border-emerald-500 rounded-xl shadow-xl shadow-emerald-500/5 p-4 flex gap-3 items-start pointer-events-auto">
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-500 flex items-center justify-center shrink-0">
+                🎉
+            </div>
+            <div class="flex-grow">
+                <h4 class="font-bold text-sm text-emerald-900" data-vi="Gửi biểu mẫu thành công!" data-ja="送信に成功しました！">
+                    Gửi biểu mẫu thành công!
+                </h4>
+                <p class="text-xs text-emerald-700/80 mt-1" data-vi="Chúc mừng bạn đã kết nối với tài liệu chương trình AIWS." data-ja="AIWSプログラムの資料送付手続きが完了しました。ご登録ありがとうございます。">
+                    Chúc mừng bạn đã kết nối với tài liệu chương trình AIWS.
+                </p>
+            </div>
+            <button onclick="dismissAlert('successAlert')" class="text-slate-400 hover:text-slate-600 font-bold text-lg leading-none">&times;</button>
+        </div>
+
     </div>
+
+    <script>
+        // Language state management
+        let currentLang = 'vi';
+
+        // Function to handle switching language states
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            // Adjust buttons active styling
+            const btnVi = document.getElementById('btn-vi');
+            const btnJa = document.getElementById('btn-ja');
+            
+            if (lang === 'vi') {
+                btnVi.className = "px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 bg-white text-blue-600 shadow-sm flex items-center gap-2";
+                btnJa.className = "px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 text-slate-600 hover:text-slate-900 flex items-center gap-2";
+                document.documentElement.lang = 'vi';
+            } else {
+                btnVi.className = "px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 text-slate-600 hover:text-slate-900 flex items-center gap-2";
+                btnJa.className = "px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 bg-white text-blue-600 shadow-sm flex items-center gap-2";
+                document.documentElement.lang = 'ja';
+            }
+
+            // Target elements with custom multilinguistic data tags
+            const textNodes = document.querySelectorAll('[data-vi]');
+            textNodes.forEach(node => {
+                if (lang === 'vi') {
+                    node.textContent = node.getAttribute('data-vi');
+                } else if (lang === 'ja') {
+                    node.textContent = node.getAttribute('data-ja');
+                }
+            });
+        }
+
+        // Form Submission validation handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById('username');
+            const nameValue = usernameInput.value.trim();
+
+            if (!nameValue) {
+                triggerAlert('errorAlert');
+            } else {
+                triggerAlert('successAlert');
+                usernameInput.value = ''; // Clean form fields
+            }
+        }
+
+        // Custom Floating Alerts triggers
+        let timerIds = {};
+        
+        function triggerAlert(alertId) {
+            const oppositeId = alertId === 'errorAlert' ? 'successAlert' : 'errorAlert';
+            dismissAlert(oppositeId); // Close the opposite toast if already shown
+
+            const alertEl = document.getElementById(alertId);
+            alertEl.classList.add('show');
+
+            // Clear any active timer for this element
+            if (timerIds[alertId]) {
+                clearTimeout(timerIds[alertId]);
+            }
+
+            // Autoclose notification after 5 seconds
+            timerIds[alertId] = setTimeout(() => {
+                dismissAlert(alertId);
+            }, 5000);
+        }
+
+        function dismissAlert(alertId) {
+            const alertEl = document.getElementById(alertId);
+            alertEl.classList.remove('show');
+            if (timerIds[alertId]) {
+                clearTimeout(timerIds[alertId]);
+                delete timerIds[alertId];
+            }
+        }
+    </script>
 
 </body>
 </html>

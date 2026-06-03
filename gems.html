@@ -38,6 +38,10 @@
         }
     </script>
     <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            zoom: 1.225;
+        }
         .glassmorphism {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -57,8 +61,16 @@
     <nav class="sticky top-0 z-50 glassmorphism border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Brand Identity -->
+                <!-- Brand Identity & Back Button-->
                 <div class="flex items-center space-x-3">
+                   <!-- Nút quay lại trang chủ index.html -->
+                    <a href="index.html" 
+                    class="w-10 h-10 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 bg-slate-100/50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-900 border border-slate-200/50 dark:border-slate-800/50 transition-all shadow-sm"
+                    title="Quay lại trang chủ">
+                        <i class="fa-solid fa-arrow-left text-base"></i>
+                    </a>
+
+                    <!-- Brand Identity -->
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
                         <i class="fa-solid fa-brain text-lg animate-pulse"></i>
                     </div>
@@ -114,12 +126,13 @@
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
         
         <!-- Interactive Navigation Anchor Links -->
-        <div class="flex flex-wrap items-center justify-center gap-2 mb-10 pb-4 border-b border-slate-200/40 dark:border-slate-800/40">
-            <a href="#sec1" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-regular fa-question-circle text-indigo-500 mr-1"></i> <span class="nav-txt-1">1. Định nghĩa Gems</span></a>
-            <a href="#sec2" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-link text-indigo-500 mr-1"></i> <span class="nav-txt-2">2. Cách kết hợp & Lợi ích</span></a>
-            <a href="#sec3" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-list-check text-indigo-500 mr-1"></i> <span class="nav-txt-3">3. Các bước thiết lập</span></a>
-            <a href="#sec4" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-flask text-indigo-500 mr-1"></i> <span class="nav-txt-4">4. Công thức PACKED</span></a>
-            <a href="#sec5" class="px-4 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 text-xs font-semibold text-slate-600 dark:text-slate-300 shadow-sm transition-all"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-1"></i> <span class="nav-txt-5">5. Bản vẽ Đề thi mẫu</span></a>
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-10 pb-4 border-b border-slate-200/40 dark:border-slate-800/40 font-semibold text-xs text-slate-600 dark:text-slate-300">
+            <a href="#sec1" class="px-3.5 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm transition-all"><i class="fa-regular fa-question-circle text-indigo-500 mr-1"></i> <span class="nav-txt-1">1. Định nghĩa Gems</span></a>
+            <a href="#sec2" class="px-3.5 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm transition-all"><i class="fa-solid fa-link text-indigo-500 mr-1"></i> <span class="nav-txt-2">2. Kết hợp & Lợi ích</span></a>
+            <a href="#sec3" class="px-3.5 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm transition-all"><i class="fa-solid fa-list-check text-indigo-500 mr-1"></i> <span class="nav-txt-3">3. Thiết lập</span></a>
+            <a href="#sec4" class="px-3.5 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm transition-all"><i class="fa-solid fa-flask text-indigo-500 mr-1"></i> <span class="nav-txt-4">4. Công thức PACKED</span></a>
+            <a href="#sec5" class="px-3.5 py-2 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm transition-all"><i class="fa-solid fa-graduation-cap text-indigo-500 mr-1"></i> <span class="nav-txt-5">5. Bản vẽ Đề thi mẫu</span></a>
+            <a href="#sec6" class="px-3.5 py-2 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-sm hover:from-indigo-600 hover:to-purple-600 transition-all"><i class="fa-solid fa-circle-question mr-1"></i> <span class="nav-txt-6">6. Bài trắc nghiệm</span></a>
         </div>
 
         <!-- Section Grid Workspace -->
@@ -239,7 +252,7 @@
                         <div class="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base">
                             <p class="font-semibold text-slate-800 dark:text-slate-200">Gemini Gemsの基本定義：</p>
                             <p>
-                                <strong>Gemini Gems</strong>は、Googleの対話型AI「Gemini」のカスタムおよび再利用可能なバージョンです。特定のタスクに合わせて役割（ペルソナ）、振る舞い、制約事項、ナレッジソースなどのシステムプロンプトを固定保存し、いつでも呼び出すことができます。
+                                <strong>Gemini Gems</strong>は、Google of 対話型AI「Gemini」のカスタムおよび再利用可能なバージョンです。特定のタスクに合わせて役割（ペルソナ）、振る舞い、制約事項、ナレッジソースなどのシステムプロンプトを固定保存し、いつでも呼び出すことができます。
                             </p>
                             <p>
                                 通常のAIチャットでは、長いやり取りの中でモデルが初期設定を忘れてしまう「コンテキストの喪失」が発生しますが、Gemsは指示文をコアにロックするため、最初から最後まで安定した一貫性のある動作を維持します。
@@ -322,7 +335,7 @@
                                     </div>
                                     <div class="p-3 bg-white dark:bg-slate-900 rounded-xl border border-slate-100 dark:border-slate-800">
                                         <p class="font-bold text-slate-800 dark:text-slate-200 mb-1"><i class="fa-solid fa-circle-question text-purple-500 mr-1.5"></i> シラバス連動型の学務問い合わせ対応</p>
-                                        <p class="text-slate-500 text-xs">履修規約、提出課題의 ール、テスト日程などの問い合わせに、シラバス資料の記載範囲でのみ回答する窓口を開設。</p>
+                                        <p class="text-slate-500 text-xs">履修規約、提出課題のルール、テスト日程などの問い合わせに、シラバス資料의 記載範囲でのみ回答する窓口を開設。</p>
                                     </div>
                                 </div>
                             </div>
@@ -542,8 +555,8 @@
                             <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Quy trình 5 bước xây dựng Custom Gem tùy chỉnh</h2>
                         </div>
                         
-                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 text-sm text-slate-600 dark:text-slate-300">
-                            <div class="lg:col-span-3 space-y-4">
+                        <div class="grid grid-cols-1 gap-6 text-sm text-slate-600 dark:text-slate-300">
+                            <div class="space-y-4">
                                 <div class="flex items-start space-x-3">
                                     <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
                                     <div>
@@ -580,21 +593,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Pro Tip box for VN steps -->
-                            <div class="lg:col-span-2 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900 p-5 rounded-2xl flex flex-col justify-between">
-                                <div>
-                                    <div class="text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase tracking-wide mb-2"><i class="fa-solid fa-brain mr-1"></i> Mẹo Pro: Thẻ Nhớ Ngoài (Memory Card)</div>
-                                    <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
-                                        Hãy tạo một tệp Google Doc có tên là "Memory Card - [Tên Gem]" trong Google Drive và liên kết tệp đó vào Gem của bạn. 
-                                        <br><br>
-                                        Bất cứ khi nào bạn cập nhật thông tin chỉnh sửa quy trình giảng dạy hay quy chuẩn học tập mới trong Google Doc đó, Gem sẽ thừa hưởng kiến thức mới ngay trong phiên chat kế tiếp mà không cần cài đặt lại!
-                                    </p>
-                                </div>
-                                <div class="mt-4 pt-3 border-t border-indigo-100 dark:border-indigo-900/60 text-[10px] text-slate-400 font-mono">
-                                    *Áp dụng phù hợp cho các bộ quy chuẩn nội bộ
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -605,8 +603,8 @@
                             <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">カスタムGemを作成する5つのステップ</h2>
                         </div>
                         
-                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 text-sm text-slate-600 dark:text-slate-300">
-                            <div class="lg:col-span-3 space-y-4">
+                        <div class="grid grid-cols-1 gap-6 text-sm text-slate-600 dark:text-slate-300">
+                            <div class="space-y-4">
                                 <div class="flex items-start space-x-3">
                                     <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
                                     <div>
@@ -632,7 +630,7 @@
                                     <span class="bg-purple-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
                                     <div>
                                         <p class="font-bold text-slate-900 dark:text-white">知識ベースの紐付け</p>
-                                        <p class="text-xs mt-1">「Knowledge」欄の「+」を押して、同じGoogleアカウントで構築されたNotebookLM、またはGoogleドライブ内のフォルダを直接リンクします。</p>
+                                        <p class="text-xs mt-1"><code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">Knowledge</code>欄の「+」を押して、同じGoogleアカウントで構築されたNotebookLM、またはGoogleドライブ内のフォルダを直接リンクします。</p>
                                     </div>
                                 </div>
                                 <div class="flex items-start space-x-3">
@@ -641,21 +639,6 @@
                                         <p class="font-bold text-slate-900 dark:text-white">プレビュー検証・保存</p>
                                         <p class="text-xs mt-1">右側のプレビュー画面でいくつか質問を投げて動作検証をします。問題がなければ「Save」を押し、左サイドバーにピン留めします。</p>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- Pro Tip box for JP steps -->
-                            <div class="lg:col-span-2 bg-purple-50/50 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900 p-5 rounded-2xl flex flex-col justify-between">
-                                <div>
-                                    <div class="text-purple-600 dark:text-purple-400 font-bold text-xs uppercase tracking-wide mb-2"><i class="fa-solid fa-lightbulb mr-1"></i> プロ技術：「メモリーカード」ハック</div>
-                                    <p class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
-                                        「Memory Card - [Gem名]」というタイトルのGoogleドキュメントをGoogleドライブに作成し、そのファイルをGemに紐付けます。
-                                        <br><br>
-                                        指導方針やカリキュラム内容が変わった際、Gemの本体プロンプトを編集しなくても、そのGoogleドキュメントを直接編集するだけで、リアルタイムでAIの判断ポリシーが自動上書き反映されます。
-                                    </p>
-                                </div>
-                                <div class="mt-4 pt-3 border-t border-purple-100 dark:border-purple-900/60 text-[10px] text-slate-400 font-mono">
-                                    ※ 指導マニュアル・学校規約の同期に最適
                                 </div>
                             </div>
                         </div>
@@ -676,7 +659,7 @@
                         </div>
                         
                         <p class="text-slate-600 dark:text-slate-300 mb-6 text-sm md:text-base">
-                            Để hỗ trợ duy trì định hướng nhất quán của Gem trong các cuộc hội thoại, bạn có thể phân chia chỉ dẫn thành 5 phần theo công thức <strong>PACKED</strong>:
+                            Để hỗ trợ duy trì định hướng nhất quán của Gem trong các cuộc hội thoại, bạn can phân chia chỉ dẫn thành 5 phần theo công thức <strong>PACKED</strong>:
                         </p>
 
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -777,12 +760,12 @@
 Bạn là Giảng viên tiếng Nhật cao cấp và là Chuyên gia Khảo thí Ngôn ngữ chuyên về kỳ thi Năng lực Nhật ngữ JLPT. Bạn am hiểu sâu sắc cấu trúc, ma trận kiến thức và phân bổ độ khó của đề thi JLPT N3 thực tế. Phong cách làm việc của bạn chuẩn mực, sư phạm và có tính chính xác cao.
 
 # NHIỆM VỤ (ASSIGNMENT)
-Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ vựng (文字・語彙) trình độ JLPT N3 dưới dạng mã nguồn Markdown rõ ràng. Đề thi bắt buộc phải xây dựng đầy đủ theo cấu trúc chuẩn gồm 5 Mondai dưới đây:
-- Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
-- Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４からいちばんいいものを一つ選びなさい。
-- Mondai 3: （　）に入れるのに最もよいものを１・２・３・４から一つ選びなさい。
-- Mondai 4: ＿＿＿の ことばに 意味が 最も 近iものを １・２・３・４から一つ選びなさい。
-- Mondai 5: 次の ことばの 使い方が 最mよいものを １・２・３・４から一つ選びなさい。
+Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) các câu hỏi trắc nghiệm đã có sẵn trong kho câu hỏi của NotebookLM được đính kèm để tạo thành một đề thi thử phần Từ vựng (文字・語彙) trình độ JLPT N3 dưới dạng mã nguồn Markdown rõ ràng. Đề thi bắt buộc phải tập hợp đầy đủ theo cấu trúc chuẩn gồm 5 Mondai dưới đây:
+- Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４ từ một lựa chọn.
+- Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４ từ một lựa chọn.
+- Mondai 3: （　）に入れるのにmốn tốt nhất là chọn một từ trong các tùy chọn 1・2・3・4.
+- Mondai 4: ＿＿＿の ことばに 意味が 最も 近いものを １・２・３・４ từ một lựa chọn.
+- Mondai 5: 次の ことばの 使い方が 最も よいものを １・２・３・４ từ một lựa chọn.
 
 # QUY TẮC ĐỊNH DẠNG & ĐẦU RA CHẶT CHẼ (OUTPUT FORMAT & LAYOUT)
 1. ĐỊNH DẠNG ĐẦU RA: Toàn bộ đầu ra phải được định dạng hoàn toàn bằng cấu trúc văn bản Markdown chuẩn (Sử dụng tiêu đề h1, h2, h3, danh sách và khối mã nếu cần) để các mô hình LLM dễ dàng đọc, phân tích và trích xuất cấu trúc.
@@ -790,12 +773,12 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
 3. ĐỒNG BỘ TRẮC NGHIỆM SỐ: Tất cả các câu hỏi trong đề thi phải thuộc dạng trắc nghiệm khách quan với đúng 4 phương án lựa chọn được ký hiệu tương ứng bằng các chữ số 1, 2, 3, 4 (Tuyệt đối không dùng chữ cái A, B, C, D hay các ký hiệu khác).
 
 # HẠN CHẾ DỮ LIỆU CHẶT CHẼ (CONTEXT & CONSTRAINTS)
-1. CHỈ SỬ DỤNG TỪ VỰNG TRONG NGUỒN: Toàn bộ từ vựng, chữ Kanji, ngữ cảnh câu và đáp án lựa chọn sử dụng trong đề thi PHẢI được lấy trực tiếp từ dữ liệu trong kho NotebookLM đính kèm. Tuyệt đối không tự ý bổ sung từ vựng mới hoặc các mẫu câu nằm ngoài tài liệu nguồn.
-2. KHÔNG TỰ SUY ĐOÁN: Nếu số lượng từ vựng trong kho đính kèm không đủ để thiết lập một Mondai cụ thể, hãy thông báo rõ cho người dùng thay vì tự bịa ra từ mới để bù đắp.
+1. CHỈ TRÍCH XUẤT CÂU HỎI CÓ SẴN TRONG NGUỒN: Toàn bộ câu hỏi, phương án chọn và đáp án sử dụng trong đề thi PHẢI được trích xuất trực tiếp từ kho câu hỏi có sẵn trong tài liệu NotebookLM đính kèm. Tuyệt đối không tự ý biên soạn câu hỏi mới hoặc bổ sung các từ vựng/mẫu câu nằm ngoài tài liệu nguồn.
+2. KHÔNG TỰ SUY ĐOÁN HOẶC TỰ SOẠN: Nếu số lượng câu hỏi trong kho đính kèm không đủ để thiết lập một Mondai cụ thể, hãy thông báo rõ cho người dùng thay vì tự sáng tác câu hỏi mới để bù đắp.
 
 # GIAO THỨC TRUY XUẤT (KNOWLEDGE)
-- Quét toàn bộ kho tài liệu từ vựng JLPT N3 được đính kèm thông qua NotebookLM trước khi bắt đầu đặt câu hỏi.
-- Biên soạn phần Đáp án chi tiết giải thích nghĩa của câu hỏi, từ vựng đúng và trích dẫn trong ngoặc vuông dẫn trực tiếp về tệp nguồn gốc trong NotebookLM (Ví dụ: "[Nguồn: Tệp Từ vựng Danh từ N3, dòng 45]").</pre>
+- Quét toàn bộ kho câu hỏi JLPT N3 được đính kèm thông qua NotebookLM để chọn lọc ngẫu nhiên các câu hỏi phù hợp.
+- Trích xuất nguyên vẹn đáp án chi tiết giải thích nghĩa và trích dẫn trong ngoặc vuông dẫn trực tiếp về tệp nguồn gốc trong NotebookLM (Ví dụ: "[Nguồn: Tệp Ngân hàng câu hỏi N3, câu 45]").</pre>
                         </div>
                     </div>
 
@@ -839,117 +822,90 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
 
 # 知識ベースの連携手順 (KNOWLEDGE)
 - 連携されたNotebookLMから関連データを事前に走査し、指定語彙情報のみをベースにテストを作成します。
-- 解答解説を作成する際、NotebookLM内の該当する語彙ファイル名を括弧付きで併記してください（例："[ソース: N3名詞リスト, 45行目]"）。</pre>
+- 解答解説を作成する際、NotebookLM内の該当する語彙ファイル名を括弧付きで併記してください（例："[ソース: N3文字・語彙リスト, 45行目]"）。</pre>
                         </div>
                     </div>
 
                 </div>
             </section>
 
+            <!-- SECTION 6: INTERACTIVE QUIZ -->
+            <section id="sec6" class="scroll-mt-24">
+                <div class="grid grid-cols-1 gap-8 transition-all language-pane" id="grid-sec6">
+                    <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all">
+                        <div class="flex items-center space-x-3 mb-6">
+                            <span class="w-10 h-10 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white flex items-center justify-center font-bold">6</span>
+                            <div>
+                                <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white lang-vn">Bài trắc nghiệm đánh giá năng lực tích hợp</h2>
+                                <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white lang-jp">統合スキル評価クイズ</h2>
+                                <p class="text-xs text-slate-400 mt-1 lang-vn">Hoàn thành 8 câu hỏi dưới đây (giới hạn nội dung từ Phần 1 đến Phần 4) để đánh giá mức độ tiếp thu.</p>
+                                <p class="text-xs text-slate-400 mt-1 lang-jp">セクション1からセクション4の内容範囲の理解度をチェックするクイズです。</p>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Quiz Container -->
+                        <div id="quiz-container" class="space-y-4">
+                            <!-- Dynamic Content Rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
-        <!-- PLAYGROUND SECTION: Dual Action Simulator -->
-        <section id="playground" class="scroll-mt-24 mt-16">
+        <!-- PLAYGROUND SECTION: Centered Dual Action Simulator -->
+        <section id="playground" class="scroll-mt-24 mt-16 max-w-3xl mx-auto">
             <div class="bg-gradient-to-r from-indigo-900 to-purple-900 text-white rounded-3xl p-6 md:p-10 shadow-xl relative overflow-hidden">
                 <!-- Background decor SVGs -->
                 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-indigo-500 rounded-full blur-3xl opacity-30"></div>
                 <div class="absolute -left-10 -top-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-30"></div>
 
-                <div class="relative z-10">
+                <div class="relative z-10 w-full">
                     <span class="bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase mb-4 inline-block">AI Playground Simulator</span>
                     <h2 class="text-2xl md:text-3xl font-extrabold mb-2">Trình Tạo Đề Thi & Chỉ Dẫn Thử Nghiệm</h2>
                     <p class="text-xs md:text-sm text-indigo-200 max-w-2xl mb-8">
-                        Thiết kế thử nghiệm một Gem luyện thi theo công thức PACKED tùy chỉnh, sau đó chạy mô phỏng "JLPT N3 Vocabulary Architect Gem" để xem kết quả tạo bài kiểm tra tự động từ nguồn dữ liệu dưới dạng Markdown.
+                        Chạy mô phỏng "JLPT N3 Vocabulary Architect Gem" để xem kết quả tạo bài kiểm tra tự động từ nguồn dữ liệu dưới dạng Markdown.
                     </p>
 
-                    <!-- Interactive Grid Split -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Single Column: Exam Architect Simulation Chat -->
+                    <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-5 md:p-6 w-full">
+                        <h3 class="font-bold text-sm uppercase tracking-wider text-purple-400 mb-4 pb-2 border-b border-slate-800"><i class="fa-solid fa-microchip mr-2"></i> Live Exam Gem Simulator</h3>
                         
-                        <!-- Tool 1: Custom PACKED Instructions Builder -->
-                        <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-5 md:p-6">
-                            <h3 class="font-bold text-sm uppercase tracking-wider text-indigo-400 mb-4 pb-2 border-b border-slate-800"><i class="fa-solid fa-wand-magic-sparkles mr-2"></i> 1. PACKED Prompts Customizer</h3>
-                            
-                            <div class="space-y-3 text-xs">
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                                 <div>
-                                    <label class="block text-slate-400 font-semibold mb-1">P - Persona (Nhân cách / ペルソナ)</label>
-                                    <input id="in-persona" type="text" value="An expert Japanese pedagogical evaluator specialized in JLPT N3 vocabulary matrix" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                                    <label class="block text-slate-400 font-semibold mb-1">Phân loại từ vựng / 語彙カテゴリ</label>
+                                    <select id="sim-subject" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-purple-500">
+                                        <option value="Từ vựng N3 - Danh từ (名詞)">Từ vựng N3 - Danh từ (名詞)</option>
+                                        <option value="Từ vựng N3 - Động từ (動詞)">Từ vựng N3 - Động từ (動詞)</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <label class="block text-slate-400 font-semibold mb-1">A - Assignment (Nhiệm vụ / 任務)</label>
-                                    <input id="in-assignment" type="text" value="Formulate systematic mock test papers in raw Markdown format, continuously numbered 1 to N, using options 1, 2, 3, 4" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block text-slate-400 font-semibold mb-1">C - Context & Constraints (Điều kiện / 制約)</label>
-                                    <input id="in-context" type="text" value="Only use verified vocabulary items present in the uploaded source. All questions must be multiple-choice with options 1, 2, 3, 4, numbered sequentially starting from 1." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block text-slate-400 font-semibold mb-1">K - Knowledge Source (Tài liệu / 知識)</label>
-                                    <input id="in-knowledge" type="text" value="Query the linked 'NotebookLM: JLPT N3 Vocabulary Bank 2026' as the sole database." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
-                                </div>
-                                <div>
-                                    <label class="block text-slate-400 font-semibold mb-1">ED - Output Format (Trình bày / 形式)</label>
-                                    <input id="in-format" type="text" value="Structure as clear Markdown headers: Mondai 1 (＿＿＿の ことばは どう 読みますか。), Mondai 2 (＿＿＿の ことばは どう 書きますか。), Mondai 3 (（　）に入れるのに...), Mondai 4 (＿＿＿の ことばに 意味が...), Mondai 5 (次の...). Options must be 1, 2, 3, 4." class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-indigo-500">
+                                    <label class="block text-slate-400 font-semibold mb-1">Mục tiêu luyện tập / 練習ターゲット</label>
+                                    <select id="sim-level" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-slate-200 focus:outline-none focus:border-purple-500">
+                                        <option value="Luyện tập rút gọn (Mondai 1, 2, 3)">Luyện tập rút gọn (Mondai 1, 2, 3)</option>
+                                        <option value="Đề khảo sát đầy đủ (5 Mondai)">Đề khảo sát đầy đủ (5 Mondai)</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <button onclick="generateCustomPacked()" class="w-full mt-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
-                                <i class="fa-solid fa-sync mr-1.5 animate-spin"></i> Ghép chỉ dẫn Prompt / プロンプト生成
+                            <button onclick="simulateExamGeneration()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 rounded-xl text-xs transition-all shadow-md">
+                                <i class="fa-solid fa-paper-plane mr-1.5"></i> Chạy lập đề kiểm tra / 模擬試験生成開始
                             </button>
-
-                            <!-- Results generated container -->
-                            <div id="packed-output-card" class="mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 hidden">
-                                <div class="flex items-center justify-between mb-2">
-                                    <span class="text-[10px] text-emerald-400 font-mono font-bold uppercase"><i class="fa-solid fa-circle-check mr-1"></i> Generated Custom Prompt</span>
-                                    <button onclick="copyPrompt('packed-result')" class="text-slate-400 hover:text-white text-xs"><i class="fa-regular fa-copy"></i></button>
-                                </div>
-                                <p id="packed-result" class="font-mono text-[10px] text-slate-300 whitespace-pre-wrap select-all leading-normal"></p>
-                            </div>
                         </div>
 
-                        <!-- Tool 2: Exam Architect Simulation Chat -->
-                        <div class="bg-slate-900/80 backdrop-blur border border-slate-800 rounded-2xl p-5 md:p-6 flex flex-col justify-between">
-                            <div>
-                                <h3 class="font-bold text-sm uppercase tracking-wider text-purple-400 mb-4 pb-2 border-b border-slate-800"><i class="fa-solid fa-microchip mr-2"></i> 2. Live Exam Gem Simulator</h3>
-                                
-                                <div class="space-y-4">
-                                    <div class="grid grid-cols-2 gap-3 text-xs">
-                                        <div>
-                                            <label class="block text-slate-400 font-semibold mb-1">Phân loại từ vựng / 語彙カテゴリ</label>
-                                            <select id="sim-subject" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-purple-500">
-                                                <option value="Từ vựng N3 - Danh từ (Noun / 名詞)">Từ vựng N3 - Danh từ</option>
-                                                <option value="Từ vựng N3 - Động từ (Verb / 動詞)">Từ vựng N3 - Động từ</option>
-                                                <option value="Từ vựng N3 - Tính từ (Adjective / 形容詞)">Từ vựng N3 - Tính từ</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label class="block text-slate-400 font-semibold mb-1">Mục tiêu luyện tập / 練習ターゲット</label>
-                                            <select id="sim-level" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-slate-200 focus:outline-none focus:border-purple-500">
-                                                <option value="Mini Mock Test (Đầy đủ 5 Mondai)">Mini Mock Test (5 Mondai)</option>
-                                                <option value="Trắc nghiệm chuyên sâu Mondai 1 & 2">Chuyên sâu Mondai 1 & 2</option>
-                                                <option value="Thử thách ngữ cảnh Mondai 3 & 5">Thử thách Mondai 3 & 5</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <button onclick="simulateExamGeneration()" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md">
-                                        <i class="fa-solid fa-paper-plane mr-1.5"></i> Chạy lập đề kiểm tra / 模擬試験生成開始
-                                    </button>
-                                </div>
-
-                                <!-- Terminal Output -->
-                                <div id="terminal-box" class="mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 text-[10px] sm:text-xs font-mono text-slate-300 min-h-48 overflow-y-auto max-h-64 leading-relaxed relative font-sans">
-                                    <div id="terminal-initial" class="text-slate-500 flex flex-col items-center justify-center pt-8 text-center">
-                                        <i class="fa-solid fa-terminal text-2xl mb-2 opacity-45"></i>
-                                        <p>Nhấp nút phía trên để chạy giả lập máy quét dữ liệu NotebookLM và tạo mẫu đề thi bằng custom Gem...</p>
-                                    </div>
-                                    <div id="terminal-content" class="hidden text-slate-300">
-                                        <!-- Typed dynamically -->
-                                    </div>
-                                </div>
+                        <!-- Terminal Output -->
+                        <div id="terminal-box" class="mt-4 p-4 bg-slate-950 rounded-xl border border-slate-800 text-[10px] sm:text-xs font-mono text-slate-300 min-h-48 overflow-y-auto max-h-64 leading-relaxed relative font-sans">
+                            <div id="terminal-initial" class="text-slate-500 flex flex-col items-center justify-center pt-8 text-center">
+                                <i class="fa-solid fa-terminal text-2xl mb-2 opacity-45"></i>
+                                <p>Nhấp nút phía trên để chạy giả lập máy quét dữ liệu NotebookLM và tạo mẫu đề thi bằng custom Gem...</p>
+                            </div>
+                            <div id="terminal-content" class="hidden text-slate-300">
+                                <!-- Typed dynamically -->
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
         </section>
@@ -1010,6 +966,181 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
             }
         }
 
+        // Quiz State & Questions JSON (Strictly limited to Sections 1-4)
+        let userAnswers = {};
+        let quizChecked = false;
+
+        const quizQuestions = [
+            {
+                q: {
+                    vn: "Gemini Gems khác biệt cơ bản nhất với các phiên chat tiêu chuẩn ở đặc điểm nào?",
+                    jp: "Gemini Gemsは通常のチャットセッションと最も大きく異なる点は何ですか？"
+                },
+                options: {
+                    vn: [
+                        "Gems có kích thước mô hình ngôn ngữ lớn hơn nhiều.",
+                        "Gems hỗ trợ lưu trữ chỉ dẫn cố định nền, hạn chế hiện tượng trôi lệch ngữ cảnh.",
+                        "Gems hoạt động mà không cần tài khoản Google.",
+                        "Gems chỉ chấp nhận duy nhất một tệp định dạng đầu vào."
+                    ],
+                    jp: [
+                        "Gemsは通常のGeminiよりもはるかに大規模なモデルを使用します。",
+                        "Gemsは指示設定を固定保存し、コンテキストの喪失や忘却を防ぎます。",
+                        "GemsはGoogleアカウントを必要とせずに動作します。",
+                        "Gemsはファイル入力形式を1つのみしか受け付けません。"
+                    ]
+                },
+                correct: 1
+            },
+            {
+                q: {
+                    vn: "Đối với một người làm giáo dục, trường hợp nào sau đây là ứng dụng phù hợp nhất của Gemini Gems?",
+                    jp: "教育従事者にとって、Gemini Gemsの最も実用的な活用方法はどれですか？"
+                },
+                options: {
+                    vn: [
+                        "Tự động chấm bài và soạn giáo án dựa trên barem tiêu chuẩn cố định.",
+                        "Tải lên hàng nghìn video bài giảng để lưu trữ trực tuyến đám mây.",
+                        "Tạo hình ảnh minh họa 3D ngẫu nhiên cho mọi tiết học.",
+                        "Thay thế hoàn toàn vai trò tương tác trực tiếp của giáo viên trên lớp."
+                    ],
+                    jp: [
+                        "設定された評価基準（ルーブリック）に基づき、指導案や小テストを自動作成する。",
+                        "オンライン保存用に数千本の授業動画をクラウドに直接バックアップする。",
+                        "すべての授業のために3Dイラスト画像をランダムに自動生成する。",
+                        "生徒と教師の対面コミュニケーションを完全にAIに代替させる。"
+                    ]
+                },
+                correct: 0
+            },
+            {
+                q: {
+                    vn: "Vai trò chính của NotebookLM trong chuỗi liên kết hệ thống này là gì?",
+                    jp: "この連携ワークフローにおけるNotebookLMの最も重要な役割は何ですか？"
+                },
+                options: {
+                    vn: [
+                        "Sáng tạo văn bản tự do và tìm kiếm mở rộng thông tin trực tiếp trên Internet.",
+                        "Cung cấp kho dữ liệu chuẩn xác làm cơ sở tham chiếu, hạn chế tối đa ảo giác thông tin.",
+                        "Là giao diện cho phép chia sẻ Gems rộng rãi đến người dùng khác.",
+                        "Là ứng dụng dịch tự động các tệp PDF sang nhiều ngôn ngữ."
+                    ],
+                    jp: [
+                        "ウェブ検索やクリエイティブなコンテンツ作成を行うための実行エンジン。",
+                        "根拠となる正確な検証データを管理し、AIのハルシネーション（嘘）を抑制する知識ベース。",
+                        "複数ユーザーで指示文の同時編集・共有を行うためのコラボレーションツール。",
+                        "学校関係者のログインアカウント情報を統合管理する認証システム。"
+                    ]
+                },
+                correct: 1
+            },
+            {
+                q: {
+                    vn: "Việc liên kết NotebookLM giúp Gemini Gems vượt qua giới hạn nào sau đây của phiên chat thông thường?",
+                    jp: "Gemini GemsとNotebookLMの連携は、通常チャットにおけるどの制限を解消しますか？"
+                },
+                options: {
+                    vn: [
+                        "Giới hạn về tốc độ phản hồi của mô hình ngôn ngữ lớn.",
+                        "Giới hạn số lượng tệp tải lên trực tiếp (thông thường tối đa 10 tệp).",
+                        "Giới hạn về ngôn ngữ đầu ra (chỉ dịch được tiếng Anh).",
+                        "Giới hạn về chi phí đăng ký sử dụng dịch vụ đám mây."
+                    ],
+                    jp: [
+                        "生成AIモデル自体の回答速度や応答パフォーマンスの制限。",
+                        "スレッドへのファイル直接アップロード制限（通常は最大10ファイル）。",
+                        "出力できる翻訳対応言語数（英語のみ）のシステム制限。",
+                        "クラウドサービスの利用に関する追加のサブスクリプション料金。"
+                    ]
+                },
+                correct: 1
+            },
+            {
+                q: {
+                    vn: "Bước đầu tiên để bắt đầu xây dựng một Custom Gem trong giao diện quản lý là gì?",
+                    jp: "カスタムGemを作成するプロセスの最初のステップは何ですか？"
+                },
+                options: {
+                    vn: [
+                        "Tải lên tệp hướng dẫn sử dụng Google Drive.",
+                        "Truy cập 'Explore Gems' trong thanh công cụ bên trái và chọn '+ New Gem'.",
+                        "Tải lên trực tiếp ngân hàng câu hỏi JLPT N3 dạng PDF vào chat thread.",
+                        "Viết một prompt yêu cầu AI tự tạo ra một robot thực thi bài tập."
+                    ],
+                    jp: [
+                        "Googleドライブの使用手順マニュアルをアップロードする。",
+                        "左サイドバーの「Explore Gems」から「+ New Gem（新規登録）」をクリックする。",
+                        "JLPT N3の語彙ファイルをPDF形式でチャットスレッドに直接アップロードする。",
+                        "AIに対して、自動的に実務用タスクエージェントを作成するようプロンプトで指示する。"
+                    ]
+                },
+                correct: 1
+            },
+            {
+                q: {
+                    vn: "Trong công thức chỉ dẫn PACKED, thành phần 'P' (Persona) yêu cầu người thiết kế khai báo nội dung gì?",
+                    jp: "PACKEDプロンプト設計において、「P」（ペルソナ）はどのような項目を定義しますか？"
+                },
+                options: {
+                    vn: [
+                        "Nhiệm vụ cốt lõi mà mô hình cần hoàn thành khi khởi chạy.",
+                        "Xác định rõ vai trò sư phạm chuyên biệt, phong cách giảng dạy và tone giọng làm việc của AI.",
+                        "Ràng buộc hạn chế chặt chẽ đối với các nguồn dữ liệu tham chiếu bên ngoài.",
+                        "Định dạng mẫu biểu diễn đầu ra (bảng biểu, Markdown, danh sách)."
+                    ],
+                    jp: [
+                        "AIエージェントが実行すべきメインタスクと具体的な仕事範囲。",
+                        "AIが担う専門的役割、具体的な指導スタイル、および回答時の会話トーン。",
+                        "参照する外部データソースに関する明確な制約事項や禁止ルール。",
+                        "生成される最終成果物の詳細なマークダウンフォーマットやレイアウト。"
+                    ]
+                },
+                correct: 1
+            },
+            {
+                q: {
+                    vn: "Trong công thức chỉ dẫn PACKED, thành phần 'C' (Context) có vai trò như thế nào?",
+                    jp: "PACKEDフレームワークにおける「C」（コンテキスト）の役割は何ですか？"
+                },
+                options: {
+                    vn: [
+                        "Xác định nguồn dữ liệu tri thức chính để đính kèm từ Drive.",
+                        "Đặt ra các quy chuẩn, rào cản hạn chế để bảo vệ tính xác thực của dữ liệu nguồn.",
+                        "Ghi chú lại danh sách thông tin cần tìm kiếm mở rộng trên mạng.",
+                        "Định nghĩa phong cách xưng hô thân thiện với học sinh."
+                    ],
+                    jp: [
+                        "ドライブから直接添付する主要なナレッジベース（知識ベース）を特定すること。",
+                        "事実に基づく出題制限などを定め、AIがデータを捏造（ハルシネーション）するのを防ぐこと。",
+                        "インターネット上で収集すべき拡張リサーチ対象のリストを整理すること。",
+                        "受験生に対してフレンドリーに寄り添う、言葉遣いのスタイルを決定すること。"
+                    ]
+                },
+                correct: 1
+            },
+            {
+                q: {
+                    vn: "Bước 5 (Kiểm thử và lưu hoàn tất) trong quy trình thiết lập Gem nhằm mục đích gì?",
+                    jp: "Gem作成プロセスの「ステップ5：プレビュー検証」を行う最大の目的は何ですか？"
+                },
+                options: {
+                    vn: [
+                        "Chạy thử trong khung Preview để đánh giá sự phù hợp của phản hồi trước khi lưu chính thức.",
+                        "Đăng ký nâng cấp tài khoản của bạn lên phiên bản Enterprise trả phí.",
+                        "Chia sẻ Gem trực tiếp cho toàn bộ đồng nghiệp trong trường thông qua email.",
+                        "Xóa bỏ các tệp tin lưu trữ bị trùng lặp trong bộ nhớ NotebookLM."
+                    ],
+                    jp: [
+                        "プレビュー画面で実際にテストを行い、保存前にプロンプトの調整や指示文の微修正を行うため。",
+                        "自身のGoogleアカウントをエンタープライズの有償プランにアップグレードするため。",
+                        "学校内のすべての同僚教師に、電子メールでGemを即座に一括配布・共有するため。",
+                        "NotebookLMのメモリ領域内で重複している不要なソースファイルを完全に削除するため。"
+                    ]
+                },
+                correct: 0
+            }
+        ];
+
         // Language toggle controller
         let currentLang = 'vn';
         function setLanguage(lang) {
@@ -1033,11 +1164,13 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
             }
 
             // Setting layout classes dynamically - Single pane layout always
-            const grids = ['grid-sec1', 'grid-sec2', 'grid-sec3', 'grid-sec4', 'grid-sec5'];
+            const grids = ['grid-sec1', 'grid-sec2', 'grid-sec3', 'grid-sec4', 'grid-sec5', 'grid-sec6'];
             
             grids.forEach(id => {
                 const element = document.getElementById(id);
-                element.className = "grid grid-cols-1 gap-8 transition-all language-pane";
+                if (element) {
+                    element.className = "grid grid-cols-1 gap-8 transition-all language-pane";
+                }
             });
 
             // Toggle language elements visibility
@@ -1053,6 +1186,181 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
                 jpElements.forEach(el => el.style.display = 'block');
                 setHeroText('jp');
             }
+
+            // Render/Refresh Interactive Quiz
+            renderQuiz();
+        }
+
+        // Render dynamic quiz in active language
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+
+            let html = "";
+            quizQuestions.forEach((q, index) => {
+                const selected = userAnswers[index];
+                
+                html += `
+                <div class="mb-6 p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800/60">
+                    <p class="font-bold text-xs text-indigo-500 dark:text-indigo-400 mb-2">Câu ${index + 1} / 質問 ${index + 1}</p>
+                    <p class="font-semibold text-sm text-slate-900 dark:text-white mb-4 leading-relaxed">
+                        ${currentLang === 'vn' ? q.q.vn : q.q.jp}
+                    </p>
+                    <div class="space-y-2">
+                `;
+
+                const optionsList = currentLang === 'vn' ? q.options.vn : q.options.jp;
+                optionsList.forEach((opt, optIdx) => {
+                    let optClass = "border border-slate-200 dark:border-slate-800 hover:border-indigo-500 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300";
+                    
+                    if (selected === optIdx) {
+                        optClass = "border-2 border-indigo-600 dark:border-indigo-500 bg-indigo-50/30 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 font-semibold";
+                    }
+
+                    if (quizChecked) {
+                        if (optIdx === q.correct) {
+                            optClass = "border-2 border-emerald-500 dark:border-emerald-600 bg-emerald-50/40 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 font-semibold";
+                        } else if (selected === optIdx) {
+                            optClass = "border-2 border-red-500 dark:border-red-600 bg-red-50/40 dark:bg-red-950/20 text-red-700 dark:text-red-400 font-semibold";
+                        }
+                    }
+
+                    const disabledAttr = quizChecked ? "disabled" : "";
+                    html += `
+                        <button ${disabledAttr} onclick="selectAnswer(${index}, ${optIdx})" class="w-full text-left px-4 py-3 rounded-xl text-xs transition-all ${optClass}">
+                            <span class="mr-2 font-bold">${optIdx + 1}.</span> ${opt}
+                        </button>
+                    `;
+                });
+
+                html += `</div></div>`;
+            });
+
+            // Submission button / Result Panel
+            if (!quizChecked) {
+                const btnText = currentLang === 'vn' ? "Kiểm tra kết quả" : "得点を判定する";
+                html += `
+                    <button onclick="checkQuiz()" class="w-full mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3.5 rounded-xl text-xs transition-all shadow-md">
+                        <i class="fa-solid fa-graduation-cap mr-1.5"></i> ${btnText}
+                    </button>
+                `;
+            } else {
+                const score = calculateScore();
+                const scoreText = currentLang === 'vn' 
+                    ? `Bạn đạt được ${score}/8 câu chính xác.` 
+                    : `スコア: 8問中 ${score}問 正解`;
+                
+                let feedbackClass = score >= 6 
+                    ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-400"
+                    : "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-400";
+                
+                html += `
+                    <div class="mt-6 p-5 border rounded-2xl transition-all ${feedbackClass}">
+                        <p class="font-extrabold text-sm mb-2"><i class="fa-solid fa-trophy mr-1.5"></i> ${scoreText}</p>
+                `;
+
+                if (score >= 6) {
+                    const labelText = currentLang === 'vn' 
+                        ? "Chúc mừng bạn đã đạt tiêu chuẩn (>= 6/8)! Hãy điền tên để ghi nhận kết quả và kích hoạt submitResult():" 
+                        : "おめでとうございます（合格基準達成）！結果を保存するためにお名前を入力してください：";
+                    const placeholderText = currentLang === 'vn' ? "Họ và tên..." : "お名前をご入力...";
+                    const submitBtnText = currentLang === 'vn' ? "Gửi kết quả" : "送信する";
+                    
+                    html += `
+                        <p class="text-xs mb-3 opacity-90 leading-relaxed">${labelText}</p>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <input type="text" id="student-name" placeholder="${placeholderText}" class="flex-grow bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-indigo-500">
+                            <button onclick="submitResult()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all shadow-md shrink-0">
+                                <i class="fa-solid fa-paper-plane mr-1"></i> ${submitBtnText}
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    const failText = currentLang === 'vn' 
+                        ? "Rất tiếc, bạn cần đạt tối thiểu 6/8 câu để hoàn thành bài đánh giá này. Hãy thử lại!" 
+                        : "残念ながら、基準達成には6問以上の正解が必要です。もう一度挑戦してください！";
+                    const retryBtnText = currentLang === 'vn' ? "Làm lại bài kiểm tra" : "再挑戦する";
+                    
+                    html += `
+                        <p class="text-xs mb-3 opacity-90 leading-relaxed">${failText}</p>
+                        <button onclick="resetQuiz()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition-all shadow-md">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> ${retryBtnText}
+                        </button>
+                    `;
+                }
+                
+                html += `</div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function selectAnswer(qIdx, optIdx) {
+            userAnswers[qIdx] = optIdx;
+            renderQuiz();
+        }
+
+        function calculateScore() {
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.correct) correctCount++;
+            });
+            return correctCount;
+        }
+
+        function checkQuiz() {
+            // Ensure all questions have been answered
+            if (Object.keys(userAnswers).length < quizQuestions.length) {
+                const warnMsg = currentLang === 'vn' 
+                    ? "Vui lòng hoàn thành toàn bộ 8 câu hỏi trước khi kiểm tra!" 
+                    : "提出する前に、8つの質問すべてに回答してください！";
+                showToast(warnMsg);
+                return;
+            }
+            quizChecked = true;
+            renderQuiz();
+        }
+
+        function resetQuiz() {
+            userAnswers = {};
+            quizChecked = false;
+            renderQuiz();
+        }
+
+        // Custom submitResult placeholder function - editable by user
+        async function submitResult() {
+            const studentName = document.getElementById('student-name').value.trim();
+            if (!studentName) {
+                const warnName = currentLang === 'vn' ? "Vui lòng nhập tên của bạn!" : "お名前を入力してください。";
+                showToast(warnName);
+                return;
+            }
+            const finalScore = calculateScore();
+            
+            // Console Logging for local debugging / LMS parameters
+            console.log(`[submitResult CALLED] Student: ${studentName} | Score: ${finalScore}/8`);
+            
+            // Success Feedback Panel (instead of alert)
+            const successMsg = currentLang === 'vn'
+                ? `Đã nộp thành công!`
+                : `送信完了！`;
+                
+            showToast(successMsg);
+
+            await fetch(
+                "https://script.google.com/macros/s/AKfycbxO8LDlVjaWO3rQSJ62gzv1hIEz4BT1L4VbN6slE5xxXlTZK1TGF7QSpn9wG674_D9r/exec",
+                {
+                    method: "POST",
+                    body: JSON.stringify({
+                        type: "gems_quiz_result",
+                        name: studentName,
+                        score: finalScore
+                    })
+                }
+            );
+            
+            // NOTE: Bạn có thể viết thêm code API gửi dữ liệu đi ở đây
+            // Example: fetch('/api/submit', { method: 'POST', body: JSON.stringify({ name: studentName, score: finalScore }) })
         }
 
         // Translation for dynamic hero titles and anchors
@@ -1066,7 +1374,8 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
                 n2: document.querySelector('.nav-txt-2'),
                 n3: document.querySelector('.nav-txt-3'),
                 n4: document.querySelector('.nav-txt-4'),
-                n5: document.querySelector('.nav-txt-5')
+                n5: document.querySelector('.nav-txt-5'),
+                n6: document.querySelector('.nav-txt-6')
             };
 
             if (lang === 'vn') {
@@ -1079,6 +1388,7 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
                 navs.n3.innerText = "3. Thiết lập";
                 navs.n4.innerText = "4. Công thức PACKED";
                 navs.n5.innerText = "5. Bản vẽ Đề thi mẫu";
+                navs.n6.innerText = "6. Bài trắc nghiệm";
             } else if (lang === 'jp') {
                 h1.innerText = "NotebookLM & Gemini Gems統合による高性能AIブレインの構築";
                 p.innerText = "リサーチと創造を切り分け、業務を最適化。NotebookLMの「検証に基づく正確な事実理解」と、Gemini Gemsの「一貫性のある柔軟なコンテンツ創出力」を直結させた実用的な連携システム。";
@@ -1089,6 +1399,7 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
                 navs.n3.innerText = "3. 設定手順";
                 navs.n4.innerText = "4. PACKED指示文";
                 navs.n5.innerText = "5. 問題作成テスト";
+                navs.n6.innerText = "6. クイズ";
             }
         }
 
@@ -1167,13 +1478,11 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
 
             initialDiv.classList.add('hidden');
             contentDiv.classList.remove('hidden');
-            contentDiv.innerHTML = `<span class="text-indigo-400 font-bold">[SYSTEM]</span> Đang kiểm tra liên kết tài khoản Google...<br>
-<span class="text-emerald-400 font-bold">[SUCCESS]</span> Tìm thấy NotebookLM gắn kèm: <code class="text-pink-400">NotebookLM: ${subject}</code><br>
-<span class="text-slate-400">[PROCESS]</span> Thiết lập luồng kiểm thử từ kho dữ liệu từ vựng gốc...<br>
-<span class="text-slate-400">[PROCESS]</span> Phân tích định dạng kiểm tra: <code class="text-yellow-400">${level}</code>...<br>
-<span class="text-indigo-400 font-bold">[AI GENERATING]</span> Chạy hệ thống kiểm định tạo bài thi từ vựng N3 dưới dạng Markdown...<br><br>
-<div class="border-t border-slate-800 pt-3 mt-3 text-slate-300 font-mono text-xs overflow-x-auto">
-<pre class="text-slate-300">
+
+            let simulatedOutput = "";
+
+            if (level.includes("Luyện tập rút gọn")) {
+                simulatedOutput = `
 # JLPT N3 Vocabulary Practice Test
 
 ### Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
@@ -1206,17 +1515,65 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
    3) 別々
    4) 勝手
 
+---
+
+## ANSWER KEY & CITATION (ĐÁP ÁN & TRÍCH DẪN ĐỐI CHIẾU)
+
+* **Question 1:** 正解: 1 (きょうりょく)
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 14 từ tệp nguồn. Từ 「協力」có cách đọc chính xác là 「きょうりょく」./ 問題バンクの14番から直接抽出。「協力」の正しい読み方は「きょうりょく」です。
+  - *[Nguồn / ソース: file N3_Mondai1_Bank.pdf, câu 14 / 14番]*
+
+* **Question 2:** 正解: 1 (どうにゅう)
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 32 từ tệp nguồn. Từ 「導入」có cách đọc chính xác là 「どうにゅう」./ 問題バンクの32番から直接抽出。「導入」の正しい読み方は「どうにゅう」です。
+  - *[Nguồn / ソース: file N3_Mondai1_Bank.pdf, câu 32 / 32番]*
+
+* **Question 3:** 正解: 2 (共同)
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 8 từ tệp nguồn. Từ 「きょうどう 共同」mang nghĩa cùng nhau hợp tác làm gì đó./ 問題バンクの8番から直接抽出。「きょうどう 共同」は一緒に協力して何かをする意味です。
+  - *[Nguồn / ソース: file N3_Mondai2_Bank.pdf, câu 8 / 8番]*
+
+* **Question 4:** 正解: 2 (共同)
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 55 từ tệp nguồn. Ngữ cảnh "Mọi người cùng nhau làm việc vì chuẩn bị muộn" phù hợp với từ 「共同」./ 問題バンクの55番から直接抽出。準備が遅れているため、みんなで協力して作業を行うという文脈に最も適しているのは「共同」です。
+  - *[Nguồn / ソース: file N3_Mondai3_Bank.pdf, câu 55 / 55番]*
+`;
+            } else {
+                simulatedOutput = `
+# JLPT N3 Vocabulary Practice Test
+
+### Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+
+1. お互いに**協力**して、仕事を進めましょう。
+   1) きょうりょく
+   2) ごうりょく
+   3) けいりょく
+   4) きょうりく
+
+### Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+
+2. 友だちと**きょうどう**で会社を作りました。
+   1) 協同
+   2) 共同
+   3) 今日同
+   4) 共道
+
+### Mondai 3: （　）に入れるのに最もよいものを１・２・３・４から一つ選びなさい。
+
+3. 会議の準備が遅れているので、みんなで（　）作業を行った。
+   1) 交代
+   2) 共同
+   3) 別々
+   4) 勝手
+
 ### Mondai 4: ＿＿＿の ことばに 意味が 最も 近いものを １・２・３・４から一つ選びなさい。
 
-5. 彼は仕事のやり方を**交代**した。
+4. 彼は仕事のやり方を**交代**した。
    1) 変えた
    2) チェンジした
    3) 整理した
    4) 計画した
 
-### Mondai 5: 次の ことばの 使い方が 最も よiものを １・２・３・４から一つ選びなさい。
+### Mondai 5: 次の ことばの 使い方が 最も よいものを １・２・３・４から一つ選びなさい。
 
-6. **共同**
+5. **共同**
    1) 彼は一人でビルを共同した。
    2) 昨日、私たちは山の上で共同に会った。
    3) 二人で共同の事業を始めることにした。
@@ -1224,32 +1581,36 @@ Nhiệm vụ cốt lõi của bạn là biên soạn đề thi thử phần Từ
 
 ---
 
-## ANSWER KEY & CITATION (ĐÁP ÁN & TRÍCH DẪN)
+## ANSWER KEY & CITATION (ĐÁP ÁN & TRÍCH DẪN ĐỐI CHIẾU)
 
 * **Question 1:** 正解: 1 (きょうりょく)
-  - *Giải thích:* 「協力」có cách đọc chính xác là 「きょうりょく」.
-  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 24]*
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 14 từ tệp nguồn. Từ 「協力」có cách đọc chính xác là 「きょうりょく」./ 問題バンクの14番から直接抽出。「協力」の正しい読み方は「きょうりょく」です。
+  - *[Nguồn / ソース: file N3_Mondai1_Bank.pdf, câu 14 / 14番]*
 
-* **Question 2:** 正解: 1 (どうにゅう)
-  - *Giải thích:* 「導入」có cách đọc chính xác là 「どうにゅう」.
-  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 89]*
+* **Question 2:** 正解: 2 (共同)
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 8 từ tệp nguồn. Từ 「きょうどう 共同」mang nghĩa cùng nhau hợp tác làm việc./ 問題バンクの8番から直接抽出。「きょうどう 共同」は一緒に協力して何かをする意味です。
+  - *[Nguồn / ソース: file N3_Mondai2_Bank.pdf, câu 8 / 8番]*
 
 * **Question 3:** 正解: 2 (共同)
-  - *Giải thích:* Từ 「きょうどう 共同」mang nghĩa cùng nhau hợp tác làm gì đó.
-  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 90]*
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 55 từ tệp nguồn. Ngữ cảnh hợp tác thực hiện công việc phù hợp với từ 「共同」./ 問題バンクの55番から直接抽出。準備が遅れているため、みんなで協力して作業を行うという文脈に最も適しているのは「共同」です。
+  - *[Nguồn / ソース: file N3_Mondai3_Bank.pdf, câu 55 / 55番]*
 
-* **Question 4:** 正解: 2 (共同)
-  - *Giải thích:* Ngữ cảnh "Mọi người cùng nhau làm việc vì chuẩn bị muộn" phù hợp với từ 「共同」.
-  - *[Nguồn: ${subject} - file N3_Verb_Interaction.pdf, dòng 11]*
+* **Question 4:** 正解: 2 (チェンジした)
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 19 từ tệp nguồn. 「交代する」đồng nghĩa với việc luân phiên thay thế, chuyển giao./ 問題バンクの19番から直接抽出。「交代する」は交替で何かを変える、チェンジすることと同義です。
+  - *[Nguồn / ソース: file N3_Mondai4_Bank.pdf, câu 19 / 19番]*
 
-* **Question 5:** 正解: 2 (チェンジした)
-  - *Giải thích:* 「交代する」đồng nghĩa với việc thay đổi, luân phiên thay thế.
-  - *[Nguồn: ${subject} - file N3_Verb_Interaction.pdf, dòng 12]*
+* **Question 5:** 正解: 3 (二人で共同の事業を始めることにした。)
+  - *Giải thích / 解説:* Trích xuất trực tiếp câu hỏi số 4 từ tệp nguồn. Quy tắc kết hợp danh từ ghép 「共同の事業」 tạo nghĩa tự nhiên nhất./ 問題バンクの4番から直接抽出。「共同の事業」という名詞の組み合わせが最も自然な意味を成しています。
+  - *[Nguồn / ソース: file N3_Mondai5_Bank.pdf, câu 4 / 4番]*
+`;
+            }
 
-* **Question 6:** 正解: 3 (二人で共同の事業を始めることにした。)
-  - *Giải thích:* Quy tắc sử dụng danh từ ghép 「共同の事業」 (sự nghiệp chung) hoàn toàn tự nhiên về mặt ngữ pháp.
-  - *[Nguồn: ${subject} - file N3_Noun_List.pdf, dòng 89]*
-</pre>
+            contentDiv.innerHTML = `<span class="text-indigo-400 font-bold">[SYSTEM]</span> Đang kết nối tài khoản Google Workspace...<br>
+<span class="text-emerald-400 font-bold">[SUCCESS]</span> Tìm thấy kho dữ liệu tham chiếu gắn kèm: <code class="text-pink-400">NotebookLM: ${subject}</code><br>
+<span class="text-slate-400">[PROCESS]</span> Phân tích ngữ cảnh ranh giới (Grounding) và định cấu trúc thiết lập: <code class="text-yellow-400">${level}</code>...<br>
+<span class="text-indigo-400 font-bold">[AI GENERATING]</span> Sinh đề kiểm tra từ vựng N3 bám sát tài liệu nguồn dưới dạng Markdown thô...<br><br>
+<div class="border-t border-slate-800 pt-3 mt-3 text-slate-300 font-mono text-xs overflow-x-auto">
+<pre class="text-slate-300">${simulatedOutput}</pre>
 </div>`;
             terminalBox.scrollTop = terminalBox.scrollHeight;
         }
