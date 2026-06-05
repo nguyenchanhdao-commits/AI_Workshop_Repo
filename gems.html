@@ -659,7 +659,7 @@
                         </div>
                         
                         <p class="text-slate-600 dark:text-slate-300 mb-6 text-sm md:text-base">
-                            Để hỗ trợ duy trì định hướng nhất quán của Gem trong các cuộc hội thoại, bạn can phân chia chỉ dẫn thành 5 phần theo công thức <strong>PACKED</strong>:
+                            Để hỗ trợ duy trì định hướng nhất quán của Gem trong các cuộc hội thoại, bạn can phân chia chỉ dẫn thành 5 phần theo công thức <strong>PACKED</strong> (trong trường hợp này là thiết kế đề thi từ vựng JLPT):
                         </p>
 
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -695,7 +695,7 @@
                     <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 shadow-sm hover:shadow-md transition-all lang-jp">
                         <div class="flex items-center space-x-3 mb-6">
                             <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">4</span>
-                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">高精度なプロンプト設計を実現する「PACKED」フォーマット</h2>
+                            <h2 class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">高精度なプロンプト設計を実現する「PACKED」フォーマット（例：JLPT語彙テスト設計）</h2>
                         </div>
                         
                         <p class="text-slate-600 dark:text-slate-300 mb-6 text-sm md:text-base">
@@ -1080,8 +1080,8 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
             },
             {
                 q: {
-                    vn: "Trong công thức chỉ dẫn PACKED, thành phần 'P' (Persona) yêu cầu người thiết kế khai báo nội dung gì?",
-                    jp: "PACKEDプロンプト設計において、「P」（ペルソナ）はどのような項目を定義しますか？"
+                    vn: "Trong công thức chỉ dẫn PACKED (theo vai trò thiết kế đề thi từ vựng JLPT), thành phần 'P' (Persona) yêu cầu người thiết kế khai báo nội dung gì?",
+                    jp: "PACKEDフレームワークにおける「P」（ペルソナ）では、設計者はどのような内容を宣言する必要がありますか？"
                 },
                 options: {
                     vn: [
@@ -1252,7 +1252,7 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
                     ? `Bạn đạt được ${score}/8 câu chính xác.` 
                     : `スコア: 8問中 ${score}問 正解`;
                 
-                let feedbackClass = score >= 6 
+                let feedbackClass = score >= 8 
                     ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-400"
                     : "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800 text-red-800 dark:text-red-400";
                 
@@ -1261,9 +1261,9 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
                         <p class="font-extrabold text-sm mb-2"><i class="fa-solid fa-trophy mr-1.5"></i> ${scoreText}</p>
                 `;
 
-                if (score >= 6) {
+                if (score >= 8) {
                     const labelText = currentLang === 'vn' 
-                        ? "Chúc mừng bạn đã đạt tiêu chuẩn (>= 6/8)! Hãy điền tên để ghi nhận kết quả và kích hoạt submitResult():" 
+                        ? "Chúc mừng bạn đã đạt tiêu chuẩn (8/8)! Hãy điền tên để ghi nhận kết quả của bạn:" 
                         : "おめでとうございます（合格基準達成）！結果を保存するためにお名前を入力してください：";
                     const placeholderText = currentLang === 'vn' ? "Họ và tên..." : "お名前をご入力...";
                     const submitBtnText = currentLang === 'vn' ? "Gửi kết quả" : "送信する";
@@ -1279,8 +1279,8 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
                     `;
                 } else {
                     const failText = currentLang === 'vn' 
-                        ? "Rất tiếc, bạn cần đạt tối thiểu 6/8 câu để hoàn thành bài đánh giá này. Hãy thử lại!" 
-                        : "残念ながら、基準達成には6問以上の正解が必要です。もう一度挑戦してください！";
+                        ? "Rất tiếc, bạn cần đạt 8/8 câu để hoàn thành bài đánh giá này. Hãy thử lại!" 
+                        : "残念ながら、基準達成には8問すべての正解が必要です。もう一度挑戦してください！";
                     const retryBtnText = currentLang === 'vn' ? "Làm lại bài kiểm tra" : "再挑戦する";
                     
                     html += `

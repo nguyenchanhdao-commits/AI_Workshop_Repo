@@ -704,7 +704,7 @@
                 qCompletionTitle: "Chúc mừng bạn đã hoàn thành bài trắc nghiệm!",
                 qCompletionScore: "Tổng điểm của bạn:",
                 qPassMsg: "Tốt lắm! Bạn đã nắm rõ các tính năng cơ bản của trợ lý NotebookLM.",
-                qFailMsg: "Bạn có thể xem lại các nội dung trên trang và thực hiện lại bài trắc nghiệm để cải thiện điểm số.",
+                qFailMsg: "Bạn có thể xem lại các nội dung trên trang và thực hiện lại bài trắc nghiệm để đạt đủ 8/8 câu.",
                 qEnterNameLabel: "Nhập tên của bạn để ghi nhận kết quả:",
                 qNamePlaceholder: "Họ và tên...",
                 qBtnSubmitResult: "Gửi kết quả",
@@ -840,7 +840,7 @@
                 qCompletionTitle: "クイズを完了しました！お疲れ様でした。",
                 qCompletionScore: "あなたのスコア:",
                 qPassMsg: "素晴らしい！NotebookLMのアシスタント機能をよく理解しています。",
-                qFailMsg: "解説を読み直し、もう一度クイズに挑戦してスコアを向上させましょう。",
+                qFailMsg: "もう一度内容を確認して、クイズをやり直してみてください。8問中8問正解を目指しましょう。",
                 qEnterNameLabel: "結果を記録するためにお名前を入力してください：",
                 qNamePlaceholder: "お名前...",
                 qBtnSubmitResult: "結果を送信",
@@ -1339,8 +1339,8 @@
             const totalQuestions = questionsList.length;
 
             if (state.quiz.currentIdx >= totalQuestions) {
-                // Render completion screen (Passing score is 6 out of 8 questions)
-                const isPassed = state.quiz.score >= 6;
+                // Render completion screen (Passing score is 8 out of 8 questions)
+                const isPassed = state.quiz.score >= 8;
                 board.innerHTML = `
                     <div class="text-center py-8 space-y-6">
                         <div class="text-6xl">${isPassed ? '🎓' : '📚'}</div>
