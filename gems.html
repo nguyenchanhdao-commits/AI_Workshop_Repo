@@ -55,7 +55,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-slate950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-300">
 
     <!-- Premium Navigation Bar -->
     <nav class="sticky top-0 z-50 glassmorphism border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
@@ -454,7 +454,7 @@
                         
                         <div class="space-y-6 text-slate-600 dark:text-slate-300 text-sm md:text-base">
                             <p>
-                                この連携は、<strong>「フルスタックAIパートナー」</strong>の構築に例えられます。NotebookLMが事実を正確に保存する「データベース」となり、Gemini Gemsがそれを形にする「実務エンジン」として機能します。
+                                この連携は、<strong>「マルチステージAIパートナー」</strong>の構築に例えられます。NotebookLMが事実を正確に保存する「データベース」となり、Gemini Gemsがそれを形にする「実務エンジン」として機能します。
                             </p>
 
                             <!-- NEW VISUAL EXAMPLE: NotebookLM (Database) vs. Gemini Gems (Executor) (JP) -->
@@ -577,7 +577,7 @@
                                         <p class="font-bold text-slate-900 dark:text-white">Khai báo cấu hình Metadata</p>
                                         <p class="text-xs mt-1">Đặt tên rõ ràng cho Gem, thêm mô tả công dụng khái quát và gắn các công cụ phụ trợ (Default Tools) như tìm kiếm chuyên sâu, tạo ảnh.</p>
                                     </div>
-                                </div>
+                                </div>ふ
                                 <div class="flex items-start space-x-3">
                                     <span class="bg-indigo-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
                                     <div>
@@ -761,11 +761,11 @@ Bạn là Giảng viên tiếng Nhật cao cấp và là Chuyên gia Khảo thí
 
 # NHIỆM VỤ (ASSIGNMENT)
 Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) các câu hỏi trắc nghiệm đã có sẵn trong kho câu hỏi của NotebookLM được đính kèm để tạo thành một đề thi thử phần Từ vựng (文字・語彙) trình độ JLPT N3 dưới dạng mã nguồn Markdown rõ ràng. Đề thi bắt buộc phải tập hợp đầy đủ theo cấu trúc chuẩn gồm 5 Mondai dưới đây:
-- Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４ từ một lựa chọn.
-- Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４ từ một lựa chọn.
-- Mondai 3: （　）に入れるのにmốn tốt nhất là chọn một từ trong các tùy chọn 1・2・3・4.
-- Mondai 4: ＿＿＿の ことばに 意味が 最も 近いものを １・２・３・４ từ một lựa chọn.
-- Mondai 5: 次の ことばの 使い方が 最も よいものを １・２・３・４ từ một lựa chọn.
+- Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４から一つ選びなさい。
+- Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４から一つ選びなさい。
+- Mondai 3: （　）に入れるのに 最も よいものは１・２・３・４から一つ選びなさい。
+- Mondai 4: ＿＿＿の ことばに 意味が 最も 近いものを １・２・３・４から一つ選びなさい。
+- Mondai 5: 次の ことばの 使い方が 最も よいものを １・２・３・４から一つ選びなさい。
 
 # QUY TẮC ĐỊNH DẠNG & ĐẦU RA CHẶT CHẼ (OUTPUT FORMAT & LAYOUT)
 1. ĐỊNH DẠNG ĐẦU RA: Toàn bộ đầu ra phải được định dạng hoàn toàn bằng cấu trúc văn bản Markdown chuẩn (Sử dụng tiêu đề h1, h2, h3, danh sách và khối mã nếu cần) để các mô hình LLM dễ dàng đọc, phân tích và trích xuất cấu trúc.
@@ -1487,7 +1487,7 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
                 simulatedOutput = `
 # JLPT N3 Vocabulary Practice Test
 
-### Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+### Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４から一つ選びなさい。
 
 1. お互いに**協力**して、仕事を進めましょう。
    1) きょうりょく
@@ -1501,7 +1501,7 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
    3) どうにゅう
    4) とにゅう
 
-### Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+### Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４から一つ選びなさい。
 
 3. 友だちと**きょうどう**で会社を作りました。
    1) 協同
@@ -1509,7 +1509,7 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
    3) 今日同
    4) 共道
 
-### Mondai 3: （　）に入れるのに最もよいものを１・２・３・４から一つ選びなさい。
+### Mondai 3: （　）に入れるのに 最も よいものは１・２・３・４から一つ選びなさい。
 
 4. 会議の準備が遅れているので、みんなで（　）作業を行った。
    1) 交代
@@ -1541,7 +1541,7 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
                 simulatedOutput = `
 # JLPT N3 Vocabulary Practice Test
 
-### Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+### Mondai 1: ＿＿＿の ことばは どう 読みますか。１・２・３・４から一つ選びなさい。
 
 1. お互いに**協力**して、仕事を進めましょう。
    1) きょうりょく
@@ -1549,7 +1549,7 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
    3) けいりょく
    4) きょうりく
 
-### Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４からいちばんいいものを一つ選びなさい。
+### Mondai 2: ＿＿＿の ことばは どう 書きますか。１・２・３・４から一つ選びなさい。
 
 2. 友だちと**きょうどう**で会社を作りました。
    1) 協同
@@ -1557,7 +1557,7 @@ Nhiệm vụ cốt lõi của bạn là trích xuất ngẫu nhiên (random) cá
    3) 今日同
    4) 共道
 
-### Mondai 3: （　）に入れるのに最もよいものを１・２・３・４から一つ選びなさい。
+### Mondai 3: （　）に入れるのに 最も よいものは１・２・３・４から一つ選びなさい。
 
 3. 会議の準備が遅れているので、みんなで（　）作業を行った。
    1) 交代
