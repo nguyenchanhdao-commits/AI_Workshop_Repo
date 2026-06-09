@@ -280,7 +280,7 @@
         <!-- SLIDE 5: Module 3 - NotebookLM SOP -->
         <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
             <div class="text-left space-y-2">
-                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 3 - THỰC HÀNH 1</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400" data-translate-key="slide5_module">MODULE 3 - THỰC HÀNH 1</span>
                 <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide5_title">Quy trình Số hóa Ngân hàng đề với NotebookLM</h2>
             </div>
 
@@ -334,7 +334,7 @@
                     </div>
                 </div>
                 <div class="bg-slate-800/40 p-6 rounded-2xl border border-cyan-500/20 flex flex-col justify-between space-y-4 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-cyan-500 text-slate-900 text-[10px] font-bold px-3 py-1 rounded-bl">THỰC HÀNH CHÍNH</div>
+                    <div class="absolute top-0 right-0 bg-cyan-500 text-slate-900 text-[10px] font-bold px-3 py-1 rounded-bl" data-translate-key="slide6_step2_top">THỰC HÀNH CHÍNH</div>
                     <div class="space-y-3 flex-grow flex flex-col justify-between">
                         <div>
                             <div class="flex items-center space-x-3 text-cyan-400">
@@ -392,7 +392,6 @@
                         <div class="flex bg-slate-800 rounded-md p-0.5 border border-slate-700/60">
                             <button onclick="switchPromptLanguage('ja')" id="lang-ja" class="px-2 py-1 rounded text-[10px] font-bold bg-cyan-500 text-slate-900 transition-all">JA</button>
                             <button onclick="switchPromptLanguage('vi')" id="lang-vi" class="px-2 py-1 rounded text-[10px] font-bold text-slate-400 transition-all">VI</button>
-                            <button onclick="switchPromptLanguage('en')" id="lang-en" class="px-2 py-1 rounded text-[10px] font-bold text-slate-400 transition-all">EN</button>
                         </div>
                         <button onclick="copyCurrentPrompt()" class="bg-cyan-600/30 hover:bg-cyan-600 border border-cyan-500/30 text-cyan-300 hover:text-white px-3 py-1 rounded-md font-medium transition-all flex items-center space-x-1.5">
                             <i class="fa-regular fa-copy"></i>
@@ -410,7 +409,7 @@
         <!-- SLIDE 8: Module 4 - Dual Gems Workflow (Architecture) -->
         <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
             <div class="text-left space-y-2">
-                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 4 - THỰC HÀNH 2</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400" data-translate-key="slide7_module">MODULE 4 - THỰC HÀNH 2</span>
                 <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide7_title">Kiến Trúc Sinh Đề Liên Hoàn (Dual Gems Architecture)</h2>
             </div>
 
@@ -452,7 +451,7 @@
             </div>
         </section>
 
-        <!-- SLIDE 9: Module 4 - SOP Quy trình thực thi (NEW!) -->
+        <!-- SLIDE 9: Module 4 - SOP Quy trình thực thi -->
         <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-4 w-full">
             <div class="text-left space-y-1">
                 <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 4 - SOP</span>
@@ -517,7 +516,7 @@
                     </div>
                 </div>
                 <div class="bg-slate-800/40 p-6 rounded-2xl border border-indigo-500/20 flex flex-col justify-between space-y-4 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl">THỰC HÀNH CHÍNH</div>
+                    <div class="absolute top-0 right-0 bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl" data-translate-key="slide9_step2_top">THỰC HÀNH CHÍNH</div>
                     <div>
                         <div class="flex items-center space-x-3 text-indigo-400">
                             <i class="fa-solid fa-users-gear text-2xl"></i>
@@ -549,7 +548,7 @@
                 </div>
                 <!-- Language Toggles for Gem 1 -->
                 <div class="flex bg-slate-800 p-0.5 rounded-lg border border-slate-700 text-xs">
-                    <button onclick="switchGem1Language('en')" id="gem1-lang-en" class="px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all">English (Optimal)</button>
+                    <button onclick="switchGem1Language('en')" id="gem1-lang-en" class="px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all" data-translate-key="btn_english">English (Khuyên dùng)</button>
                     <button onclick="switchGem1Language('vi')" id="gem1-lang-vi" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">Tiếng Việt</button>
                     <button onclick="switchGem1Language('ja')" id="gem1-lang-ja" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">日本語</button>
                 </div>
@@ -585,7 +584,7 @@
                 </div>
                 <!-- Language Toggles for Gem 2 -->
                 <div class="flex bg-slate-800 p-0.5 rounded-lg border border-slate-700 text-xs">
-                    <button onclick="switchGem2Language('en')" id="gem2-lang-en" class="px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all">English (Optimal)</button>
+                    <button onclick="switchGem2Language('en')" id="gem2-lang-en" class="px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all" data-translate-key="btn_english">English (Khuyên dùng)</button>
                     <button onclick="switchGem2Language('vi')" id="gem2-lang-vi" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">Tiếng Việt</button>
                     <button onclick="switchGem2Language('ja')" id="gem2-lang-ja" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">日本語</button>
                 </div>
@@ -624,7 +623,7 @@
                     <div>
                         <span class="text-cyan-400 text-xs font-bold uppercase" data-translate-key="slide10_c1_title">Case 1: Từ Vựng Cơ Bản</span>
                         <p class="text-slate-300 text-xs mt-2 font-mono bg-slate-900/60 p-3 rounded-xl border border-slate-800" data-translate-key="slide10_c1_val">
-                            "Hãy tạo cho tôi 5 câu hỏi thuộc các dạng bài: 漢字読み, 表記, 文脈規定 từ ngân hàng đề N3 đã liên kết."
+                            "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 漢字読み, 表記, 文脈規定."
                         </p>
                     </div>
                     <button id="btn-copy-case-1" onclick="copyCasePrompt(1)" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-1.5 rounded-lg text-xs font-medium transition-all" data-translate-key="btn_copy_prompt">Copy Prompt</button>
@@ -634,7 +633,7 @@
                     <div>
                         <span class="text-cyan-400 text-xs font-bold uppercase" data-translate-key="slide10_c2_title">Case 2: Từ Vựng Nâng Cao</span>
                         <p class="text-slate-300 text-xs mt-2 font-mono bg-slate-900/60 p-3 rounded-xl border border-slate-800" data-translate-key="slide10_c2_val">
-                            "Hãy tạo cho tôi 5 câu hỏi thuộc các dạng bài: 言い換え類義, 用法 từ ngân hàng đề N3 đã liên kết."
+                            "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 言い換え類義, 用法."
                         </p>
                     </div>
                     <button id="btn-copy-case-2" onclick="copyCasePrompt(2)" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-1.5 rounded-lg text-xs font-medium transition-all" data-translate-key="btn_copy_prompt">Copy Prompt</button>
@@ -644,7 +643,7 @@
                     <div>
                         <span class="text-cyan-400 text-xs font-bold uppercase" data-translate-key="slide10_c3_title">Case 3: Ngữ Pháp</span>
                         <p class="text-slate-300 text-xs mt-2 font-mono bg-slate-900/60 p-3 rounded-xl border border-slate-800" data-translate-key="slide10_c3_val">
-                            "Hãy tạo cho tôi 5 câu hỏi thuộc các dạng bài: 文法形式の判断, 文の組み立て từ ngân hàng đề N3 đã liên kết."
+                            "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 文法形式の判断, 文の組み立て."
                         </p>
                     </div>
                     <button id="btn-copy-case-3" onclick="copyCasePrompt(3)" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-1.5 rounded-lg text-xs font-medium transition-all" data-translate-key="btn_copy_prompt">Copy Prompt</button>
@@ -653,8 +652,8 @@
 
             <div class="bg-indigo-900/10 border border-indigo-500/20 p-4 rounded-xl text-xs flex justify-between items-center">
                 <div class="space-y-1">
-                    <span class="text-indigo-400 font-bold block" data-translate-key="slide10_g2_label">Prompt cho Gem 2 (Định dạng):</span>
-                    <p class="text-slate-400" data-translate-key="slide10_g2_desc">"Hãy định dạng lại nội dung đề thi sau đây theo đúng quy chuẩn Google Docs..."</p>
+                    <span class="text-indigo-400 font-bold block" data-translate-key="slide10_g2_label">Prompt cho Gem 2 (Tạo Docs):</span>
+                    <p class="text-slate-400" data-translate-key="slide10_g2_desc">Hãy tạo đề thi trên Google Docs với dữ liệu dưới đây:<br>【Dữ liệu】</p>
                 </div>
                 <button onclick="copyGem2RunPrompt()" class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-all text-xs" data-translate-key="btn_copy_prompt">Copy Prompt</button>
             </div>
@@ -838,33 +837,31 @@
     <script>
         const promptDB = {
             vocab: {
-                ja: "# 依頼\n\n現在選択されているソース（PDF）から、「言語知識（言い換え類義）」の問題をすべて抽出してください。\n省略や要約は一切行わず、元の文章を正確に書き起こしてください。\n\n### 抽出の基本ルール：\n\n1. **正確な書き起こし**: 問題文、選択肢（1〜4）、および正解（記載がある場合）を原文のまま正確に抽出してください。\n2. **下線（アンダーライン）の処理**: 原文で下線が引かれている箇所は、必ず `<u>下線部</u>` のように、前後にスペースを挟まずにHTMLタグで囲んでください。\n3. **推測の禁止（ハルシネーション対策）**:\n   - 正解の記載がない場合は、空欄にせず `正解: 不明（ソースに記載なし）` と出力してください。\n   - ページ番号が不明な場合は、 `出典: [ファイル名] P.不明` と出力してください。\n\n### 出力形式（Markdown）：\n\nAIによる自動処理やランダム抽出がしやすいよう、以下のフォーマット（YAMLフロントマター風の構成）を厳守してください。問題ごとに必ず3つのバッククォート（ ___TB___ ）で囲んでブロック化してください。\n\n___TB___markdown\n- ID: [ファイル名]_[連番（例: 001）]\n- カテゴリ: 言語知識（言い換え類義）\n- 出典: [ファイル名] P.[ページ番号]\n- 問題: [問題文。下線部は必ず <u>このように</u> 囲む]\n- 選択肢:\n  1. [選択肢1]\n  2. [選択肢2]\n  3. [選択肢3]\n  4. [選択肢4]\n- 正解: [正解、または「不明（ソースに記載なし）」]\n___TB___\n\n### 完了後のアクション：\n1. このファイルにまだ抽出できる問題があれば、最後に「続きが必要ですか？」と尋ねてください。\n2. 全ての抽出が終わったら、「このファイルの抽出が完了しました。次のファイルに進みますか？」と報告してください。",
+                ja: "# 依頼\n\n現在選択されているソース（PDF）から、「言語知識（[問題形式, 例: 漢字読み/表記/文脈規定/言い換え類義/用法]）」の問題をすべて抽出してください。\n省略や要約は一切行わず、元の文章を正確に書き起こしてください。\n\n### 抽出の基本ルール：\n\n1. **正確な書き起こし**: 問題文、選択肢（1〜4）、および正解（記載がある場合）を原文のまま正確に抽出してください。\n2. **下線（アンダーライン）の処理**: 原文で下線が引かれている箇所は、必ず `<u>下線部</u>` のように、前後にスペースを挟まずにHTMLタグで囲んでください。\n3. **推測の禁止（ハルシネーション対策）**:\n   - 正解の記載がない場合は、空欄にせず `正解: 不明（ソースに記載なし）` と出力してください。\n   - ページ番号が不明な場合は、 `出典: [ファイル名] P.不明` と出力してください。\n\n### 出力形式（Markdown）：\n\nAIによる自動処理やランダム抽出がしやすいよう、以下のフォーマット（YAMLフロントマター風の構成）を厳守してください。\n\n- ID: [ファイル名]_[連番（例: 001）]\n- カテゴリ: 言語知識（[問題形式]）\n- 出典: [ファイル名] P.[ページ番号]\n- 問題: [問題文。下線部は必ず <u>このように</u> 囲む]\n- 選択肢:\n  1. [選択肢1]\n  2. [選択肢2]\n  3. [選択肢3]\n  4. [選択肢4]\n- 正解: [正解、または「不明（ソースに記載なし）」]\n\n- ID:... \n\n### 完了後のアクション：\n1. このファイルにまだ抽出できる問題があれば、最後に「続きが必要ですか？」と尋ねてください。\n2. 全ての抽出が終わったら、「このファイルの抽出が完了しました。次のファイルに進みますか？」と報告してください。",
                 
-                vi: "# YÊU CẦU\n\nHãy trích xuất toàn bộ các câu hỏi thuộc dạng bài \"Kiến thức ngôn ngữ (Từ đồng nghĩa)\" từ tài liệu nguồn (PDF) hiện đang được chọn.\nTuyệt đối không lược bớt hoặc tóm tắt, hãy sao chép lại chính xác văn bản gốc.\n\n### Quy tắc trích xuất cơ bản:\n\n1. **Trích xuất chính xác**: Trích xuất chính xác câu hỏi, các phương án lựa chọn (1-4) và đáp án đúng (nếu có trong tài liệu gốc) theo đúng nguyên bản.\n2. **Xử lý phần gạch chân (Underline)**: Những phần được gạch chân trong văn bản gốc bắt buộc phải được bao bọc bằng thẻ HTML `<u>Phần_gạch_chân</u>`, không được chèn thêm khoảng trắng ở trước và sau thẻ.\n3. **Không tự suy đoán (Tránh Hallucination)**:\n   - Nếu không có đáp án đúng đi kèm, không được để trống mà hãy xuất ra: `正解: 不明（ソースに記載なし）`.\n   - Nếu không rõ số trang, hãy xuất ra: `出典: [Tên file] P.不明`.\n\n### Định dạng đầu ra (Markdown):\n\nĐể thuận tiện cho việc xử lý tự động hoặc trích xuất ngẫu nhiên bằng AI, hãy tuân thủ nghiêm ngặt định dạng dưới đây. Mỗi câu hỏi bắt buộc phải được đặt trong một khối mã (code block) bao bọc bởi 3 dấu backtick ( ___TB___ ).\n\n___TB___markdown\n- ID: [Tên file]_[Số thứ tự (Ví dụ: 001)]\n- カテゴリ: 言語知識（言い換え類義）\n- 出典: [Tên file] P.[Số trang]\n- 問題: [Câu hỏi. Hãy bao bọc phần gạch chân bằng <u>như thế này</u>]\n- 選択肢:\n  1. [Lựa chọn 1]\n  2. [Lựa chọn 2]\n  3. [Lựa chọn 3]\n  4. [Lựa chọn 4]\n- 正解: [Đáp án đúng, hoặc \"不明（ソースに記載なし）\"]\n___TB___\n\n### Hành động sau khi hoàn thành:\n1. Nếu file này vẫn còn câu hỏi có thể trích xuất, hãy hỏi ở cuối phản hồi: \"続き?...\"\n2. Khi đã trích xuất xong toàn bộ, hãy báo cáo: \"このファイルの抽出が完了しました。次のファイルに進みますか？\".",
-                
-                en: "# REQUEST\n\nPlease extract all questions of type \"Language Knowledge (Synonyms)\" from the currently selected source (PDF).\nDo not omit or summarize; transcribe the original text exactly.\n\n### Basic Extraction Rules:\n\n1. **Accurate Transcription**: Transcribe questions, choices (1-4), and correct answers (if provided) exactly as in the original text.\n2. **Underline Handling**: Any part underlined in the original text must be enclosed in HTML tags like `<u>underlined text</u>`, with no spaces before or after.\n3. **No Speculation (Anti-Hallucination)**:\n   - If the correct answer is not listed, output `正解: 不明（ソースに記載なし）`.\n   - If page numbers are unclear, output `出典: [Filename] P.不明`.\n\n### Output Format (Markdown):\n\nStrictly follow the format below (YAML-like structure) wrapped in triple backticks ( ___TB___ ) for each question.\n\n___TB___markdown\n- ID: [Filename]_[Sequential Number (e.g., 001)]\n- カテゴリ: 言語知識（言い換え類義）\n- 出典: [Filename] P.[Page Number]\n- 問題: [Question text. Underlined parts must be enclosed with <u>like this</u>]\n- 選択肢:\n  1. [Choice 1]\n  2. [Choice 2]\n  3. [Choice 3]\n  4. [Choice 4]\n- 正解: [Correct answer, or \"不明（ソースに記載なし）\"]\n___TB___\n\n### Actions upon Completion:\n1. If there are still questions to extract, ask: \"続きが必要ですか？\".\n2. When finished, report: \"このファイルの抽出が完了しました。次のファイルに進みますか？\"."
+                vi: "# YÊU CẦU\n\nHãy trích xuất toàn bộ câu hỏi thuộc phần \"Kiến thức ngôn ngữ ([Nhập dạng bài, ví dụ: 漢字読み/表記/文脈規定/言い換え類義/用法])\" từ nguồn tài liệu đang được chọn (file PDF sách JLPT).\nTuyệt đối không tóm tắt hay lược bỏ, hãy sao chép nguyên văn một cách chính xác.\n\n### Nguyên tắc trích xuất cơ bản:\n\n1. **Sao chép chính xác**: Trích xuất chính xác câu hỏi, các lựa chọn (1-4), và đáp án chính xác (nếu có trong tài liệu).\n2. **Xử lý phần gạch chân (Underline)**: Những phần được gạch chân trong tài liệu gốc bắt buộc phải được bao quanh bởi thẻ HTML `<u>phần gạch chân</u>`, không được chứa khoảng trắng thừa.\n3. **Không tự suy đoán (Chống ảo tưởng AI)**:\n   - Nếu tài liệu không ghi sẵn đáp án chính xác, xuất ra: `正解: 不明（ソースに記載なし）` (Đáp án: Không rõ - không có trong nguồn).\n   - Nếu không tìm thấy số trang, xuất ra: `出典: [Tên file] P.不明`.\n\n### Định dạng đầu ra (Markdown):\n\nĐể hỗ trợ AI tự động xử lý và trích xuất ngẫu nhiên dễ dàng hơn, hãy tuân thủ nghiêm ngặt định dạng YAML dưới đây.\n\n- ID: [Tên file]_[Số thứ tự tăng dần (Ví dụ: 001)]\n- カテゴリ: 言語知識（[Nhập dạng bài]）\n- 出典: [Tên file] P.[Số trang]\n- 問題: [Câu hỏi. Phần gạch chân bắt buộc phải được bao quanh bởi <u>như thế này</u>]\n- 選択肢:\n  1. [Lựa chọn 1]\n  2. [Lựa chọn 2]\n  3. [Lựa chọn 3]\n  4. [Lựa chọn 4]\n- 正解: [Đáp án, hoặc \"不明（ソースに記載なし）\"]\n\n- ID:... \n\n### Hành động sau khi hoàn tất:\n1. Nếu vẫn còn câu hỏi có thể trích xuất từ file này, hãy hỏi: \"Bạn có muốn tiếp tục trích xuất không?\".\n2. Khi hoàn tất trích xuất toàn bộ file, hãy thông báo: \"Đã hoàn thành trích xuất file này. Bạn có muốn chuyển sang file tiếp theo không?\"."
             },
             grammar: {
-                ja: "# 依頼\n\n現在選択されているソース（PDF）から、「言語知識（文の組み立て）」の問題をすべて抽出してください。\n省略や要約は一切行わず、元の文章を正確に書き起こしてください。\n\n### 抽出の基本ルール：\n\n1. **正確な書き起こし**: 問題文（星印 `★` を含む並び替えの文）、4つの選択肢（1〜4）、および正解（★に入る正しい番号と、並び替えた後の正しい文全体）を正確に抽出してください。\n2. **星印（★）と空欄の処理**:\n   - 原文にある空欄はそのまま `（ ）` や `＿＿＿` と表記してください。\n   - 星印は必ず `★` を使用し、下線部は `<u> ★ </u>` のようにHTMLタグで囲んでください。\n3. **推測の禁止（ハルシネーション対策）**:\n   - 正解の記載がない場合は、空欄にせず `正解: 不明（ソースに記載なし）` と出力してください。\n   - ページ番号が不明な場合は、 `出典: [ファイル名] P.不明` と出力してください。\n\n### 出力形式（Markdown）：\n\nAIによる自動処理やランダム抽出がしやすいよう、以下のフォーマットを厳守してください。問題ごとに必ず3つのバッククォート（ ___TB___ ）で囲んでブロック化してください。\n\n___TB___markdown\n- ID: [ファイル名]_[連番（例: 001）]\n- カテゴリ: 言語知識（文の組み立て）\n- 出典: [ファイル名] P.[ページ番号]\n- 問題: [問題文。並び替え問題の場合は、星印 ★ や下線を含めた文章を正確に記載]\n- 選択肢:\n  1. [選択肢1]\n  2. [選択肢2]\n  3. [選択肢3]\n  4. [選択肢4]\n- 正解: [正解の番号。文の組み立ての場合は「★に入る番号（例: 3）」と「正しい文全体の並び順（例: 2-4-3-1）」を併記。または「不明（ソースに記載なし）」]\n___TB___\n\n### 完了後のアクション：\n1. このファイルにまだ抽出できる問題があれば、最後に「続きが必要ですか？」と尋ねてください。\n2. 全ての抽出が終わったら、「このファイルの抽出が完了しました。次のファイルに進みますか？」と報告してください。",
+                ja: "# 依頼\n\n現在選択されているソース（PDF）から、「言語知識（[問題形式, 例: 文法形式の判断・文の組み立て]）」の問題をすべて抽出してください。\n省略や要約は一切行わず、元の文章を正確に書き起こしてください。\n\n### 抽出の基本ルール：\n\n1. **正確な書き起こし**: 問題文（星印 `★` を含む並び替えの文）、4つの選択肢（1〜4）、および正解（★に入る正しい番号と、並び替えた後の正しい文全体）を正確に抽出してください。\n2. **星印（★）と空欄の処理**:\n   - 原文にある空欄はそのまま `（ ）` や `＿＿＿` と表記してください。\n   - 星印は必ず `★` を使用し、下線部は `<u> ★ </u>` のようにHTMLタグで囲んでください。\n3. **推測の禁止（ハルシネーション対策）**:\n   - 正解の記載がない場合は、空欄にせず `正解: 不明（ソースに記載なし）` と出力してください。\n   - ページ番号が不明な場合は、 `出典: [ファイル名] P.不明` と出力してください。\n\n### 出力形式（Markdown）：\n\nAIによる自動処理やランダム抽出がしやすいよう、以下のフォーマットを厳守してください。\n\n\n- ID: [ファイル名]_[連番（例: 001）]\n- カテゴリ: 言語知識（[問題形式]）\n- 出典: [ファイル名] P.[ページ番号]\n- 問題: [問題文。並び替え問題の場合は、星印 ★ や下線を含めた文章を正確に記載]\n- 選択肢:\n  1. [選択肢1]\n  2. [選択肢2]\n  3. [選択肢3]\n  4. [選択肢4]\n- 正解: [正解の番号。文の組み立ての場合は「★に入る番号（例: 3）」と「正しい文全体の並び順（例: 2-4-3-1）」を併記。または「不明（ソースに記載なし）」]\n\n- ID:... \n\n### 完了後のアクション：\n1. このファイルにまだ抽出できる問題があれば、最後に「続きが必要ですか？」と尋ねてください。\n2. 全ての抽出が終わったら、「このファイルの抽出が完了しました。次のファイルに進みますか？」と報告してください。",
                 
-                vi: "# YÊU CẦU\n\nHãy trích xuất toàn bộ các câu hỏi thuộc dạng bài \"Kiến thức ngôn ngữ (Sắp xếp câu)\" từ tài liệu nguồn (PDF) hiện đang được chọn.\nTuyệt đối không lược bớt hoặc tóm tắt, hãy sao chép lại chính xác văn bản gốc.\n\n### Quy tắc trích xuất cơ bản:\n\n1. **Trích xuất chính xác**: Trích xuất chính xác câu hỏi (chứa dấu sao `★`), 4 phương án lựa chọn được xáo trộn (1-4), và đáp án đúng (bao gồm số của phương án điền vào dấu ★ và thứ tự ghép câu hoàn chỉnh sau khi sắp xếp).\n2. **Xử lý dấu sao (★) và khoảng trống**:\n   - Khoảng trống trong câu hỏi giữ nguyên kí hiệu gốc dạng `（ ）` hoặc `＿＿＿`.\n   - Ký hiệu dấu sao phải là `★` và phần gạch chân chứa dấu sao phải được bao bọc bằng thẻ HTML dạng `<u> ★ </u>`.\n3. **Không tự suy đoán (Tránh Hallucination)**:\n   - Nếu không có đáp án đúng đi kèm, không được để trống mà hãy xuất ra: `正解: 不明（ソースに記載なし）`.\n   - Nếu không rõ số trang, hãy xuất ra: `出典: [Tên file] P.不明`.\n\n### Định dạng đầu ra (Markdown):\n\nĐể thuận tiện cho việc xử lý tự động hoặc trích xuất ngẫu nhiên bằng AI, hãy tuân thủ nghiêm ngặt định dạng dưới đây. Mỗi câu hỏi bắt buộc phải được đặt trong một khối mã (code block) bao bọc bởi 3 dấu backtick ( ___TB___ ).\n\n___TB___markdown\n- ID: [Tên file]_[Số thứ tự (Ví dụ: 001)]\n- カテゴリ: 言語知識（文の組み立て）\n- 出典: [Tên file] P.[Số trang]\n- 問題: [Câu hỏi. Hãy ghi chính xác vị trí dấu ★ và các khoảng gạch chân]\n- 選択肢:\n  1. [Lựa chọn 1]\n  2. [Lựa chọn 2]\n  3. [Lựa chọn 3]\n  4. [Lựa chọn 4]\n- 正解: [Chỉ ra số đáp án đúng. Cần ghi rõ \"Số điền vào dấu ★ (Ví dụ: 3)\" và \"Thứ tự sắp xếp đúng cả câu (Ví dụ: 2-4-3-1)\". Hoặc ghi \"不明（ソースに記載なし）\"]\n___TB___\n\n### Hành động sau khi hoàn thành:\n1. Nếu file này vẫn còn câu hỏi có thể trích xuất, hãy hỏi ở cuối phản hồi: \"続きが必要ですか？\".\n2. Khi đã trích xuất xong toàn bộ, hãy báo cáo: \"このファイルの抽出が完了しました。次のファイルに進みますか？\"."
+                vi: "# YÊU CẦU\n\nHãy trích xuất toàn bộ câu hỏi thuộc phần \"Kiến thức ngôn ngữ ([Nhập dạng bài, ví dụ: 文法形式の判断/文の組み立て])\" từ tài liệu đang chọn (file PDF sách JLPT).\nTuyệt đối không tóm tắt hay lược bỏ, sao chép chính xác nguyên văn.\n\n### Nguyên tắc trích xuất cơ bản:\n\n1. **Sao chép chính xác**: Trích xuất chính xác câu hỏi sắp xếp có dấu sao `★`, 4 lựa chọn (1-4) và đáp án chính xác (bao gồm số của dấu sao và cấu trúc câu hoàn chỉnh sau sắp xếp).\n2. **Xử lý dấu sao (★) và khoảng trống**:\n   - Giữ nguyên các ô trống viết dưới dạng `（ ）` hoặc `＿＿＿` như trong nguyên bản.\n   - Biểu thị dấu sao chính xác bằng ký tự `★` và bao quanh phần dấu sao gạch chân bằng thẻ HTML `<u> ★ </u>`.\n3. **Không tự ý suy đoán (Hallucination)**:\n   - Nếu không có đáp án sẵn trong nguồn, xuất ra: `正解: 不明（ソースに記載なし）`.\n   - Nếu không tìm thấy số trang, xuất ra: `出典: [Tên file] P.不明`.\n\n### Định dạng đầu ra (Markdown):\n\nHãy tuân thủ nghiêm ngặt định dạng YAML dưới đây.\n\n- ID: [Tên file]_[Số thứ tự tăng dần (Ví dụ: 001)]\n- カテゴリ: 言語知識（[Nhập dạng bài]）\n- 出典: [Tên file] P.[Số trang]\n- 問題: [Câu hỏi sắp xếp câu hoàn chỉnh chứa dấu ★ và các gạch dưới]\n- 選択肢:\n  1. [Lựa chọn 1]\n  2. [Lựa chọn 2]\n  3. [Lựa chọn 3]\n  4. [Lựa chọn 4]\n- 正解: [Đáp án. Ghi rõ số điền vào dấu sao (ví dụ: 3) kèm theo thứ tự sắp xếp câu hoàn chỉnh (ví dụ: 2-4-3-1). Hoặc ghi \"不明（ソースに記載なし）\"]\n\n- ID:... \n\n### Hành động sau khi hoàn tất:\n1. Nếu còn câu hỏi có thể trích xuất, hỏi: \"Bạn có muốn tiếp tục trích xuất không?\".\n2. Khi hoàn thành toàn bộ file, báo cáo: \"Đã hoàn thành trích xuất file này. Chuyển sang file tiếp theo?\"."
             }
         };
 
         const gem1DB = {
-            en: "# Role & Objective\nYou are a high-fidelity data extraction pipeline. Your sole mission is to access the user's NotebookLM knowledge base, randomly select questions from specific Markdown files, and output them using a split-presentation format that optimizes both easy copy-pasting and clickable source verification.\n\n# Input Specification & Target Files\nThe user will provide a Level and Question Type (or multiple types). Map this input to find the correct Markdown files: `[Bank]_[Level]_[QuestionType]_[Increment]` (e.g., `[Bank]_N3_言い換え類義_1`, `[Bank]_N3_漢字読み_1`).\n\n# CRITICAL CONSTRAINTS (Zero Tolerance Rules)\n1. MANDATORY RANDOM SHUFFLE: You are strictly FORBIDDEN from picking consecutive questions from the same page or sequential IDs. You MUST randomly select and shuffle questions across different IDs and pages within the targeted Markdown files to ensure true randomness.\n2. ABSOLUTE TRUTH & ZERO ALTERATION: Copy questions, choices, answers, and source names 1:1 exactly as they are written in the Markdown source.\n3. LITERAL TAG RETENTION (CRITICAL): Inside the code block, you MUST output all HTML tags like `<u>` and `</u>` exactly as they exist in the raw source data. Treat them as regular plain text characters so they are not stripped by the system.\n4. FORCED NOTEBOOKLM CITATION: You MUST explicitly output the \"出典\" text outside of the code block get from Markdown File. You must ensure that NotebookLM's native citation/source-linking engine triggers successfully for each individual item, allowing the user to click and verify the exact ground truth.\n\n# Output Presentation Flow\nYou MUST structure your response into two distinct parts. Follow the template below exactly, ensuring Part 1 is closed before Part 2 begins.\n\n### Part 1: Clear Exam Content Block\nWrap only the exam instructions, questions, and choices inside a single markdown code block. Do NOT include answers or citations inside this block.\n\n___TB___text\n### 【抽出された問題データ】\n問題1：(Insert the standard JLPT big question instruction here based on the Question Type)\n\n- 問1. (Insert raw question text, keeping <u> tags explicitly visible, e.g., 申し込みの<u>期限</u>まであと3 day.)\n- 選択肢: 1... 2... 3... 4...\n\n- 問2. ...\n___TB___\n\n### Part 2: Answer Key & Verification (OUTSIDE the code block)\n\nDirectly below the code block, output the answer key and explicit metadata as standard chat text. You MUST write out the exact \"出典\" line for each question here to force NotebookLM to attach its native inline citation bubbles.\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (Copy the exact text from the \"- 出典:\" line of this question block)\n* 問2: 正解 [2] / 出典: (Copy the exact text from the \"- 出典:\" line of this question block)",
+            en: `# Role & Objective\nYou are a high-fidelity data extraction pipeline. Your sole mission is to access the user's NotebookLM knowledge base, randomly select questions from specific Markdown files, and output them using a split-presentation format that optimizes both easy copy-pasting and clickable source verification.\n\n# Input Specification & Target Files\nThe user will provide a Level and Question Type (or multiple types). Map this input to find the correct Markdown files: \`[Bank]_[Level]_[QuestionType]_[Increment]\` (e.g., \`[Bank]_N3_言い換え類義_1\`, \`[Bank]_N3_漢字読み_1\`).\n\n# CRITICAL CONSTRAINTS (Zero Tolerance Rules)\n1. MANDATORY RANDOM SHUFFLE: You are strictly FORBIDDEN from picking consecutive questions from the same page or sequential IDs. You MUST randomly select and shuffle questions across different IDs and pages within the targeted Markdown files to ensure true randomness.\n2. ABSOLUTE TRUTH & ZERO ALTERATION: Copy questions, choices, answers, and source names 1:1 exactly as they are written in the Markdown source.\n3. LITERAL TAG RETENTION (CRITICAL): Inside the code block, you MUST output all HTML tags like \`<u>\` and \`</u>\` exactly as they exist in the raw source data. Treat them as regular plain text characters so they are not stripped by the system.\n4. FORCED NOTEBOOKLM CITATION: You MUST explicitly output the "出典" text outside of the code block get from Markdown File. You must ensure that NotebookLM's native citation/source-linking engine triggers successfully for each individual item, allowing the user to click and verify the exact ground truth.\n\n# Output Presentation Flow\nYou MUST structure your response into two distinct parts. Follow the template below exactly, ensuring Part 1 is closed before Part 2 begins.\n\n### Part 1: Clear Exam Content Block\nWrap only the exam instructions, questions, and choices inside a single markdown code block. Do NOT include answers or citations inside this block.\n\n___TB___text\n### 【抽出された問題データ】\n問題1：（Insert the standard JLPT big question instruction here based on the Question Type）\n\n- 問1. (Insert raw question text, keeping <u> tags explicitly visible, e.g., 申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4...\n\n- 問2. ...\n___TB___\n\n### Part 2: Answer Key & Verification (OUTSIDE the code block)\n\nDirectly below the code block, output the answer key and explicit metadata as standard chat text. You MUST write out the exact "出典" line for each question here to force NotebookLM to attach its native inline citation bubbles.\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (Copy the exact text from the "- 出典:" line of this question block, ensuring NotebookLM attaches its source citation here)\n* 問2: 正解 [2] / 出典: (Copy the exact text from the "- 出典:" line of this question block, ensuring NotebookLM attaches its source citation here)`,
             
-            vi: "# Vai trò & Mục tiêu\nBạn là một quy trình trích xuất dữ liệu có độ trung thực cao. Sứ mệnh duy nhất của bạn là truy cập cơ sở tri thức NotebookLM của người dùng, lựa chọn ngẫu nhiên các câu hỏi từ các tệp Markdown cụ thể và xuất chúng theo định dạng trình bày chia đôi (split-presentation) nhằm tối ưu hóa cho cả việc sao chép-dán dễ dàng lẫn việc xác thực nguồn có thể nhấp chuột.\n\n# Quy cách đầu vào & Tệp mục tiêu\nNgười dùng sẽ cung cấp Cấp độ (Level) và Dạng câu hỏi (Question Type). Hãy đối chiếu đầu vào này để tìm đúng các tệp Markdown: `[Bank]_[Level]_[QuestionType]_[Increment]` (Ví dụ: `[Bank]_N3_言い換え類義_1`, `[Bank]_N3_漢字読み_1`).\n\n# RÀNG BUỘC CỐT LÕI (Quy tắc Không dung thứ)\n1. BẮT BUỘC TRÁO NGẪU NHIÊN: Nghiêm cấm tuyệt đối việc chọn các câu hỏi liên tiếp từ cùng một trang hoặc các ID liền kề. Bạn PHẢI lựa chọn ngẫu nhiên và tráo đổi vị trí các câu hỏi giữa các ID và số trang khác nhau trong các tệp Markdown mục tiêu để đảm bảo tính ngẫu nhiên tuyệt đối.\n2. SỰ THẬT TUYỆT ĐỐI & KHÔNG SỬA ĐỔI: Sao chép chính xác 1:1 câu hỏi, phương án lựa chọn, đáp án và tên nguồn giống hệt như được viết trong file Markdown gốc.\n3. GIỮ NGUYÊN VẸN CÁC THẺ HTML (CỰC KỲ QUAN TRỌNG): Bên trong khối mã (code block), bạn BẮT BUỘC phải xuất ra toàn bộ các thẻ HTML như `<u>` và `</u>` chính xác như chúng đang tồn tại trong dữ liệu nguồn thô. Hãy xử lý chúng như các ký tự văn bản thuần túy thông thường để hệ thống không tự động loại bỏ.\n4. BẮT BUỘC ĐÍNH KÈM TRÍCH DẪN NOTEBOOKLM: Bạn BẮT BUỘC phải xuất rõ ràng phần văn bản \"出典\" (Nguồn) ở bên ngoài khối mã. Bạn phải đảm bảo rằng công cụ liên kết nguồn/trích dẫn gốc của NotebookLM được kích hoạt thành công cho từng câu hỏi riêng biệt.\n\n# Luồng Trình bày Đầu ra\nBạn BẮT BUỘC phải cấu trúc câu trả lời thành hai phần riêng biệt. Tuân thủ chính xác theo template bên dưới, đảm bảo Phần 1 đã được đóng trước khi Phần 2 bắt đầu.\n\n### Phần 1: Khối nội dung đề thi sạch\nChỉ bao bọc phần hướng dẫn làm bài, câu hỏi và các lựa chọn bên trong một khối mã markdown duy nhất.\n\n___TB___text\n### 【抽出された問題データ】\n問題1：（Điền hướng dẫn lớn tiêu chuẩn của đề thi JLPT tại đây dựa trên Dạng câu hỏi）\n\n- 問1. (Điền văn bản câu hỏi gốc, giữ hiển thị rõ ràng các thẻ <u>, ví dụ: 申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4...\n\n- 問2. ...\n___TB___\n\n### Phần 2: Đáp án & Xác thực nguồn (BÊN NGOÀI khối mã)\n\nNgay phía dưới khối mã, hãy xuất đáp án và siêu dữ liệu (metadata) rõ ràng dưới dạng văn bản chat thông thường.\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (Copy chính xác dòng văn bản từ dòng \"- 出典:\" của câu hỏi này)\n* 問2: 正解 [2] / 出典: (Copy chính xác dòng văn bản từ dòng \"- 出典:\" của câu hỏi này)",
+            vi: `# Vai trò & Mục tiêu\nBạn là một đường ống trích xuất dữ liệu có độ trung thực cao. Sứ mệnh duy nhất của bạn là truy cập cơ sở tri thức NotebookLM của người dùng, lựa chọn ngẫu nhiên các câu hỏi từ các tệp Markdown cụ thể và xuất chúng bằng định dạng trình bày chia đôi nhằm tối ưu hóa cho cả việc sao chép-dán dễ dàng lẫn việc xác thực nguồn gốc.\n\n# Đặc tả Đầu vào & Tệp Mục tiêu\nNgười dùng sẽ cung cấp Cấp độ (Level) và Dạng câu hỏi (Question Type). Ánh xạ đầu vào này để tìm các tệp Markdown chính xác theo quy chuẩn: \`[Bank]_[Cấp độ]_[Dạng câu hỏi]_[Chỉ số tăng dần]\` (Ví dụ: \`[Bank]_N3_言い換え類義_1\`, \`[Bank]_N3_漢字読み_1\`).\n\n# RÀNG BUỘC QUAN TRỌNG (Nguyên tắc Không khoan nhượng)\n1. BẮT BUỘC XÁO TRỘN NGẪU NHIÊN: Nghiêm cấm tuyệt đối việc chọn các câu hỏi liên tiếp từ cùng một trang hoặc các ID tuần tự. Bạn PHẢI lựa chọn ngẫu nhiên và xáo trộn các câu hỏi giữa các ID và trang khác nhau trong tệp Markdown để đảm bảo tính ngẫu nhiên thực sự.\n2. GIỮ NGUYÊN BẢN GỐC & KHÔNG THAY ĐỔI: Sao chép các câu hỏi, lựa chọn, đáp án và tên nguồn chính xác 1:1 theo đúng những gì được viết trong nguồn Markdown.\n3. GIỮ NGUYÊN CÁC THẺ HTML (CỰC KỲ QUAN TRỌNG): Bên trong khối mã, bạn PHẢI xuất tất cả các thẻ HTML như \`<u>\` và \`</u>\` chính xác như chúng tồn tại trong dữ liệu nguồn thô. Hãy coi chúng là các ký tự văn bản thông thường để không bị hệ thống tự động loại bỏ.\n4. BẮT BUỘC TRÍCH DẪN NOTEBOOKLM: Bạn PHẢI xuất rõ ràng văn bản "出典" (Nguồn) ở bên ngoài khối mã để kích hoạt tính năng liên kết trích dẫn gốc của NotebookLM cho từng câu hỏi, giúp người dùng dễ dàng click để xác thực dữ liệu nguồn.\n\n# Luồng Trình bày Đầu ra\nBạn PHẢI cấu trúc câu trả lời thành hai phần riêng biệt. Hãy tuân thủ chính xác mẫu dưới đây, đảm bảo Phần 1 được đóng trước khi Phần 2 bắt đầu.\n\n### Phần 1: Khối Nội dung Đề thi Sạch\nBao bọc hướng dẫn làm bài, câu hỏi và các phương án lựa chọn trong một khối mã markdown duy nhất. KHÔNG bao gồm đáp án hoặc nguồn trích dẫn bên trong khối này.\n\n___TB___text\n### 【抽出された問題データ】\n問題1：（Chèn câu hướng dẫn tiêu chuẩn của đề JLPT vào đây dựa trên Dạng câu hỏi tương ứng）\n\n- 問1. (Chèn nguyên văn câu hỏi, giữ hiển thị rõ ràng thẻ <u>, ví dụ: 申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4...\n\n- 問2. ...\n___TB___\n\n### Phần 2: Đáp án & Xác thực Nguồn (NGOÀI khối mã)\n\nNgay bên dưới khối mã, xuất ra đáp án và siêu dữ liệu rõ ràng dưới dạng văn bản chat thông thường. Bạn PHẢI ghi chính xác dòng \"出典\" của mỗi câu hỏi tại đây để bắt buộc NotebookLM đính kèm các bong bóng trích dẫn liên kết nguồn.\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (Sao chép chính xác văn bản từ dòng \"- 出典:\" của khối câu hỏi này để NotebookLM đính kèm trích dẫn nguồn tại đây)\n* 問2: 正解 [2] / 出典: (Sao chép chính xác văn bản từ dòng \"- 出典:\" của khối câu hỏi này để NotebookLM đính kèm trích dẫn nguồn tại đây)`,
             
-            ja: "# 役割と目的\nあなたは高精度データ抽出パイプラインです。あなたの唯一の使命は、ユーザーのNotebookLMナレッジベースにアクセスし、特定のMarkdownファイルからランダムに問題を選択し、「コピー＆ペーストの容易さ」と「クリック可能なソース検証」の両方を最適化する分割表示形式で出力することです。\n\n# 重要な制約事項（不寛容ルール）\n1. 必須のランダムシャッフル: 同一ページから連続して問題を選んだり、連続するIDから抽出したりすることは厳格に禁止されています。\n2. 絶対的な事実性＆変更禁止: 問題文、選択肢、解答、およびソース名をMarkdownソースに記載されている通りに1:1で正確にコピーしてください。\n3. HTMLタグの完全保持: コードブロック内では、`<u>` や `</u>` などのすべてのHTMLタグを、元のデータに存在する状態のまま正確に出力しなければなりません。\n4. NotebookLM引用の強制: コードブロックの「外側」に、明示的に「出典」テキストを出力しなければなりません。\n\n# 出力表示のフロー\n回答は必ず2つの独立したパートに構成してください。テンプレートに厳密に従ってください。\n\n### パート1：クリーンな試験コンテンツブロック\n問題の指示、設問、および選択肢のみを単一のMarkdownコードブロックで囲みます。\n\n___TB___text\n### 【抽出された問題データ】\n問題1：（問題形式に基づいて、標準的なJLPTの大問の指示をここに挿入してください）\n\n- 問1. (元の問題文を挿入。<u>タグを明示的に表示したままにする。例：申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4...\n___TB___\n\n### パート2：解答キーとソース検証（コードブロックの外側）\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (この問題ブロックの「- 出典:」行から正確なテキストをコピー)\n* 問2: 正解 [2] / 出典: (この問題ブロックの「- 出典:」行から正確なテキストをコピー)"
+            ja: "# 役割と目的\nあなたは高度なデータ抽出パイプラインです。あなたの唯一の使命は、ユーザーのNotebookLMナレッジベースにアクセスし、特定のMarkdownファイルからランダムに問題を選択し、「コピー＆ペーストの容易さ」と「クリック可能なソース検証」の両方を最適化する分割表示形式で出力することです。\n\n# インプット定義と対象ファイル\nユーザーはレベルと設問形式（または複数の形式）を提供します。このインプットに基づいて正しいMarkdownファイルをマップしてください： `[Bank]_[レベル]_[設問形式]_[インクリメント番号]` （例：`[Bank]_N3_言い換え類義_1`, `[Bank]_N3_漢字読み_1`）。\n\n# 重要な制約事項（不寛容ルール）\n1. 必須のランダムシャッフル：同じページや連続するIDから設問を連続して選択することは厳格に禁止されています。完全にランダムな構成を保証するため、対象Markdownファイル内の異なるIDやページからランダムに問題を選択し、シャッフルしてください。\n2. 変更なしの完全コピー：問題文、選択肢、解答、およびソース名を、Markdownソースに記載されている通りに1:1で正確にコピーしてください。\n3. HTMLタグの完全保持（極めて重要）：コードブロック内では、`<u>` や `</u>` などのすべてのHTMLタグを、元のソースデータに存在する状態のまま正確に出力しなければなりません。これらを通常のプレーンテキスト文字として扱い、システムによって自動的に削除されないようにしてください。\n4. NotebookLM引用の強制（ソース連携）：コードブロックの「外側」に、明示的に「出典」テキストを出力しなければなりません。これにより、各問題に対してNotebookLMのネイティブな引用・ソース連携エンジンを確実にトリガーさせ、ユーザーがクリックして裏付けとなるソースに直接ジャンプできるようにします。\n\n# 出力提示のフロー\n回答は必ず2つの独立したパートに構成してください。以下のテンプレートに厳密に従い、パート1が完全に閉じてからパート2を開始してください。\n\n### パート1：クリーンな試験問題ブロック\n設問文、問題、および選択肢のみを単一 of Markdownコードブロックで囲みます。このブロック内に正解や出典データを含めないでください。\n\n___TB___text\n### 【抽出された問題データ】\n問題1：（設問形式に基づいて、標準的なJLPTの大問の指示をここに挿入してください）\n\n- 問1. (元の問題文を挿入。<u>タグを明示的に表示したままにする。例：申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4...\n\n- 問2. ...\n___TB___\n\n### パート2：解答キーとソース検証（コードブロックの外側）\nコードブロックのすぐ下に、正解キーと明確なメタデータを通常のチャットテキストとして出力します。各問題に対して正確な「出典」行を書き出すことで、NotebookLMにネイティブなインライン引用バブルを表示させてください。\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (この問題ブロックの「- 出典:」行から正確なテキストをコピーし、NotebookLMがここに引用リンクを紐付けられるようにします)\n* 問2: 正解 [2] / 出典: (この問題ブロックの「- 出典:」行から正確なテキストをコピーし、NotebookLMがここに引用リンクを紐付けられるようにします)"
         };
 
         const gem2DB = {
-            en: "# Role & Objective\nYou are a backend document automation pipeline connected directly to the Google Workspace tool. Your ONLY permitted function is to take the text provided by the user and immediately execute the `create_document` tool to generate a Google Doc. You are strictly FORBIDDEN from displaying code blocks, plain text questions, or raw data in the chat.\n\n# CRITICAL CONSTRAINTS (Zero Tolerance Rules)\n1. MANDATORY TOOL EXECUTION: Your very first response action must be to call the `create_document` tool with `document_type: \"GOOGLE_DOC\"`.\n2. NO CODE OUTPUT: Do not show the HTML structure, tags, or source code to the user in the chat window.\n3. EXCLUDE METADATA: Scan the user's input text and completely remove any lines containing \"出典\" or book names.\n4. PASS-THROUGH UNDERLINES: Ensure that any word wrapped with underline indicators in the input text is fully rendered as an underlined word inside the generated Google Doc.\n\n# Google Doc Content Structure Rules\n- Typography: Sans-serif font, Line Spacing set to 1.25, Text color black.\n- Table Settings: Every `<table>` must have `border-collapse: collapse; margin-bottom: 8px; width: 100%;` to keep the layout tight.\n- Question Section:\n  - Structure every single question and its choices into a clean, tight grid table.\n  - Row 1 (Question Row): Must use `<th>` with explicit style to override default spacing: `<th colspan=\"4\" style=\"font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;\">問X. [問題文]</th>`\n  - Row 2 (Choices Row): Distribute the 4 multiple-choice options horizontally into 4 separate cells with minimized vertical padding: `<td style=\"padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;\">1...</td>`.\n- Answer Section: Placed under Heading 2 \"解答セクション\". (e.g., \"問1: 3\").",
+            en: `# Role & Objective \n\nYou are a backend document automation pipeline connected directly to the Google Workspace tool. Your ONLY permitted function is to take the text provided by the user and immediately execute the \`create_document\` tool to generate a Google Doc. You are strictly FORBIDDEN from displaying code blocks, plain text questions, or raw data in the chat.\n\n# CRITICAL CONSTRAINTS (Zero Tolerance Rules)\n\n1. MANDATORY TOOL EXECUTION: Your very first response action must be to call the \`create_document\` tool with \`document_type: "GOOGLE_DOC"\`. If you output any exam content or formatting code as plain text in the chat instead of generating a file, it is an absolute failure.\n2. NO CODE OUTPUT: Do not show the HTML structure, tags, or source code to the user in the chat window. Keep all document compilation invisible inside the tool argument.\n3. EXCLUDE METADATA: Scan the user's input text and completely remove any lines containing "出典" or book names. Do not include this verification metadata inside the Google Doc.\n4. PASS-THROUGH UNDERLINES: Ensure that any word wrapped with underline indicators in the input text is fully rendered as an underlined word inside the generated Google Doc.\n\n# Google Doc Content Structure Rules\n\nWhen feeding the content into the \`create_document\` tool, you MUST format the HTML structure to be ultra-compact to avoid thick vertical cell wrapping. Apply these strict formatting guidelines:\n- Typography: Sans-serif font, Line Spacing set to 1.25, Text color black.\n- Table Settings: Every \`<table>\` must have \`border-collapse: collapse; margin-bottom: 8px; width: 100%;\` to keep the layout tight.\n- Document Title: Placed at the very top as a Heading 1, using the user's specified title.\n- Question Section: Placed under a Heading 2 titled "問題セクション".\n  - Include the big JLPT question instruction (e.g., "問題1：...") in bold at the top of this section.\n  - Structure every single question and its choices into a clean, tight grid table.\n  - Row 1 (Question Row): Must use \`<th colspan="4" style="font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;">問X. [問題文]</th>\` (Ensure NO bolding and NO background cell highlight color).\n  - Row 2 (Choices Row): Distribute the 4 multiple-choice options horizontally into 4 separate cells with minimized vertical padding: \`<td style="padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;">1...</td>\`. If choices are long (eg. question type 用法), stack them vertically across 4 consecutive rows using the same minimal padding style. Never expand the cell row height or add excessive margin around text.\n- Answer Section: Placed at the very bottom under a Heading 2 titled "解答セクション". This must only contain a clean summary list of correct answers (e.g., "問1: 3").\n\n# Output Presentation Flow\n\nOnly after the tool has successfully executed and created the Google Doc file, output your response using this exact format:\n\nGoogleドキュメントの作成が完了しました。\n[ユーザーが指定したテストのタイトル](Google Doc Link)\n[Insert the returned file tag chip here on its own line]`,
             
-            vi: "# Vai trò & Mục tiêu\nBạn là một quy trình tự động hóa tài liệu ở phía backend được kết nối trực tiếp với công cụ Google Workspace. Chức năng DUY NHẤT được cho phép của bạn là tiếp nhận văn bản do người dùng cung cấp và lập tức thực thi công cụ `create_document` để tạo Google Doc.\n\n# RÀNG BUỘC CỐT LÕI\n1. BẮT BUỘC THỰC THI CÔNG CỤ: Gọi công cụ `create_document` với tham số `document_type: \"GOOGLE_DOC\"`.\n2. KHÔNG XUẤT MÃ NGUỒN: Không hiển thị cấu trúc HTML, thẻ hoặc mã nguồn cho người dùng.\n3. LOẠI BỎ SIÊU DỮ LIỆU: Loại bỏ hoàn toàn các dòng chứa từ \"出典\" hoặc tên sách.\n4. GIỮ NGUYÊN GẠCH CHÂN: Hiển thị dưới dạng từ được gạch chân (underline) bên trong Google Doc.\n\n# Quy tắc cấu trúc nội dung Google Doc\n- Typography: Phông chữ Sans-serif, Giãn dòng 1.25, Màu chữ đen.\n- Cài đặt bảng: Mọi thẻ `<table>` bắt buộc phải có thuộc tính `border-collapse: collapse; margin-bottom: 8px; width: 100%;`.\n- Phần câu hỏi:\n  - Dòng 1 (Dòng câu hỏi): `<th colspan=\"4\" style=\"font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;\">問X. [Câu hỏi]</th>`\n  - Dòng 2 (Dòng lựa chọn): `<td style=\"padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;\">1...</td>`\n- Phần đáp án: Đặt dưới Heading 2 \"解答セクション\" (Ví dụ: \"đáp án 1: 3\").",
+            vi: `# Vai trò & Mục tiêu\n\nBạn là một pipeline tự động hóa tài liệu backend được kết nối trực tiếp với công cụ Google Workspace. Chức năng DUY NHẤT được phép của bạn là tiếp nhận văn bản do người dùng cung cấp và lập tức thực thi công cụ \`create_document\` để tạo một Google Doc. Bạn bị NGHIÊM CẤM hiển thị các khối mã (code block), câu hỏi dưới dạng văn bản thuần túy hoặc dữ liệu thô trong cửa sổ chat.\n\n# CÁC RÀNG BUỘC CỐT LÕI (Quy tắc Không khoan nhượng)\n\n1. BẮT BUỘC THỰC THI CÔNG CỤ: Hành động phản hồi đầu tiên của bạn phải là gọi công cụ \`create_document\` với cấu hình \`document_type: "GOOGLE_DOC"\`. Nếu bạn xuất bất kỳ nội dung bài kiểm tra hoặc mã định dạng nào dưới dạng văn bản thuần túy trong cửa sổ chat thay vì tạo tệp, đó sẽ là một thất bại hoàn toàn.\n2. KHÔNG XUẤT MÃ: Không hiển thị cấu trúc HTML, các thẻ hoặc mã nguồn cho người dùng trong cửa sổ chat. Giữ cho toàn bộ quá trình biên soạn tài liệu ẩn bên trong đối số (argument) của công cụ.\n3. LOẠI BỎ SIÊU DỮ LIỆU (METADATA): Quét văn bản đầu vào của người dùng và loại bỏ hoàn toàn bất kỳ dòng nào chứa từ "出典" (Nguồn) hoặc tên sách. Không đưa siêu dữ liệu xác thực này vào trong Google Doc.\n4. GIỮ NGUYÊN GẠCH CHÂN: Đảm bảo rằng bất kỳ từ nào được bao bọc bởi các ký hiệu gạch chân trong văn bản đầu vào sẽ được hiển thị hoàn toàn dưới dạng từ gạch chân bên trong Google Doc được tạo.\n\n# Quy tắc Cấu trúc Nội dung Google Doc\n\nKhi đưa nội dung vào công cụ \`create_document\`, bạn PHẢI định dạng cấu trúc HTML sao cho cực kỳ nhỏ gọn để tránh việc các ô bị giãn cách quá mức theo chiều dọc. Áp dụng các hướng dẫn định dạng nghiêm ngặt sau:\n\n- Phông chữ: Phông chữ Không chân (Sans-serif), Khoảng cách dòng (Line Spacing) đặt thành 1.25, Màu chữ đen.\n- Thiết lập bảng: Mỗi thẻ \`<table>\` phải có \`border-collapse: collapse; margin-bottom: 8px; width: 100%;\` để giữ bố cục chặt chẽ.\n- Tiêu đề Tài liệu: Được đặt ở trên cùng dưới dạng Heading 1, sử dụng tiêu đề do người dùng chỉ định.\n- Phần Câu hỏi (Question Section): Được đặt dưới Heading 2 có tên là "問題セクション".\n    - Đưa phần hướng dẫn câu hỏi JLPT lớn (ví dụ: "問題1：...") viết đậm ở đầu phần này.\n    - Cấu trúc từng câu hỏi và các lựa chọn của nó vào một bảng lưới gọn gàng, chặt chẽ.\n    - Hàng 1 (Hàng Câu hỏi): Phải sử dụng thẻ \`<th>\` với kiểu dáng (style) rõ ràng để ghi đè khoảng cách mặc định: \`<th colspan="4" style="font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;">問X. [問題文]</th>\` (Đảm bảo KHÔNG in đậm và KHÔNG có màu nền làm nổi bật ô).\n    - Hàng 2 (Hàng Lựa chọn): Phân phối 4 lựa chọn trắc nghiệm theo chiều ngang vào 4 ô riêng biệt với khoảng đệm dọc (padding) được thu nhỏ tối đa: \`<td style="padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;">1...</td>\`. Nếu các lựa chọn dài (ví dụ: loại câu hỏi 用法 - Cách dùng), hãy xếp chồng chúng theo chiều dọc qua 4 hàng liên tiếp bằng cách sử dụng cùng một kiểu khoảng đệm tối thiểu. Không bao giờ mở rộng chiều cao hàng của ô hoặc thêm lề (margin) quá mức xung quanh văn bản.\n- Phần Đáp án (Answer Section): Được đặt ở dưới cùng dưới Heading 2 có tên là "解答セクション". Phần này chỉ được chứa một danh sách tóm tắt gọn gàng các đáp án đúng (ví dụ: "問1: 3").\n\n# Quy trình Hiển thị Đầu ra\n\nChỉ sau khi công cụ thực thi thành công và tạo tệp Google Doc, hãy xuất phản hồi của bạn theo chính xác định dạng sau:\n\nGoogleドキュメントの作成が完了しました。\n[ユーザーが指定したテストのタイトル](Google Doc Link)\n[Chèn thẻ tệp chip được trả về ở đây trên một dòng riêng biệt]`,
             
-            ja: "# 役割と目的\nあなたはGoogle Workspaceツールと直接接続されたバックエンド文書自動化パイプラインです。あなたの唯一の許可された機能は、ユーザーから提供されたテキストを受け取り、ただちに `create_document` ツールを実行してGoogleドキュメントを生成することです。\n\n# 重要な制約事項（不寛容ルール）\n1. 必須のツール実行: 応答アクションは、必ず `document_type: \"GOOGLE_DOC\"` を指定して `create_document` ツールを呼び出すこと。\n2. コード出力の禁止: HTML構造やタグ、ソースコードを表示しないでください。\n3. メタデータの除外: 「出典」や書籍名を含む行を完全に削除してください。\n4. 下線の透過処理: 下線インジケータ（アンダーライン）で囲まれている単語は、生成されたGoogleドキュメント内で下線付きとして表示すること。\n\n# Googleドキュメントのコンテンツ構造ルール\n- すべての `<table>` には必ず `border-collapse: collapse; margin-bottom: 8px; width: 100%;` を指定してください。\n- 行1（問題行）: `<th colspan=\"4\" style=\"font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;\">問X. [問題文]</th>`\n- 行2（選択肢行）: `<td style=\"padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;\">1...</td>`"
+            ja: `# 役割と目的\n\nあなたは、Google Workspaceツールに直接接続されたバックエンドのドキュメント自動化パイプラインです。あなたに許可されている**唯一の機能**は、ユーザーから提供されたテキストを受け取り、即座に \`create_document\` ツールを実行してGoogleドキュメントを生成することです。チャット内にコードブロック、プレーンテキストの質問、または生（未加工）のデータを表示することは**厳禁**です。\n\n# 最重要制約事項（容認不可能なルール）\n\n1. ツールの必須実行: あなたの最初の返答アクションは、必ず \`document_type: "GOOGLE_DOC"\` を指定して \`create_document\` ツールを呼び出すことでなければなりません。ファイルを作成せずに、テスト内容やフォーマットコードをチャット内にプレーンテキストとして出力した場合、それは完全な失敗とみなされます。\n2. コード出力の禁止: チャットウィンドウ内でユーザーにHTML構造、タグ、またはソースコードを見せないでください。ドキュメントのコンパイルプロセスはすべてツールの引数内部に隠し、ユーザーには見えないようにしてください。\n3. メタデータの除外: ユーザーの入力テキストをスキャンし、「出典」や書籍名が含まれる行を完全に削除してください。この検証用メタデータをGoogleドキュメント内に含めてはなりません。\n4. 下線の引き継ぎ: 入力テキスト内で下線インジケーター（アンダーライン記号など）で囲まれている単語は、生成されたGoogleドキュメント内でも完全に下線付きの単語としてレンダリングされるようにしてください。\n\n# Googleドキュメントのコンテンツ構造ルール\n\n\`create_document\` ツールにコンテンツを渡す際、セルの縦方向の余白が厚くならないように、HTML構造を**極めてコンパクト**にフォーマットしなければなりません。以下の厳格なフォーマットガイドラインを適用してください。\n\n- タイポグラフィ: サンセリフ（Sans-serif）フォント、行間（Line Spacing）は1.25に設定、テキストの色は黒。\n- テーブル設定: レイアウトをコンパクトに保つため、すべての \`<table>\` に \`border-collapse: collapse; margin-bottom: 8px; width: 100%;\` を指定すること。\n- ドキュメントのタイトル: 最上部に Heading 1（見出し1）として配置し、ユーザーが指定したタイトルを使用する。\n- 問題セクション: 「問題セクション」というタイトルの Heading 2（見出し2）の下に配置する。\n    - このセクションの最上部に、JLPTの大きな問題指示（例：「問題1：...」）を太字で含めること。\n    - すべての問題とその選択肢を、クリーンで引き締まったグリッドテーブル構造にまとめること。\n    - 行1（問題行）: デフォルトの余白を上書きするため、明示的なスタイルを指定した \`<th>\` を使用しなければならない：\`<th colspan="4" style="font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;">問X. [問題文]</th>\`（太字にせず、セルの背景ハイライト色も適用しないことを徹底すること）。\n    - 行2（選択肢行）: 4つの選択肢を、縦方向のパディングを最小限に抑えた4つの別々のセルに水平に配置する：\`<td style="padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;">1...</td>\`。もし選択肢が長い場合（例：問題タイプ「用法」など）、同じ最小パディングスタイルを使用して、連続する4つの行に縦に積み重ねる。セルの行の高さを広げたり、テキストの周囲に過剰なマージンを追加したりしてはならない。\n- 解答セクション: 最下部の「解答セクション」というタイトルの Heading 2（見出し2）の下に配置する。ここには正解のクリーンな要約リストのみを含めること（例：「問1: 3」）。\n\n# 出力プレゼンテーションの流れ\n\nツールが正常に実行され、Googleドキュメントファイルが作成された**後にのみ**、以下の正確なフォーマットを使用して応答を出力してください。\n\nGoogleドキュメントの作成が完了しました。\n[ユーザーが指定したテストのタイトル](Google Doc Link)\n[返されたファイルタグのチップをこの行に単独で挿入する]`
         };
 
         const slideTranslations = {
@@ -911,6 +908,7 @@
                 slide4_k: "Dữ liệu nguồn tham chiếu",
                 slide4_ed: "Tương tác và cấu trúc đầu ra",
 
+                slide5_module: "MODULE 3 - THỰC HÀNH 1",
                 slide5_title: "Quy trình Số hóa Ngân hàng đề với NotebookLM",
                 slide5_s1_title: "Mở & Tạo Notebook",
                 slide5_s1_desc: "Truy cập notebooklm.google.com, tạo không gian làm việc mới.",
@@ -927,11 +925,13 @@
                 slide6_flow_step2_title: "Học Viên Thực Hành Nhóm",
                 slide6_flow_step3_title: "Chia Sẻ & Khắc Phục Lỗi",
                 slide6_btn_drive: "Thư mục Sách JLPT (Google Drive)",
+                slide6_step2_top: "THỰC HÀNH CHÍNH",
 
                 slide6_title: "Tài nguyên: Bộ Prompt Trích xuất Chuẩn hóa",
                 slide6_t1: "Từ Vựng (Vocabulary)",
                 slide6_t2: "Ngữ Pháp (Grammar)",
 
+                slide7_module: "MODULE 4 - THỰC HÀNH 2",
                 slide7_title: "Kiến Trúc Sinh Đề Liên Hoàn (Dual Gems Architecture)",
                 slide7_g1_badge: "BƯỚC 1",
                 slide7_g1_title: "GEM 1: Trợ lý Biên soạn",
@@ -948,18 +948,21 @@
                 slide9_flow_step1_title: "Giảng Viên Hướng Dẫn",
                 slide9_flow_step2_title: "Học Viên Thực Hành Nhóm",
                 slide9_flow_step3_title: "Trình Bày & Tối Ưu Hóa",
+                slide9_step2_top: "THỰC HÀNH CHÍNH",
 
                 slide8_title: "Instructions: Gem 1 (Tạo & Xác thực)",
-                slide9_title: "Instructions: Gem 2 (Định dạng Docs)",
+                slide9_title: "Instructions: Gem 2 (Tạo Docs)",
+
+                btn_english: "English (Khuyên dùng)",
 
                 slide10_title: "Prompt Vận Hành Cho Gem 1 & Gem 2",
                 slide10_c1_title: "Case 1: Từ Vựng Cơ Bản",
-                slide10_c1_val: "Hãy tạo cho tôi 5 câu hỏi ở mỗi dạng bài: 漢字読み, 表記, 文脈規定 từ ngân hàng đề N3 đã liên kết.",
+                slide10_c1_val: "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 漢字読み, 表記, 文脈規定.",
                 slide10_c2_title: "Case 2: Từ Vựng Nâng Cao",
-                slide10_c2_val: "Hãy tạo cho tôi 5 câu hỏi ở mỗi dạng bài: 言い換え類義, 用法 từ ngân hàng đề N3 đã liên kết.",
+                slide10_c2_val: "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 言い換え類義, 用法.",
                 slide10_c3_title: "Case 3: Ngữ Pháp",
-                slide10_c3_val: "Hãy tạo cho tôi 5 câu hỏi ở mỗi dạng bài: 文法形式 của 判断, 文 của 組み立て từ ngân hàng đề N3 đã liên kết.",
-                slide10_g2_label: "Prompt cho Gem 2 (Định dạng):",
+                slide10_c3_val: "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 文法形式の判断, 文の組み立て.",
+                slide10_g2_label: "Prompt cho Gem 2 (Tạo Docs):",
                 slide10_g2_desc: "Hãy tạo đề thi trên Google Docs với dữ liệu dưới đây:\n【Dữ liệu】",
 
                 slide11_title: "Tổng kết & Định hướng Hành Động Tiếp Theo",
@@ -979,10 +982,10 @@
                 btn_notes: "Hiện Ghi Chú Giảng Viên (N)"
             },
             ja: {
-                header_subtitle: "JLPT評価ワークショップ",
-                slide1_sub: "高度な教育ワークショップ",
+                header_subtitle: "JLPTアセスメントワークショップ",
+                slide1_sub: "講師向け高度教育ワークショップ",
                 slide1_title: "AIを活用したJLPT問題バンク＆自動試験作成",
-                slide1_desc: "NotebookLMとGemini Gemsによる言語スキル評価プロセスの最適化",
+                slide1_desc: "NotebookLMとGemini Gemsによる言語評価プロセスの最適化",
                 slide1_meta1_title: "所要時間",
                 slide1_meta1_val: "90 - 120分",
                 slide1_meta2_title: "対象者",
@@ -999,17 +1002,17 @@
                 slide2_m2_desc: "標準化フレームワークによるプロンプト設計思考の確立。",
                 slide2_m3_time: "10 - 45分",
                 slide2_m3_title: "ワーク 1：NotebookLM",
-                slide2_m3_desc: "JLPT教材を個人用問題バンクデータにデジタル化するプロセス。",
+                slide2_m3_desc: "JLPT教材を問題バンクとしてデジタル化する実践。",
                 slide2_m4_time: "45 - 85分",
                 slide2_m4_title: "ワーク 2：Gemini Gems",
-                slide2_m4_desc: "Google Docsに準拠した試験作成用プロフェッショナルアシスタントの設定。",
-                slide2_m5_time: "85分+",
+                slide2_m4_desc: "Googleドキュメント対応 of 試験作成用カスタムアシスタントの構築。",
+                slide2_m5_time: "85 - 95+分",
                 slide2_m5_title: "Q&A＆クロージング",
                 slide2_m5_desc: "レイアウトエラーの解決とアクションプランの確定。",
 
                 slide3_title: "教育におけるAI活用の必要性",
                 slide3_c1_title: "社会的トレンド＆Sun*の方向性",
-                slide3_c2_title: "応用の重点",
+                slide3_c2_title: "主な適用分野",
 
                 slide4_title: "ツールの仕組み＆PACKEDプロンプト思考",
                 slide4_c1_title: "中核となる2つのツール",
@@ -1021,6 +1024,7 @@
                 slide4_k: "参照用のソースデータ",
                 slide4_ed: "インタラクションと出力形式",
 
+                slide5_module: "MODULE 3 - 実践1",
                 slide5_title: "NotebookLMを活用した問題バンクのデジタル化プロセス",
                 slide5_s1_title: "Notebookの新規作成",
                 slide5_s1_desc: "notebooklm.google.com にアクセスし、新しいワークスペースを作成します。",
@@ -1032,16 +1036,18 @@
                 slide6_flow_title: "実践1：アクティビティフロー（35分）",
                 slide6_step1_badge: "01. デモ (10分)",
                 slide6_step2_badge: "02. グループワーク (15分)",
-                slide6_step3_badge: "03. メインルーム (10分)",
+                slide6_step3_badge: "03. 共有とトラブルシューティング (10分)",
                 slide6_flow_step1_title: "講師によるデモ",
                 slide6_flow_step2_title: "グループワーク",
                 slide6_flow_step3_title: "共有とトラブルシューティング",
                 slide6_btn_drive: "JLPT教材フォルダ (Google Drive)",
+                slide6_step2_top: "メインの実践セッション",
 
                 slide6_title: "リソース：標準化された抽出用プロンプト集",
                 slide6_t1: "語彙（Vocabulary）",
                 slide6_t2: "文法（Grammar）",
-
+                
+                slide7_module: "MODULE 4 - 実践2",
                 slide7_title: "連携型ダブルGemsアーキテクチャ（Dual Gems Architecture）",
                 slide7_g1_badge: "ステップ 1",
                 slide7_g1_title: "GEM 1：問題作成アシスタント",
@@ -1058,18 +1064,21 @@
                 slide9_flow_step1_title: "講師によるデモ",
                 slide9_flow_step2_title: "グループワーク",
                 slide9_flow_step3_title: "発表と最適化",
+                slide9_step2_top: "メインの実践セッション",
 
                 slide8_title: "Instructions：Gem 1（問題作成＆検証）",
-                slide9_title: "Instructions：Gem 2（ドキュメント書式設定）",
+                slide9_title: "Instructions：Gem 2（ドキュメント書き出し用）",
 
-                slide10_title: "Gem 1＆Gem 2 of 運用プロンプト",
+                btn_english: "English (おすすめ)",
+
+                slide10_title: "Gem 1＆Gem 2の運用プロンプト",
                 slide10_c1_title: "ケース 1：基本語彙",
-                slide10_c1_val: "リンクされたN3問題バンクから、漢字読み、表記、文脈規定の各形式でそれぞれ5問ずつ作成してください。",
+                slide10_c1_val: "N3の漢字読み、表記、文脈規定の各形式でそれぞれ5問ずつ作成してください。",
                 slide10_c2_title: "ケース 2：応用語彙",
-                slide10_c2_val: "リンクされたN3問題バンクから、言い換え類義、用法の各形式でそれぞれ5問ずつ作成してください。",
+                slide10_c2_val: "N3の言い換え類義、用法の各形式でそれぞれ5問ずつ作成してください。",
                 slide10_c3_title: "ケース 3：文法項目",
-                slide10_c3_val: "リンクされたN3問題バンクから、文法形式の判断、文の組み立ての各形式でそれぞれ5問ずつ作成してください。",
-                slide10_g2_label: "Gem 2 of 実行プロンプト（Docs作成）:",
+                slide10_c3_val: "N3の文法形式の判断、文の組み立ての各形式でそれぞれ5問ずつ作成してください。",
+                slide10_g2_label: "Gem 2の実行プロンプト（Docs作成）:",
                 slide10_g2_desc: "以下のデータでGoogleドキュメントのテストを作成してください。\n【データ】",
 
                 slide11_title: "まとめ＆次のステップへの行動指針",
@@ -1077,7 +1086,7 @@
                 slide11_c3_title: "ナレッジ共有の推進",
                 slide11_qa: "抽出精度の課題、ドキュメントのレイアウト修正、またはPDFのOCRエラーへの対応など、何でもご質問ください。",
 
-                slide14_title: "ホームワーク＆実践的アクション",
+                slide14_title: "ホームワーク＆実践 Activity",
                 slide14_desc: "日々の業務効率を最大化するために、以下2つのアプローチのいずれかを選択して実践してください。",
                 slide14_optA_title: "JLPT模擬試験の完全作成",
                 slide14_optB_title: "生産性の特定と最適化",
@@ -1112,7 +1121,7 @@
                 "Hướng dẫn hoạt động về nhà. Khích lệ tinh thần chủ động ứng dụng AI của các thầy cô thông qua 2 lựa chọn: số hóa bài thi thực tế hoặc chủ động đề xuất ý tưởng tối ưu hóa các đầu việc hàng ngày bằng AI để nâng cao hiệu suất dạy học."
             ],
             ja: [
-                "Sun*の講師陣の皆様、本ワークショップへようこそ！導入時のマインドセットとして、「AIは人を代替しないが、AIを使いこなす人が、使いこなせない人を代替する」という時代の要性を伝え、動機付けを行います。",
+                "Sun*の講師陣の皆様、本ワークショップへようこそ！導入時のマインドセットとして、「AIは人を代替しないが、AIを使いこなす人が、使いこなせない人を代替する」という時代の要請を伝え、強い動機付けを行います。",
                 "各ワークの所要時間 & アジェンダの流れを事前に説明し、ブレイクアウトルームでのグループ学習の目安を提示します。",
                 "手作業でテストを作成すると2〜3時間かける現状を、AI活用によって15〜20分の検証作業だけに縮小できるメリットを説明。「Prompt -> Verify -> Edit」へのマインド転換を強調します。",
                 "NotebookLM（ソースデータに忠実、ハルシネーションの排除）とGemini Gems（一貫した手順実行）のそれぞれの利点を説明。PACKEDの基本構造にも触れます。",
@@ -1144,7 +1153,9 @@
         let selectedGem2Lang = 'en';
 
         // Helper to solve Triple Backticks escape issues dynamically at runtime
+        // Safety guard added: returns empty string if text is undefined/null
         function resolveBackticks(text) {
+            if (!text) return '';
             return text.replace(/___TB___/g, '`' + '`' + '`');
         }
 
@@ -1306,7 +1317,7 @@
                 slide6_flow_step2_desc.innerText = "Học viên vào phòng 3-4 người để cùng hỗ trợ, chia sẻ lẫn nhau. Tải giáo trình JLPT bất kỳ muốn thử nghiệm từ Thư mục Tài nguyên bên dưới, dán prompt trích xuất và tạo Ngân hàng đề riêng.";
                 slide6_flow_step3_desc.innerText = "Trở lại phòng họp lớn. Đại diện 1-2 nhóm chia sẻ thành quả nguồn dữ liệu đã số hóa. Giảng viên giải đáp khó khăn và chốt quy tắc đặt tên.";
 
-                // Translating Slide 9 NEW
+                // Translating Slide 9
                 slide9_sop_title.innerHTML = '<span class="text-cyan-400 mr-2">08.</span> Quy trình thực thi 4 bước (Step-by-Step SOP)';
                 slide9_sop_desc.innerText = "Cách phối hợp nhịp nhàng giữa Gem 1 và Gem 2 để xuất đề chuẩn chỉnh.";
                 slide9_step1_badge.innerText = "BƯỚC 1";
@@ -1353,44 +1364,44 @@
                 res_desc.innerText = "Giảng viên có thể sao chép nhanh các tài nguyên này bất kỳ lúc nào trong lúc demo:";
             } else {
                 list3_1.innerHTML = '<li>生成AI（<strong class="text-cyan-400">GenAI</strong>）の台頭により、講師の役割は知識伝達者から学習体験の「デザイナー」へとシフトしています。</li>' +
-                                     '<li>Sun*の<strong class="text-cyan-400">「AI-Ready」</strong>方針：手作業を極限まで削減し、メンバー全体のデジタル能力をボトムアップします。</li>';
+                                     '<li>Sun*の<strong class="text-cyan-400">「AI-Ready」</strong>方針：手作業を極限まで削減し、メンバー全体のデジタル能力を底上げします。</li>';
                 list3_2.innerHTML = '<li>教育におけるAIの応用例：クイックテストの作成、スライド作成、学生の成績・進捗管理。</li>' +
-                                     '<li class="text-cyan-300 font-semibold">本日の重要目標：問題集からの抽出（データベース化）から最終的な試験出力までをシームレスに自動化すること。</li>';
-                blockWarn.innerHTML = '<strong>最大の障壁：</strong> 従来の仕事のやり方の変革。全てをゼロから自作する習慣から、協働プロセス（<strong>プロンプト作成 &rarr; 整合性の検証(Verify) &rarr; 微調整(Edit)</strong>）への変革が必要です。';
-                slide4_c1.innerHTML = '<p><strong>NotebookLM:</strong> アップロードされたソース（PDFやGoogle Docsなど）に完全に基づき稼働する優秀なアシスタント。ハルシネーション（嘘の出力）を排除できます。</p>' +
-                                       '<p><strong>Gemini Gems:</strong> あらかじめ指示書（Instructions）を組み込み、特定タスクを何度でも高い整合性で再現できる専用カスタムAI機能。</p>';
+                                     '<li class="text-cyan-300 font-semibold">本日の重点：問題集からの抽出（データベース化）から最終的な試験出力までの一括自動化。</li>';
+                blockWarn.innerHTML = '<strong>最大の課題：</strong> 従来の業務プロセスの変革です。すべてをゼロから自作する習慣から、AIとの協働プロセス（<strong>プロンプト作成 &rarr; 検証(Verify) &rarr; 微調整(Edit)</strong>）へのマインド転換が必要です。';
+                slide4_c1.innerHTML = '<p><strong>NotebookLM:</strong> アップロードされたソース（PDFやGoogle Docsなど）に完全に基づき稼働する優秀なアシスタント。ハルシネーション（事実に基づかない回答）を完全に排除します。</p>' +
+                                       '<p><strong>Gemini Gems:</strong> あらかじめ指示書（Instructions）を組み込み、特定タスクを何度でも高い整合性で再現実行できる専用カスタムAI（プロンプトのテンプレート化）。</p>';
                 
                 slide5_ex.innerHTML = '例：<code class="bg-slate-900 px-2 py-1 rounded text-slate-300">[Bank]_N3_漢字読み_1</code>';
                 
                 slide5_step3_title.innerText = "抽出プロンプトの送信";
-                slide5_step3_desc.innerHTML = "標準化されたYAMLプロンプト（<strong>スライド7</strong>にあります）をコピーしてチャットに入力します。<br><span class='text-amber-300 font-semibold text-[10px] block mt-1'><i class='fa-solid fa-triangle-exclamation mr-1'></i> 注意：プロンプト内で抽出したい設問形式を修正する必要があります</span>";
+                slide5_step3_desc.innerHTML = "標準化されたYAMLプロンプト（<strong>スライド7</strong>にあります）をコピーしてチャットに入力します。<br><span class='text-amber-300 font-semibold text-[10px] block mt-1'><i class='fa-solid fa-triangle-exclamation mr-1'></i> 注意：プロンプト内の抽出対象（問題形式）を適宜修正して送信してください。</span>";
                 slide5_step4_title.innerText = "保存と新規ソース追加";
-                slide5_step4_desc.innerText = "回答をコピーし、新規ソース追加（Add source -> Paste text）を選択して貼り付け、標準規則に従って命名します。";
+                slide5_step4_desc.innerText = "回答をコピーし、「Add Source」→「Paste text」を選択して貼り付け、規定の命名規則に従ってソース名を変更します。";
 
-                slide6_flow_step1_desc.innerText = "講師による操作実演：NotebookLMを開き、教材PDFをロード、抽出用プロンプトを実行し、応答を新しい「ソース」として再登録します。";
-                slide6_flow_step2_desc.innerText = "3〜4名のルームに分かれて互いにサポートし合います。配布されたGoogle Driveから好きな教材をダウンロードしてグループで協力し合いながら進めるよう促します。";
-                slide6_flow_step3_desc.innerText = "メインルームに戻り、1〜2チームが作成した問題バンクのソースを共有します。発生した課題への対応と、ソース命名規則の合意を行います。";
+                slide6_flow_step1_desc.innerText = "講師によるデモンストレーション：NotebookLMを起動し、教材PDFをアップロード。抽出用プロンプトを入力し、得られた回答を新しい「テキストソース」として再登録する一連の流れを実演します。";
+                slide6_flow_step2_desc.innerText = "ブレイクアウトルーム（3〜4名）に分かれ、お互いにサポートしながら実践します。配布用のGoogle Driveから任意の教材（PDF）をダウンロードし、抽出プロンプトを実行して独自の問題バンクを作成します。";
+                slide6_flow_step3_desc.innerText = "メインルームに戻り、代表して1〜2グループの成果物を共有します。エラーの解消やトラブルシューティングを行い、命名規則の重要性を再確認します。";
 
-                // Translating Slide 9 NEW
-                slide9_sop_title.innerHTML = '<span class="text-cyan-400 mr-2">08.</span> 実際の4ステップ運用ルール（Step-by-Step SOP）';
-                slide9_sop_desc.innerText = "Gem 1とGem 2をシームレスに連携させ、綺麗な試験ファイルをGoogle Docsに出力する流れ。";
+                // Translating Slide 9
+                slide9_sop_title.innerHTML = '<span class="text-cyan-400 mr-2">09.</span> 実践の4ステップ運用フロー（Step-by-Step SOP）';
+                slide9_sop_desc.innerText = "Gem 1とGem 2を連携させ、レイアウトの崩れない試験用Googleドキュメントを作成・出力する手順です。";
                 slide9_step1_badge.innerText = "ステップ 1";
                 slide9_step1_title.innerText = "Gem 1の作成とナレッジ接続";
-                slide9_step1_desc.innerText = "指示書に従ってGem 1を設定し、NotebookLMを問題の参照先として連携します。";
+                slide9_step1_desc.innerText = "Gem 1（問題作成用）をInstructionsで作成し、NotebookLMの問題バンク（ナレッジ）をソースとして連携します。";
                 slide9_step2_badge.innerText = "ステップ 2";
-                slide9_step2_title.innerText = "問題の生データ生成と確認";
-                slide9_step2_desc.innerText = "運用コマンド（Case 1, 2, 3）を実行。生データを検証（Verify）します。";
+                slide9_step2_title.innerText = "生テストデータの生成と人間による検証";
+                slide9_step2_desc.innerText = "Gem 1に対して運用コマンド（Case 1, 2, 3）を実行し、生成された問題の質と正確性を人間が検証（Verify）します。";
                 slide9_step3_badge.innerText = "ステップ 3";
-                slide9_step3_title.innerText = "Gem 2（Docs用整形）の作成";
-                slide9_step3_desc.innerText = "指示書に従ってGem 2を作成。Google Docsで表崩れを防ぐHTML仕様を定義します。";
+                slide9_step3_title.innerText = "Gem 2（Docs整形用）の作成";
+                slide9_step3_desc.innerText = "Gem 2（ドキュメント書き出し用）を作成。Google Docs上で表（テーブル）が崩れないよう、HTML構造を定義します。";
                 slide9_step4_badge.innerText = "ステップ 4";
-                slide9_step4_title.innerText = "整形出力とペースト";
-                slide9_step4_desc.innerText = "Gem 1の生データをGem 2に渡し、出力された高圧縮テーブルをGoogle Docsに直接貼り付けます。";
-                slide9_tip.innerHTML = '<i class="fa-solid fa-lightbulb"></i> <span><strong>運用テクニック:</strong> Gemini 1で完全に検証してからGem 2へ渡すことで、何度もGoogle Docsをフォーマットし直す時間を削減できます！</span>';
+                slide9_step4_title.innerText = "出力された表データのコピー＆ペースト";
+                slide9_step4_desc.innerText = "Gem 1で確定した生データをGem 2に投入し、出力された高圧縮なテーブル構造のテキストをGoogle Docsへ直接ペーストします。";
+                slide9_tip.innerHTML = '<i class="fa-solid fa-lightbulb"></i> <span><strong>実践テクニック:</strong> 必ずGem 1で問題の内容を検証（修正・承認）してからGem 2に渡してください。これにより、Googleドキュメント上での無駄な修正作業を極限まで削減できます！</span>';
 
-                slide9_flow_step1_desc.innerText = "講師による一連の動作デモ：NotebookLMと連携したGem 1（設問作成）の構築・実行 -> 問題の確認 -> Gem 2（フォーマット整形）の実行 -> 整形された表データをGoogle Docsに一発ペースト。";
-                slide9_flow_step2_desc.innerText = "グループワークに移行。各自で2つのGemsをセットアップ、運用プロンプト（Case 1, 2, 3）を実行し、実際にGoogleドキュメントを1件作成します。";
-                slide9_flow_step3_desc.innerText = "メインルームに戻り、作成したGoogle Docsの共有リンクをチャット欄に共有します。表崩れや不要なメタデータの混入などの問題を講師がデバッグします。";
+                slide9_flow_step1_desc.innerText = "講師によるデモ：Gem 1の作成とNotebookLM of 接続、運用コマンドによる問題生成、人間によるレビュー、Gem 2へのデータ投入、そしてGoogle Docsへの貼り付けまでの一連の流れを実演します。";
+                slide9_flow_step2_desc.innerText = "ブレイクアウトルームでの実践：各自で2つのGems（Gem 1 & Gem 2）をセットアップし、運用プロンプトを実行。実際にGoogleドキュメントへエクスポートしてテストファイルを1部作成します。";
+                slide9_flow_step3_desc.innerText = "成果物の共有：メインルームに戻り、完成したGoogleドキュメントの共有リンクをチャット欄に貼り付けます。表崩れや不要なメタデータの混入がないか、講師がレビューとデバッグを行います。";
 
                 slide7_g1_sub.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-cyan-400 mr-1"></i> 生データと解答を出力し、講師によるチェック（検証）を受けます。';
                 slide7_g2_sub.innerHTML = '<i class="fa-solid fa-file-word text-indigo-400 mr-1"></i> Google Docsに直接貼り付け可能な、余白の狭い高圧縮HTMLテーブルを作成します。';
@@ -1483,7 +1494,7 @@
 
         function switchPromptLanguage(lang) {
             selectedPromptLang = lang;
-            ['ja', 'vi', 'en'].forEach(l => {
+            ['ja', 'vi'].forEach(l => {
                 const btn = document.getElementById('lang-' + l);
                 if (l === lang) {
                     btn.className = "px-2 py-1 rounded text-[10px] font-bold bg-cyan-500 text-slate-900 transition-all";
@@ -1590,14 +1601,14 @@
         // Copy operational case prompts for Slide 12 in multiple languages
         function copyCasePrompt(caseNum) {
             const viCases = [
-                "Hãy tạo cho tôi 5 câu hỏi ở mỗi dạng bài: 漢字読み, 表記, 文脈規定 từ ngân hàng đề N3 đã liên kết.",
-                "Hãy tạo cho tôi 5 câu hỏi ở mỗi dạng bài: 言い換え類義, 用法 từ ngân hàng đề N3 đã liên kết.",
-                "Hãy tạo cho tôi 5 câu hỏi ở mỗi dạng bài: 文 pháp形式の判断, 文の組み立て từ ngân hàng đề N3 đã liên kết."
+                "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 漢字読み, 表記, 文脈規定.",
+                "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 言い換え類義, 用法.",
+                "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 文法形式の判断, 文の組み立て."
             ];
             const jaCases = [
-                "リンクされたN3問題バンクから、漢字読み、表記、文脈規定の各形式でそれぞれ5問ずつ作成してください。",
-                "リンクされたN3問題バンクから、言い換え類義、用法の各形式でそれぞれ5問ずつ作成してください。",
-                "リンクされたN3問題バンクから、文法形式の判断、文の組み立ての各形式でそれぞれ5問ずつ作成してください。"
+                "N3の漢字読み、表記、文脈規定の各形式でそれぞれ5問ずつ作成してください。",
+                "N3の言い換え類義、用法の各形式でそれぞれ5問ずつ作成してください。",
+                "N3の文法形式の判断、文の組み立ての各形式でそれぞれ5問ずつ作成してください。"
             ];
 
             const text = globalSlideLang === 'vi' ? viCases[caseNum - 1] : jaCases[caseNum - 1];
