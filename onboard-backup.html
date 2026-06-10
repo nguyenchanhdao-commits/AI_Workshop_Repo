@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI JLPT Workshop Slides - Sun*</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae2fd',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0b1329',
+                            800: '#1c2541',
+                            700: '#3a506b',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            zoom: 1.25;
+        }
+        .slide {
+            display: none;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+            opacity: 0;
+            transform: scale(0.98) translateY(10px);
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        /* Custom scrollbars for code sections */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.3);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(14, 165, 233, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(14, 165, 233, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans h-full overflow-hidden flex flex-col justify-between">
+
+    <!-- Background glow elements -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,0.15),transparent_50%)] pointer-events-none"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(99,102,241,0.1),transparent_50%)] pointer-events-none"></div>
+
+    <!-- Top Progress Bar -->
+    <div class="w-full bg-slate-800 h-1.5 relative z-50">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-500 to-indigo-500 transition-all duration-300 w-0"></div>
+    </div>
+
+    <header class="px-6 py-4 flex justify-between items-center bg-dark-900/80 backdrop-blur-md border-b border-slate-800/60 relative z-40">
+        <div class="flex items-center space-x-3">
+            <span class="bg-gradient-to-r from-cyan-500 to-indigo-500 text-white font-extrabold px-3 py-1 rounded text-sm tracking-widest shadow-md shadow-cyan-500/10">SUN* AI</span>
+            <div class="h-5 w-px bg-slate-700"></div>
+            <span class="text-xs text-slate-400 font-medium tracking-wide uppercase hidden sm:inline" id="header-subtitle" data-translate-key="header_subtitle">JLPT Assessment Workshop</span>
+        </div>
+        
+        <div class="flex items-center space-x-2">
+            <!-- Global Slide Deck Language Switcher -->
+            <div class="flex bg-slate-800/80 p-1 rounded-lg border border-slate-700/60 text-xs font-mono mr-2">
+                <button onclick="setGlobalLanguage('vi')" id="btn-glob-vi" class="px-3 py-1 rounded-md font-bold transition-all bg-gradient-to-r from-cyan-500 to-indigo-500 text-white">VI</button>
+                <button onclick="setGlobalLanguage('ja')" id="btn-glob-ja" class="px-3 py-1 rounded-md font-bold transition-all text-slate-400 hover:text-slate-200">JA</button>
+            </div>
+
+            <div class="text-sm font-semibold bg-slate-800/80 px-4 py-1.5 rounded-full border border-slate-700 text-slate-300 mr-2" id="slide-indicator">
+                Slide 1 / 15
+            </div>
+
+            <button onclick="toggleResourcesDrawer()" class="p-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 rounded-lg transition-all" title="Bảng tra cứu nhanh Prompts">
+                <i class="fa-solid fa-folder-open text-lg"></i>
+            </button>
+            <button onclick="toggleHelpModal()" class="p-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 rounded-lg transition-all" title="Phím tắt trợ giúp">
+                <i class="fa-solid fa-circle-question text-lg"></i>
+            </button>
+            <button onclick="toggleFullscreen()" class="p-2 text-slate-300 hover:text-cyan-400 hover:bg-slate-800/80 rounded-lg transition-all" title="Toàn màn hình">
+                <i class="fa-solid fa-expand text-lg"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-4 md:p-8 relative overflow-hidden">
+        
+        <!-- SLIDE 1: Title Slide -->
+        <section class="slide active flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-8">
+            <div class="space-y-3">
+                <p class="text-cyan-400 tracking-widest uppercase font-semibold text-sm animate-pulse-slow" data-translate-key="slide1_sub">WORKSHOP ĐÀO TẠO NÂNG CAO</p>
+                <h1 class="text-3xl md:text-5xl font-extrabold leading-tight tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-cyan-300" data-translate-key="slide1_title">
+                    ỨNG DỤNG AI THIẾT KẾ NGÂN HÀNG ĐỀ & ĐỀ THI JLPT TỰ ĐỘNG
+                </h1>
+                <p class="text-slate-400 text-lg md:text-xl font-light" data-translate-key="slide1_desc">Tối ưu quy trình khảo thí kỹ năng ngôn ngữ với NotebookLM & Gemini Gems</p>
+            </div>
+            
+            <div class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-full mx-auto"></div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-xs md:text-sm text-slate-400 max-w-xl mx-auto pt-4">
+                <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/50">
+                    <i class="fa-regular fa-clock text-cyan-400 text-lg mb-2 block"></i>
+                    <span class="block text-slate-200 font-medium" data-translate-key="slide1_meta1_title">Thời lượng</span>
+                    <span data-translate-key="slide1_meta1_val">90 - 120 Phút</span>
+                </div>
+                <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/50">
+                    <i class="fa-solid fa-users text-cyan-400 text-lg mb-2 block"></i>
+                    <span class="block text-slate-200 font-medium" data-translate-key="slide1_meta2_title">Đối tượng</span>
+                    <span data-translate-key="slide1_meta2_val">Giảng viên Sun*</span>
+                </div>
+                <div class="bg-slate-800/40 p-3 rounded-xl border border-slate-700/50 col-span-2 md:col-span-1">
+                    <i class="fa-solid fa-laptop-code text-cyan-400 text-lg mb-2 block"></i>
+                    <span class="block text-slate-200 font-medium" data-translate-key="slide1_meta3_title">Công cụ</span>
+                    <span>NotebookLM & Gemini</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: Agenda & Timeline -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <h2 class="text-2xl md:text-3xl font-bold text-white"><span class="text-cyan-400 mr-2">01.</span><span data-translate-key="slide2_title">Khung Chương Trình & Phân Bổ Thời Gian</span></h2>
+                <p class="text-slate-400 text-sm" data-translate-key="slide2_desc">Tiến trình hoạt động cụ thể giúp kiểm soát thời lượng buổi workshop.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 pt-4">
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase" data-translate-key="slide2_m1_time">Phút 00 - 05</span>
+                        <h3 class="text-base font-semibold text-slate-200 mt-1 mb-2" data-translate-key="slide2_m1_title">Giới thiệu & Cấp thiết</h3>
+                    </div>
+                    <p class="text-xs text-slate-400" data-translate-key="slide2_m1_desc">Xu hướng xã hội và mục tiêu "AI-Ready" của Sun*.</p>
+                </div>
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase" data-translate-key="slide2_m2_time">Phút 05 - 10</span>
+                        <h3 class="text-base font-semibold text-slate-200 mt-1 mb-2" data-translate-key="slide2_m2_title">Công cụ & PACKED</h3>
+                    </div>
+                    <p class="text-xs text-slate-400" data-translate-key="slide2_m2_desc">Định hình tư duy thiết kế prompt với bộ khung chuẩn hóa.</p>
+                </div>
+                <div class="bg-slate-800/40 p-5 rounded-2xl border border-cyan-900/50 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-cyan-500 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-bl">HOT</div>
+                    <div>
+                        <span class="text-xs font-bold text-cyan-400 uppercase" data-translate-key="slide2_m3_time">Phút 10 - 45</span>
+                        <h3 class="text-base font-semibold text-white mt-1 mb-2" data-translate-key="slide2_m3_title">Thực hành 1: NotebookLM</h3>
+                    </div>
+                    <p class="text-xs text-slate-400" data-translate-key="slide2_m3_desc">Số hóa sách tài liệu JLPT thành ngân hàng dữ liệu câu hỏi cá nhân.</p>
+                </div>
+                <div class="bg-slate-800/40 p-5 rounded-2xl border border-indigo-900/50 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-indigo-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-bl">HOT</div>
+                    <div>
+                        <span class="text-xs font-bold text-indigo-400 uppercase" data-translate-key="slide2_m4_time">Phút 45 - 85</span>
+                        <h3 class="text-base font-semibold text-white mt-1 mb-2" data-translate-key="slide2_m4_title">Thực hành 2: Gemini Gems</h3>
+                    </div>
+                    <p class="text-xs text-slate-400" data-translate-key="slide2_m4_desc">Thiết lập 2 trợ lý ảo chuyên nghiệp sinh đề thi chuẩn Google Docs.</p>
+                </div>
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase" data-translate-key="slide2_m5_time">Phút 85 - 95+</span>
+                        <h3 class="text-base font-semibold text-slate-200 mt-1 mb-2" data-translate-key="slide2_m5_title">Q&A & Đóng gói</h3>
+                    </div>
+                    <p class="text-xs text-slate-400" data-translate-key="slide2_m5_desc">Khắc phục các lỗi định dạng và hoàn thành mục tiêu.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: Module 1 - Core Values -->
+        <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 1</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide3_title">Tính cấp thiết của AI trong đào tạo</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+                <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center space-x-3 text-cyan-400">
+                        <i class="fa-solid fa-lightbulb text-xl"></i>
+                        <h3 class="text-lg font-semibold text-white" data-translate-key="slide3_c1_title">Xu hướng & Định hướng Sun*</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-300 list-disc pl-5" id="slide3_c1_list">
+                    </ul>
+                </div>
+                
+                <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center space-x-3 text-cyan-400">
+                        <i class="fa-solid fa-compass-drafting text-xl"></i>
+                        <h3 class="text-lg font-semibold text-white" data-translate-key="slide3_c2_title">Trọng tâm ứng dụng</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-300 list-disc pl-5" id="slide3_c2_list">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-amber-900/20 border border-amber-500/20 p-4 rounded-xl text-xs md:text-sm text-amber-300 flex items-start space-x-3">
+                <i class="fa-solid fa-circle-exclamation mt-0.5 text-base"></i>
+                <p id="slide3_warn"><strong>Thách thức lớn nhất:</strong> Thay đổi thói quen làm việc...</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: Module 2 - Tool & PACKED Framework -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 2</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide4_title">Cơ chế Công Cụ & Tư Duy Prompt PACKED</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-4">
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 md:col-span-4 space-y-4">
+                    <h3 class="text-base font-semibold text-cyan-400 border-b border-slate-700/60 pb-2"><i class="fa-solid fa-cubes mr-2"></i><span data-translate-key="slide4_c1_title">Bộ đôi công cụ cốt lõi</span></h3>
+                    <div class="space-y-3 text-xs md:text-sm text-slate-300" id="slide4_c1_desc">
+                    </div>
+                </div>
+
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 md:col-span-8 space-y-4">
+                    <div class="flex justify-between items-center border-b border-slate-700/60 pb-2">
+                        <h3 class="text-base font-semibold text-cyan-400"><i class="fa-solid fa-shapes mr-2"></i><span data-translate-key="slide4_c2_title">Khung thiết kế Instructions: PACKED</span></h3>
+                        <span class="text-[10px] text-amber-300 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20" data-translate-key="slide4_c2_badge">LƯU Ý: KHÔNG CẦN CỨNG NHẮC VIẾT ĐÚNG TIÊU ĐỀ</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-center">
+                            <span class="text-xl font-black text-cyan-400 block">P</span>
+                            <span class="text-xs font-semibold block text-slate-200 mt-1">Persona</span>
+                            <p class="text-[10px] text-slate-400 mt-1" data-translate-key="slide4_p">Vai trò/hình mẫu của AI</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-center">
+                            <span class="text-xl font-black text-cyan-400 block">A</span>
+                            <span class="text-xs font-semibold block text-slate-200 mt-1">Assignment</span>
+                            <p class="text-[10px] text-slate-400 mt-1" data-translate-key="slide4_a">Nhiệm vụ, quy trình hành động</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-center">
+                            <span class="text-xl font-black text-cyan-400 block">C</span>
+                            <span class="text-xs font-semibold block text-slate-200 mt-1">Context</span>
+                            <p class="text-[10px] text-slate-400 mt-1" data-translate-key="slide4_c">Ràng buộc & đối tượng đích</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-center">
+                            <span class="text-xl font-black text-cyan-400 block">K</span>
+                            <span class="text-xs font-semibold block text-slate-200 mt-1">Knowledge</span>
+                            <p class="text-[10px] text-slate-400 mt-1" data-translate-key="slide4_k">Dữ liệu nguồn tham chiếu</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-center">
+                            <span class="text-xl font-black text-cyan-400 block">ED</span>
+                            <span class="text-xs font-semibold block text-slate-200 mt-1">Engage</span>
+                            <p class="text-[10px] text-slate-400 mt-1" data-translate-key="slide4_ed">Tương tác và cấu trúc đầu ra</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: Module 3 - NotebookLM SOP -->
+        <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400" data-translate-key="slide5_module">MODULE 3 - THỰC HÀNH 1</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide5_title">Quy trình Số hóa Ngân hàng đề với NotebookLM</h2>
+            </div>
+
+            <!-- Visual Flow Steps -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4">
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 relative">
+                    <span class="absolute -top-3 -left-2 bg-cyan-500 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow">01</span>
+                    <h3 class="text-sm font-bold text-slate-200 mt-2 mb-1" data-translate-key="slide5_s1_title">Mở & Tạo Notebook</h3>
+                    <p class="text-xs text-slate-400" data-translate-key="slide5_s1_desc">Truy cập <code class="text-cyan-400 text-[10px]">notebooklm.google.com</code>, tạo không gian làm việc mới.</p>
+                </div>
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 relative">
+                    <span class="absolute -top-3 -left-2 bg-cyan-500 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow">02</span>
+                    <h3 class="text-sm font-bold text-slate-200 mt-2 mb-1" data-translate-key="slide5_s2_title">Nạp Dữ Liệu Nguồn</h3>
+                    <p class="text-xs text-slate-400" data-translate-key="slide5_s2_desc">Chọn <strong>Add Source</strong> và tải lên file PDF sách JLPT (N3/N2) làm cơ sở tham chiếu.</p>
+                </div>
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 relative">
+                    <span class="absolute -top-3 -left-2 bg-cyan-500 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow">03</span>
+                    <h3 class="text-sm font-bold text-slate-200 mt-2 mb-1" id="slide5_step3_title">Gửi Prompt Trích xuất</h3>
+                    <p class="text-xs text-slate-400" id="slide5_step3_desc">Dán bộ prompt YAML chuẩn hóa (được cấp ở slide 7) vào khung chat.</p>
+                </div>
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 relative">
+                    <span class="absolute -top-3 -left-2 bg-cyan-500 text-slate-900 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shadow">04</span>
+                    <h3 class="text-sm font-bold text-slate-200 mt-2 mb-1" id="slide5_step4_title">Lưu & Tạo Nguồn Đề</h3>
+                    <p class="text-xs text-slate-400" id="slide5_step4_desc">Bấm nút Copy câu trả lời, chọn Add Source -> Paste text, dán nội dung vào và đổi tên theo chuẩn.</p>
+                </div>
+            </div>
+
+            <!-- Naming rule visualizer -->
+            <div class="bg-slate-800/20 p-4 rounded-xl border border-slate-700/60 flex flex-wrap justify-between items-center gap-4 text-xs">
+                <span class="text-slate-300 font-semibold" data-translate-key="slide5_rule_title"><i class="fa-solid fa-signature text-cyan-400 mr-2"></i>Quy ước đặt tên (Nguồn Đề):</span>
+                <code class="bg-slate-900 px-3 py-1.5 rounded text-cyan-400 border border-slate-800 font-mono">[Bank]_【Level】_【Question type】_[Increment Index]</code>
+                <span class="text-slate-400" id="slide5_rule_ex">Ví dụ: <code class="bg-slate-900 px-2 py-1 rounded text-slate-300">[Bank]_N3_漢字読み_1</code></span>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: Module 3 - Activity Flow -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 3 - TIMELINE</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide6_flow_title">Thực Hành 1: Tiến Trình Hoạt Động (35 Phút)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center space-x-3 text-cyan-400">
+                            <i class="fa-solid fa-chalkboard-user text-2xl"></i>
+                            <span class="text-xs font-bold text-slate-500 uppercase" data-translate-key="slide6_step1_badge">01. DEMO (10 Phút)</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mt-2" data-translate-key="slide6_flow_step1_title">Giảng Viên Hướng Dẫn</h3>
+                        <p class="text-xs text-slate-300 mt-2 leading-relaxed" id="slide6_flow_step1_desc">Giảng viên thao tác trực quan: mở NotebookLM, tải lên tài liệu PDF, nhập Prompt trích xuất và biến đổi câu trả lời thành nguồn dữ liệu mới.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-800/40 p-6 rounded-2xl border border-cyan-500/20 flex flex-col justify-between space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-cyan-500 text-slate-900 text-[10px] font-bold px-3 py-1 rounded-bl" data-translate-key="slide6_step2_top">THỰC HÀNH CHÍNH</div>
+                    <div class="space-y-3 flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-3 text-cyan-400">
+                                <i class="fa-solid fa-users-gear text-2xl"></i>
+                                <span class="text-xs font-bold text-cyan-400 uppercase" data-translate-key="slide6_step2_badge">02. BREAKOUT ROOM (15 Phút)</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-white mt-2" data-translate-key="slide6_flow_step2_title">Học Viên Thực Hành Nhóm</h3>
+                            <p class="text-xs text-slate-300 mt-2 leading-relaxed" id="slide6_flow_step2_desc">Học viên vào phòng 3-4 người hỗ trợ lẫn nhau, tải sách JLPT muốn thử nghiệm tại link tài nguyên và dán prompt để tạo Ngân hàng đề.</p>
+                        </div>
+                        <div class="pt-2">
+                            <a href="https://drive.google.com/drive/folders/1PfAQCfqQt3K6QZ46uJtrq3yMPt2RSBeM" target="_blank" class="inline-flex items-center space-x-2 bg-cyan-600/30 hover:bg-cyan-500 hover:text-slate-900 border border-cyan-500/30 text-cyan-300 px-3 py-1.5 rounded-lg text-xs font-medium transition-all w-full justify-center">
+                                <i class="fa-solid fa-folder-open"></i>
+                                <span data-translate-key="slide6_btn_drive">Thư mục Sách JLPT (Google Drive)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center space-x-3 text-cyan-400">
+                            <i class="fa-solid fa-comments text-2xl"></i>
+                            <span class="text-xs font-bold text-slate-500 uppercase" data-translate-key="slide6_step3_badge">03. MAIN ROOM (10 Phút)</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mt-2" data-translate-key="slide6_flow_step3_title">Chia Sẻ & Khắc Phục Lỗi</h3>
+                        <p class="text-xs text-slate-300 mt-2 leading-relaxed" id="slide6_flow_step3_desc">Trở lại phòng họp lớn. Đại diện 1-2 nhóm chia sẻ thành quả nguồn dữ liệu đã số hóa. Giảng viên giải đáp khó khăn và chốt quy tắc đặt tên.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: Module 3 - Interactive Prompts Copier -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-4 w-full">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="text-left">
+                    <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 3 RESOURCES</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-white" data-translate-key="slide6_title">Tài nguyên: Bộ Prompt Trích xuất Chuẩn hóa</h2>
+                </div>
+                <div class="flex bg-slate-800/80 p-1 rounded-lg border border-slate-700 text-xs">
+                    <button onclick="switchPromptType('vocab')" id="btn-prompt-vocab" class="px-3 py-1.5 rounded-md font-semibold bg-cyan-500 text-slate-900 transition-all" data-translate-key="slide6_t1">Từ Vựng (Vocabulary)</button>
+                    <button onclick="switchPromptType('grammar')" id="btn-prompt-grammar" class="px-3 py-1.5 rounded-md font-semibold text-slate-300 hover:text-white transition-all" data-translate-key="slide6_t2">Ngữ Pháp (Grammar)</button>
+                </div>
+            </div>
+
+            <!-- Interactive Copier Console -->
+            <div class="bg-slate-800/30 border border-slate-800 rounded-2xl flex flex-col h-[320px] md:h-[380px] overflow-hidden">
+                <div class="bg-slate-900/80 px-4 py-3 border-b border-slate-800 flex justify-between items-center text-xs">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                        <span class="text-slate-400 font-mono pl-2" id="prompt-file-name">vocabulary_extraction.yaml</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <!-- Language Toggles -->
+                        <div class="flex bg-slate-800 rounded-md p-0.5 border border-slate-700/60">
+                            <button onclick="switchPromptLanguage('ja')" id="lang-ja" class="px-2 py-1 rounded text-[10px] font-bold bg-cyan-500 text-slate-900 transition-all">JA</button>
+                            <button onclick="switchPromptLanguage('vi')" id="lang-vi" class="px-2 py-1 rounded text-[10px] font-bold text-slate-400 transition-all">VI</button>
+                        </div>
+                        <button onclick="copyCurrentPrompt()" class="bg-cyan-600/30 hover:bg-cyan-600 border border-cyan-500/30 text-cyan-300 hover:text-white px-3 py-1 rounded-md font-medium transition-all flex items-center space-x-1.5">
+                            <i class="fa-regular fa-copy"></i>
+                            <span data-translate-key="btn_copy">Sao chép</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Content Viewport -->
+                <div class="flex-grow overflow-auto p-4 bg-slate-900/40">
+                    <pre class="text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed select-all" id="prompt-display-area">...</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: Module 4 - Dual Gems Workflow (Architecture) -->
+        <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400" data-translate-key="slide7_module">MODULE 4 - THỰC HÀNH 2</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide7_title">Kiến Trúc Sinh Đề Liên Hoàn (Dual Gems Architecture)</h2>
+            </div>
+
+            <!-- Workflow Visual Chart -->
+            <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6">
+                
+                <!-- Gem 1 Box -->
+                <div class="bg-slate-900/60 border border-cyan-500/20 p-5 rounded-2xl w-full md:w-5/12 space-y-3 relative">
+                    <div class="absolute -top-3 left-4 bg-cyan-500 text-slate-900 font-bold px-2 py-0.5 rounded text-[10px]" data-translate-key="slide7_g1_badge">BƯỚC 1</div>
+                    <div class="flex items-center space-x-2 text-cyan-400 font-bold text-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <h3 data-translate-key="slide7_g1_title">GEM 1: Trợ lý Biên soạn</h3>
+                    </div>
+                    <p class="text-xs text-slate-400" data-translate-key="slide7_g1_desc">Liên kết cơ sở tri thức từ NotebookLM để chọn lọc và trộn ngẫu nhiên đề.</p>
+                    <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700/40 text-[11px] text-slate-300" id="slide7_g1_sub">
+                        <i class="fa-solid fa-arrow-right-to-bracket text-cyan-400 mr-1"></i> Xuất bản đề thô và đáp án để giảng viên thẩm định (Verify).
+                    </div>
+                </div>
+
+                <!-- Arrow Connector -->
+                <div class="flex flex-col items-center justify-center text-slate-500">
+                    <i class="fa-solid fa-circle-arrow-right text-3xl hidden md:block text-cyan-500/70 animate-pulse"></i>
+                    <i class="fa-solid fa-circle-arrow-down text-3xl md:hidden text-cyan-500/70 animate-pulse"></i>
+                    <span class="text-[10px] font-mono uppercase tracking-widest mt-1 text-slate-400" data-translate-key="slide7_arrow">Copy Thô</span>
+                </div>
+
+                <!-- Gem 2 Box -->
+                <div class="bg-slate-900/60 border border-indigo-500/20 p-5 rounded-2xl w-full md:w-5/12 space-y-3 relative">
+                    <div class="absolute -top-3 left-4 bg-indigo-500 text-white font-bold px-2 py-0.5 rounded text-[10px]" data-translate-key="slide7_g2_badge">BƯỚC 2</div>
+                    <div class="flex items-center space-x-2 text-indigo-400 font-bold text-sm">
+                        <i class="fa-solid fa-file-invoice"></i>
+                        <h3 data-translate-key="slide7_g2_title">GEM 2: Chuyên gia Google Docs</h3>
+                    </div>
+                    <p class="text-xs text-slate-400" data-translate-key="slide7_g2_desc">Tiếp nhận đề thô đã được duyệt và tiến hành cấu hình API tự động.</p>
+                    <div class="bg-slate-800/80 p-2.5 rounded-lg border border-slate-700/40 text-[11px] text-slate-300" id="slide7_g2_sub">
+                        <i class="fa-solid fa-file-word text-indigo-400 mr-1"></i> Thiết lập bảng biểu HTML nén chặt, gạch chân chuẩn để dán trực tiếp.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: Module 4 - SOP Quy trình thực thi -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-4 w-full">
+            <div class="text-left space-y-1">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 4 - SOP</span>
+                <h2 class="text-xl md:text-2xl font-bold text-white" id="slide9_sop_title">Quy trình thực thi 4 bước (Step-by-Step SOP)</h2>
+                <p class="text-slate-400 text-xs" id="slide9_sop_desc">Cách phối hợp nhịp nhàng giữa Gem 1 và Gem 2 để xuất đề chuẩn chỉnh.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+                <!-- Step 1 -->
+                <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-cyan-400 font-bold text-xs block mb-1" id="slide9_step1_badge">BƯỚC 1</span>
+                        <h3 class="text-sm font-semibold text-white" id="slide9_step1_title">Cấu hình & Liên kết Gem 1</h3>
+                        <p class="text-xs text-slate-400 mt-1" id="slide9_step1_desc">Tạo Gem 1 với Instructions, liên kết NotebookLM làm cơ sở dữ liệu gốc.</p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-cyan-400 font-bold text-xs block mb-1" id="slide9_step2_badge">BƯỚC 2</span>
+                        <h3 class="text-sm font-semibold text-white" id="slide9_step2_title">Sinh đề thô & Duyệt</h3>
+                        <p class="text-xs text-slate-400 mt-1" id="slide9_step2_desc">Dùng câu lệnh Case 1, 2, 3 để Gem 1 sinh đề thô. Giảng viên kiểm tra tính đúng đắn.</p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-cyan-400 font-bold text-xs block mb-1" id="slide9_step3_badge">BƯỚC 3</span>
+                        <h3 class="text-sm font-semibold text-white" id="slide9_step3_title">Tạo Gem 2 định dạng</h3>
+                        <p class="text-xs text-slate-400 mt-1" id="slide9_step3_desc">Tạo Gem 2 với Instructions định dạng nén HTML siêu hẹp cho Google Docs.</p>
+                    </div>
+                </div>
+                <!-- Step 4 -->
+                <div class="bg-slate-800/30 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-cyan-400 font-bold text-xs block mb-1" id="slide9_step4_badge">BƯỚC 4</span>
+                        <h3 class="text-sm font-semibold text-white" id="slide9_step4_title">Chuyển đổi & Xuất bản</h3>
+                        <p class="text-xs text-slate-400 mt-1" id="slide9_step4_desc">Dán đề thô vào Gem 2, copy kết quả đầu ra dán thẳng vào Google Docs.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-cyan-950/20 border border-cyan-500/20 p-3 rounded-lg text-xs text-cyan-300 flex items-center space-x-2" id="slide9_tip">
+                <i class="fa-solid fa-lightbulb"></i>
+                <span><strong>Mẹo thực chiến:</strong> Hãy luôn duyệt trước đề ở Gem 1 trước khi đưa sang Gem 2 để tránh mất thời gian định dạng lại nhiều lần!</span>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: Module 4 - Activity Flow -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 4 - TIMELINE</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide9_flow_title">Thực Hành 2: Tiến Trình Hoạt Động (40 Phút)</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center space-x-3 text-indigo-400">
+                            <i class="fa-solid fa-chalkboard-user text-2xl"></i>
+                            <span class="text-xs font-bold text-slate-500 uppercase" data-translate-key="slide9_step1_badge">01. DEMO (10 Phút)</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mt-2" data-translate-key="slide9_flow_step1_title">Giảng Viên Hướng Dẫn</h3>
+                        <p class="text-xs text-slate-300 mt-2 leading-relaxed" id="slide9_flow_step1_desc">Giảng viên demo toàn bộ chuỗi: Tạo Gem 1 kết nối với NotebookLM để sinh đề thô -> Xác thực đề -> Đưa vào Gem 2 -> Tạo và xuất bảng dữ liệu sạch lên Google Docs.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-800/40 p-6 rounded-2xl border border-indigo-500/20 flex flex-col justify-between space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl" data-translate-key="slide9_step2_top">THỰC HÀNH CHÍNH</div>
+                    <div>
+                        <div class="flex items-center space-x-3 text-indigo-400">
+                            <i class="fa-solid fa-users-gear text-2xl"></i>
+                            <span class="text-xs font-bold text-indigo-400 uppercase" data-translate-key="slide9_step2_badge">02. BREAKOUT ROOM (15 Phút)</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mt-2" data-translate-key="slide9_flow_step2_title">Học Viên Thực Hành Nhóm</h3>
+                        <p class="text-xs text-slate-300 mt-2 leading-relaxed" id="slide9_flow_step2_desc">Chia phòng thực hành. Từng học viên thiết lập hệ thống 2 Gems cá nhân, dán prompt vận hành (Case 1, 2, 3), và tạo thử 1 tệp Google Doc hoàn chỉnh.</p>
+                    </div>
+                </div>
+                <div class="bg-slate-800/30 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center space-x-3 text-indigo-400">
+                            <i class="fa-solid fa-comments text-2xl"></i>
+                            <span class="text-xs font-bold text-slate-500 uppercase" data-translate-key="slide9_step3_badge">03. MAIN ROOM (15 Phút)</span>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mt-2" data-translate-key="slide9_flow_step3_title">Trình Bày & Tối Ưu Hóa</h3>
+                        <p class="text-xs text-slate-300 mt-2 leading-relaxed" id="slide9_flow_step3_desc">Học viên trở lại phòng họp lớn, dán liên kết Google Doc thành phẩm vào chat box. Giảng viên hỗ trợ xử lý lỗi định dạng bảng hoặc lỗi rò rỉ siêu dữ liệu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: Module 4 - Gem 1 Interactive Instructions -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-4 w-full">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="text-left">
+                    <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">GEM 1 RESOURCES</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-white" data-translate-key="slide8_title">Instructions: Gem 1 (Tạo & Xác thực)</h2>
+                </div>
+                <!-- Language Toggles for Gem 1 -->
+                <div class="flex bg-slate-800 p-0.5 rounded-lg border border-slate-700 text-xs">
+                    <button onclick="switchGem1Language('en')" id="gem1-lang-en" class="px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all" data-translate-key="btn_english">English (Khuyên dùng)</button>
+                    <button onclick="switchGem1Language('vi')" id="gem1-lang-vi" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">Tiếng Việt</button>
+                    <button onclick="switchGem1Language('ja')" id="gem1-lang-ja" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">日本語</button>
+                </div>
+            </div>
+
+            <!-- Console Window -->
+            <div class="bg-slate-800/30 border border-slate-800 rounded-2xl flex flex-col h-[320px] md:h-[380px] overflow-hidden">
+                <div class="bg-slate-900/80 px-4 py-3 border-b border-slate-800 flex justify-between items-center text-xs">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                        <span class="text-slate-400 font-mono pl-2">gem1_instructions.md</span>
+                    </div>
+                    <button onclick="copyGem1Prompt()" class="bg-cyan-600/30 hover:bg-cyan-600 border border-cyan-500/30 text-cyan-300 hover:text-white px-3 py-1 rounded-md font-medium transition-all flex items-center space-x-1.5">
+                        <i class="fa-regular fa-copy"></i>
+                        <span data-translate-key="btn_copy_instructions">Sao chép Instruction</span>
+                    </button>
+                </div>
+                <!-- Content Area -->
+                <div class="flex-grow overflow-auto p-4 bg-slate-900/40">
+                    <pre class="text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed select-all" id="gem1-display-area">...</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 12: Module 4 - Gem 2 Interactive Instructions -->
+        <section class="slide flex-col justify-center max-w-5xl mx-auto space-y-4 w-full">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="text-left">
+                    <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">GEM 2 RESOURCES</span>
+                    <h2 class="text-xl md:text-2xl font-bold text-white" data-translate-key="slide9_title">Instructions: Gem 2 (Định dạng Docs)</h2>
+                </div>
+                <!-- Language Toggles for Gem 2 -->
+                <div class="flex bg-slate-800 p-0.5 rounded-lg border border-slate-700 text-xs">
+                    <button onclick="switchGem2Language('en')" id="gem2-lang-en" class="px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all" data-translate-key="btn_english">English (Khuyên dùng)</button>
+                    <button onclick="switchGem2Language('vi')" id="gem2-lang-vi" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">Tiếng Việt</button>
+                    <button onclick="switchGem2Language('ja')" id="gem2-lang-ja" class="px-3 py-1 text-slate-400 rounded-md font-semibold transition-all">日本語</button>
+                </div>
+            </div>
+
+            <!-- Console Window -->
+            <div class="bg-slate-800/30 border border-slate-800 rounded-2xl flex flex-col h-[320px] md:h-[380px] overflow-hidden">
+                <div class="bg-slate-900/80 px-4 py-3 border-b border-slate-800 flex justify-between items-center text-xs">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                        <span class="text-slate-400 font-mono pl-2">gem2_instructions.md</span>
+                    </div>
+                    <button onclick="copyGem2Prompt()" class="bg-cyan-600/30 hover:bg-cyan-600 border border-cyan-500/30 text-cyan-300 hover:text-white px-3 py-1 rounded-md font-medium transition-all flex items-center space-x-1.5">
+                        <i class="fa-regular fa-copy"></i>
+                        <span data-translate-key="btn_copy_instructions">Sao chép Instruction</span>
+                    </button>
+                </div>
+                <!-- Content Area -->
+                <div class="flex-grow overflow-auto p-4 bg-slate-900/40">
+                    <pre class="text-xs font-mono text-slate-300 whitespace-pre-wrap leading-relaxed select-all" id="gem2-display-area">...</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 13: Module 4 - Operational Prompts for Gems -->
+        <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 4 - OPERATION</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide10_title">Prompt Vận Hành Cho Gem 1 & Gem 2</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <span class="text-cyan-400 text-xs font-bold uppercase" data-translate-key="slide10_c1_title">Case 1: Từ Vựng Cơ Bản</span>
+                        <p class="text-slate-300 text-xs mt-2 font-mono bg-slate-900/60 p-3 rounded-xl border border-slate-800" data-translate-key="slide10_c1_val">
+                            "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 漢字読み, 表記, 文脈規定."
+                        </p>
+                    </div>
+                    <button id="btn-copy-case-1" onclick="copyCasePrompt(1)" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-1.5 rounded-lg text-xs font-medium transition-all" data-translate-key="btn_copy_prompt">Copy Prompt</button>
+                </div>
+
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <span class="text-cyan-400 text-xs font-bold uppercase" data-translate-key="slide10_c2_title">Case 2: Từ Vựng Nâng Cao</span>
+                        <p class="text-slate-300 text-xs mt-2 font-mono bg-slate-900/60 p-3 rounded-xl border border-slate-800" data-translate-key="slide10_c2_val">
+                            "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 言い換え類義, 用法."
+                        </p>
+                    </div>
+                    <button id="btn-copy-case-2" onclick="copyCasePrompt(2)" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-1.5 rounded-lg text-xs font-medium transition-all" data-translate-key="btn_copy_prompt">Copy Prompt</button>
+                </div>
+
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+                    <div>
+                        <span class="text-cyan-400 text-xs font-bold uppercase" data-translate-key="slide10_c3_title">Case 3: Ngữ Pháp</span>
+                        <p class="text-slate-300 text-xs mt-2 font-mono bg-slate-900/60 p-3 rounded-xl border border-slate-800" data-translate-key="slide10_c3_val">
+                            "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 文法形式の判断, 文の組み立て."
+                        </p>
+                    </div>
+                    <button id="btn-copy-case-3" onclick="copyCasePrompt(3)" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 py-1.5 rounded-lg text-xs font-medium transition-all" data-translate-key="btn_copy_prompt">Copy Prompt</button>
+                </div>
+            </div>
+
+            <div class="bg-indigo-900/10 border border-indigo-500/20 p-4 rounded-xl text-xs flex justify-between items-center">
+                <div class="space-y-1">
+                    <span class="text-indigo-400 font-bold block" data-translate-key="slide10_g2_label">Prompt cho Gem 2 (Tạo Docs):</span>
+                    <p class="text-slate-400" data-translate-key="slide10_g2_desc">Hãy tạo đề thi trên Google Docs với dữ liệu dưới đây:<br>【Dữ liệu】</p>
+                </div>
+                <button onclick="copyGem2RunPrompt()" class="bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-600 transition-all text-xs" data-translate-key="btn_copy_prompt">Copy Prompt</button>
+            </div>
+        </section>
+
+        <!-- SLIDE 14: Module 5 - Summary & Next Actions -->
+        <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">MODULE 5</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide11_title">Tổng kết & Định hướng Hành Động Tiếp Theo</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="text-cyan-400 text-lg"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h3 class="text-sm font-bold text-white" data-translate-key="slide11_c1_title">Lưu ý Bảo mật dữ liệu</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" id="slide11_c1_desc">Tuyệt đối tuân thủ quy tắc bảo mật dữ liệu nội bộ của Sun*. Không tải các thông tin nhạy cảm của khách hàng hay công ty lên mô hình công cộng.</p>
+                </div>
+                <div class="bg-slate-800/30 p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="text-cyan-400 text-lg"><i class="fa-solid fa-share-nodes"></i></div>
+                    <h3 class="text-sm font-bold text-white" data-translate-key="slide11_c3_title">Chia sẻ tri thức</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed" id="slide11_c3_desc">Cùng đóng góp và phát triển thư viện chung. Chia sẻ các bộ Instruction Gems đã được tùy biến thông minh lên không gian chung của đội ngũ Sun*.</p>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-cyan-950 to-indigo-950 border border-cyan-500/30 p-5 rounded-2xl text-center">
+                <h3 class="text-lg font-bold text-white mb-1"><i class="fa-solid fa-comments text-cyan-400 mr-2"></i>Q&A SESSION</h3>
+                <p class="text-xs text-slate-300" data-translate-key="slide11_qa">Giải đáp thắc mắc của giảng viên về quy trình trích xuất, lỗi định dạng tệp Docs hoặc lỗi OCR dữ liệu.</p>
+            </div>
+        </section>
+
+        <!-- SLIDE 15: Homework Activities -->
+        <section class="slide flex-col justify-center max-w-4xl mx-auto space-y-6 w-full">
+            <div class="text-left space-y-2">
+                <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">HOMEWORK</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-white" data-translate-key="slide14_title">Hoạt Động Về Nhà & Ứng Dụng Thực Tiễn</h2>
+                <p class="text-slate-400 text-sm" data-translate-key="slide14_desc">Hãy lựa chọn một trong hai phương án hành động dưới đây để tối ưu hóa công việc hàng ngày của bạn.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                <div class="bg-slate-800/40 p-6 rounded-2xl border border-cyan-500/20 space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-cyan-500 text-slate-900 text-[10px] font-bold px-3 py-1 rounded-bl">OPTION A</div>
+                    <div class="flex items-center space-x-3 text-cyan-400">
+                        <i class="fa-solid fa-square-poll-horizontal text-2xl"></i>
+                        <h3 class="text-lg font-semibold text-white" data-translate-key="slide14_optA_title">Xây dựng Đề thi JLPT hoàn chỉnh</h3>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed" id="slide14_optA_desc">
+                        Tự tạo Ngân hàng đề thi của cấp độ tiếng Nhật bạn đang phụ trách (N5 - N1) bằng NotebookLM. Sau đó sử dụng bộ đôi Gems 1 & Gems 2 để tiến hành tạo, duyệt và định dạng một tệp đề thi Google Docs hoàn chỉnh.
+                    </p>
+                </div>
+
+                <div class="bg-slate-800/40 p-6 rounded-2xl border border-indigo-500/20 space-y-4 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl">OPTION B</div>
+                    <div class="flex items-center space-x-3 text-indigo-400">
+                        <i class="fa-solid fa-chart-line text-2xl"></i>
+                        <h3 class="text-lg font-semibold text-white" data-translate-key="slide14_optB_title">Định vị & Tối ưu hóa Hiệu suất</h3>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed" id="slide14_optB_desc">
+                        Đánh giá các nhiệm vụ, đầu việc hiện tại của bạn trong đào tạo. Xác định xem NotebookLM, Gems hoặc các công cụ AI khác có thể giải quyết, tự động hóa khâu nào, đồng thời đo lường hiệu suất được cải tiến cụ thể ra sao.
+                    </p>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/20 border border-slate-700/60 p-4 rounded-xl text-xs md:text-sm text-slate-300 flex items-center space-x-3 justify-center">
+                <i class="fa-solid fa-lightbulb text-amber-400 text-lg"></i>
+                <span data-translate-key="slide14_footer">Mục tiêu: Chuyển hóa kiến thức từ lý thuyết sang năng suất làm việc thực tế!</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Slide Controls -->
+    <footer class="px-6 py-4 bg-dark-900/90 border-t border-slate-800/60 flex flex-col md:flex-row justify-between items-center gap-4 relative z-40">
+        <!-- Presenter Notes Toggle Button -->
+        <div>
+            <button onclick="toggleNotesDrawer()" class="flex items-center space-x-2 text-slate-400 hover:text-cyan-400 px-3 py-1.5 rounded-lg hover:bg-slate-800/60 transition-all text-xs">
+                <i class="fa-regular fa-comment-dots"></i>
+                <span id="notes-btn-text" data-translate-key="btn_notes">Hiện Ghi Chú Giảng Viên (N)</span>
+            </button>
+        </div>
+
+        <!-- Quick navigation slider and buttons -->
+        <div class="flex items-center space-x-4">
+            <button onclick="prevSlide()" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all" title="Slide trước (←)">
+                <i class="fa-solid fa-chevron-left text-lg"></i>
+            </button>
+            <div class="flex items-center space-x-1">
+                <input type="range" id="slide-range" min="1" max="15" value="1" oninput="jumpToSlide(this.value)" class="w-24 md:w-48 accent-cyan-500 bg-slate-800 rounded-lg appearance-none h-1.5 cursor-pointer">
+            </div>
+            <button onclick="nextSlide()" class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all" title="Slide tiếp theo (→ / Space)">
+                <i class="fa-solid fa-chevron-right text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Right Side Brand Info -->
+        <div class="text-slate-500 text-xs font-mono">
+            &copy; Sun* Learning & Development 2026
+        </div>
+    </footer>
+
+    <!-- Help Shortcut Overlay Modal -->
+    <div id="help-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative">
+            <button onclick="toggleHelpModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <h3 class="text-lg font-bold text-white flex items-center" id="help_title"><i class="fa-solid fa-circle-question text-cyan-400 mr-2"></i>Phím tắt trình chiếu</h3>
+            <div class="space-y-2 text-xs text-slate-300" id="help_list">
+                <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">← / Mũi tên trái</span> <span>Slide trước</span></div>
+                <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">&rarr; / Mũi tên phải</span> <span>Slide tiếp theo</span></div>
+                <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">Spacebar (Phím cách)</span> <span>Slide tiếp theo</span></div>
+                <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">F / Phím F</span> <span>Bật/Tắt Toàn màn hình</span></div>
+                <div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">N / Phím N</span> <span>Bật/Tắt Ghi chú giảng viên</span></div>
+                <div class="flex justify-between py-1.5"><span class="font-bold text-cyan-400">R / Phím R</span> <span>Bật/Tắt Tra cứu tài nguyên nhanh</span></div>
+            </div>
+            <button onclick="toggleHelpModal()" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 rounded-xl text-xs transition-all" id="btn_close_help">Đóng</button>
+        </div>
+    </div>
+
+    <!-- Presenter Notes Bottom Drawer -->
+    <div id="notes-drawer" class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900 border-t border-slate-800 shadow-2xl h-0 transition-all duration-300 overflow-hidden">
+        <div class="max-w-4xl mx-auto p-5 space-y-3 h-full overflow-auto">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <h4 class="text-sm font-bold text-cyan-400 uppercase tracking-widest" id="drawer_notes_title"><i class="fa-solid fa-comment-dots mr-2"></i>Presenter Notes (Gợi ý điều phối lớp)</h4>
+                <button onclick="toggleNotesDrawer()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p id="notes-content" class="text-xs md:text-sm text-slate-300 leading-relaxed font-light">Không có ghi chú nào cho slide này.</p>
+        </div>
+    </div>
+
+    <!-- Right Collapsible Quick Resources Drawer -->
+    <div id="resources-drawer" class="fixed top-0 right-0 bottom-0 z-50 bg-slate-900 border-l border-slate-800 shadow-2xl w-0 md:w-0 transition-all duration-300 overflow-hidden flex flex-col">
+        <div class="p-5 border-b border-slate-800 flex justify-between items-center bg-slate-950/40">
+            <h3 class="text-sm font-bold text-cyan-400"><i class="fa-solid fa-folder-open mr-2"></i><span id="res_title">Tra cứu nhanh tài nguyên</span></h3>
+            <button onclick="toggleResourcesDrawer()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <!-- Search and list of quick links -->
+        <div class="flex-grow overflow-auto p-4 space-y-4 text-xs">
+            <p class="text-slate-400 leading-relaxed" id="res_desc">Giảng viên có thể sao chép nhanh các tài nguyên này bất kỳ lúc nào trong lúc demo:</p>
+            
+            <div class="space-y-2">
+                <h4 class="font-bold text-slate-200 border-b border-slate-800 pb-1">MODULE 3: PROMPTS TRÍCH XUẤT</h4>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="copyResource('vocab-ja')" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700/60 text-left">Từ Vựng (JA)</button>
+                    <button onclick="copyResource('grammar-ja')" class="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700/60 text-left">Ngữ Pháp (JA)</button>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <h4 class="font-bold text-slate-200 border-b border-slate-800 pb-1">MODULE 4: GEMS INSTRUCTIONS</h4>
+                <div class="space-y-2">
+                    <div class="p-2 bg-slate-900 rounded border border-slate-800 space-y-2">
+                        <span class="text-cyan-400 font-bold block">Gem 1 Instructions:</span>
+                        <div class="grid grid-cols-3 gap-1">
+                            <button onclick="copyResource('gem1-en')" class="py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded">EN</button>
+                            <button onclick="copyResource('gem1-vi')" class="py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded">VI</button>
+                            <button onclick="copyResource('gem1-ja')" class="py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded">JA</button>
+                        </div>
+                    </div>
+                    <div class="p-2 bg-slate-900 rounded border border-slate-800 space-y-2">
+                        <span class="text-indigo-400 font-bold block">Gem 2 Instructions:</span>
+                        <div class="grid grid-cols-3 gap-1">
+                            <button onclick="copyResource('gem2-en')" class="py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded">EN</button>
+                            <button onclick="copyResource('gem2-vi')" class="py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded">VI</button>
+                            <button onclick="copyResource('gem2-ja')" class="py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center rounded">JA</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Quick Notification Toast -->
+    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-cyan-600 to-indigo-600 border border-cyan-400/30 text-white font-medium px-5 py-2.5 rounded-full text-xs shadow-lg shadow-cyan-500/10 scale-95 opacity-0 transition-all pointer-events-none flex items-center space-x-2">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-message">Đã sao chép vào bộ nhớ tạm!</span>
+    </div>
+
+    <!-- Database for Interactive Prompt Copy System -->
+    <script>
+        const promptDB = {
+            vocab: {
+                ja: "# 依頼\n\n現在選択されているソース（PDF）から、「言語知識（[問題形式, 例: 漢字読み/表記/文脈規定/言い換え類義/用法]）」の問題をすべて抽出してください。\n省略や要約は一切行わず、元の文章を正確に書き起こしてください。\n\n### 抽出の基本ルール：\n\n1. **正確な書き起こし**: 問題文、選択肢（1〜4）、および正解（記載がある場合）を原文のまま正確に抽出してください。\n2. **下線（アンダーライン）の処理**: 原文で下線が引かれている箇所は、必ず `<u>下線部</u>` のように、前後にスペースを挟まずにHTMLタグで囲んでください。\n3. **推測の禁止（ハルシネーション対策）**:\n   - 正解の記載がない場合は、空欄にせず `正解: 不明（ソースに記載なし）` と出力してください。\n   - ページ番号が不明な場合は、 `出典: [ファイル名] P.不明` と出力してください。\n\n### 出力形式（Markdown）：\n\nAIによる自動処理やランダム抽出がしやすいよう、以下のフォーマット（YAMLフロントマター風の構成）を厳守してください。\n\n- ID: [ファイル名]_[連番（例: 001）]\n- カテゴリ: 言語知識（[問題形式]）\n- 出典: [ファイル名] P.[ページ番号]\n- 問題: [問題文。下線部は必ず <u>このように</u> 囲む]\n- 選択肢:\n  1. [選択肢1]\n  2. [選択肢2]\n  3. [選択肢3]\n  4. [選択肢4]\n- 正解: [正解、または「不明（ソースに記載なし）」]\n\n- ID:... \n\n### 完了後のアクション：\n1. このファイルにまだ抽出できる問題があれば、最後に「続きが必要ですか？」と尋ねてください。\n2. 全ての抽出が終わったら、「このファイルの抽出が完了しました。次のファイルに進みますか？」と報告してください。",
+                
+                vi: "# YÊU CẦU\n\nHãy trích xuất toàn bộ câu hỏi thuộc phần \"Kiến thức ngôn ngữ ([Nhập dạng bài, ví dụ: 漢字読み/表記/文脈規定/言い換え類義/用法])\" từ nguồn tài liệu đang được chọn (file PDF sách JLPT).\nTuyệt đối không tóm tắt hay lược bỏ, hãy sao chép nguyên văn một cách chính xác.\n\n### Nguyên tắc trích xuất cơ bản:\n\n1. **Sao chép chính xác**: Trích xuất chính xác câu hỏi, các lựa chọn (1-4), và đáp án chính xác (nếu có trong tài liệu).\n2. **Xử lý phần gạch chân (Underline)**: Những phần được gạch chân trong tài liệu gốc bắt buộc phải được bao quanh bởi thẻ HTML `<u>phần gạch chân</u>`, không được chứa khoảng trắng thừa.\n3. **Không tự suy đoán (Chống ảo tưởng AI)**:\n   - Nếu tài liệu không ghi sẵn đáp án chính xác, xuất ra: `正解: 不明（ソースに記載なし）` (Đáp án: Không rõ - không có trong nguồn).\n   - Nếu không tìm thấy số trang, xuất ra: `出典: [Tên file] P.不明`.\n\n### Định dạng đầu ra (Markdown):\n\nĐể hỗ trợ AI tự động xử lý và trích xuất ngẫu nhiên dễ dàng hơn, hãy tuân thủ nghiêm ngặt định dạng YAML dưới đây.\n\n- ID: [Tên file]_[Số thứ tự tăng dần (Ví dụ: 001)]\n- カテゴリ: 言語知識（[Nhập dạng bài]）\n- 出典: [Tên file] P.[Số trang]\n- 問題: [Câu hỏi. Phần gạch chân bắt buộc phải được bao quanh bởi <u>như thế này</u>]\n- 選択肢:\n  1. [Lựa chọn 1]\n  2. [Lựa chọn 2]\n  3. [Lựa chọn 3]\n  4. [Lựa chọn 4]\n- 正解: [Đáp án, hoặc \"不明（ソースに記載なし）\"]\n\n- ID:... \n\n### Hành động sau khi hoàn tất:\n1. Nếu vẫn còn câu hỏi có thể trích xuất từ file này, hãy hỏi: \"Bạn có muốn tiếp tục trích xuất không?\".\n2. Khi hoàn tất trích xuất toàn bộ file, hãy thông báo: \"Đã hoàn thành trích xuất file này. Bạn có muốn chuyển sang file tiếp theo không?\"."
+            },
+            grammar: {
+                ja: "# 依頼\n\n現在選択されているソース（PDF）から、「言語知識（[問題形式, 例: 文法形式の判断・文の組み立て]）」の問題をすべて抽出してください。\n省略や要約は一切行わず、元の文章を正確に書き起こしてください。\n\n### 抽出の基本ルール：\n\n1. **正確な書き起こし**: 問題文（星印 `★` を含む並び替えの文）、4つの選択肢（1〜4）、および正解（★に入る正しい番号と、並び替えた後の正しい文全体）を正確に抽出してください。\n2. **星印（★）と空欄の処理**:\n   - 原文にある空欄はそのまま `（ ）` や `＿＿＿` と表記してください。\n   - 星印は必ず `★` を使用し、下線部は `<u> ★ </u>` のようにHTMLタグで囲んでください。\n3. **推測の禁止（ハルシネーション対策）**:\n   - 正解の記載がない場合は、空欄にせず `正解: 不明（ソースに記載なし）` と出力してください。\n   - ページ番号が不明な場合は、 `出典: [ファイル名] P.不明` と出力してください。\n\n### 出力形式（Markdown）：\n\nAIによる自動処理やランダム抽出がしやすいよう、以下のフォーマットを厳守してください。\n\n\n- ID: [ファイル名]_[連番（例: 001）]\n- カテゴリ: 言語知識（[問題形式]）\n- 出典: [ファイル名] P.[ページ番号]\n- 問題: [問題文。並び替え問題の場合は、星印 ★ や下線を含めた文章を正確に記載]\n- 選択肢:\n  1. [選択肢1]\n  2. [選択肢2]\n  3. [選択肢3]\n  4. [選択肢4]\n- 正解: [正解の番号。文の組み立ての場合は「★に入る番号（例: 3）」と「正しい文全体の並び順（例: 2-4-3-1）」を併記。または「不明（ソースに記載なし）」]\n\n- ID:... \n\n### 完了後のアクション：\n1. このファイルにまだ抽出できる問題があれば、最後に「続きが必要ですか？」と尋ねてください。\n2. 全ての抽出が終わったら、「このファイルの抽出が完了しました。次のファイルに進みますか？」と報告してください。",
+                
+                vi: "# YÊU CẦU\n\nHãy trích xuất toàn bộ câu hỏi thuộc phần \"Kiến thức ngôn ngữ ([Nhập dạng bài, ví dụ: 文法形式の判断/文の組み立て])\" từ tài liệu đang chọn (file PDF sách JLPT).\nTuyệt đối không tóm tắt hay lược bỏ, sao chép chính xác nguyên văn.\n\n### Nguyên tắc trích xuất cơ bản:\n\n1. **Sao chép chính xác**: Trích xuất chính xác câu hỏi sắp xếp có dấu sao `★`, 4 lựa chọn (1-4) và đáp án chính xác (bao gồm số của dấu sao và cấu trúc câu hoàn chỉnh sau sắp xếp).\n2. **Xử lý dấu sao (★) và khoảng trống**:\n   - Giữ nguyên các ô trống viết dưới dạng `（ ）` hoặc `＿＿＿` như trong nguyên bản.\n   - Biểu thị dấu sao chính xác bằng ký tự `★` và bao quanh phần dấu sao gạch chân bằng thẻ HTML `<u> ★ </u>`.\n3. **Không tự ý suy đoán (Hallucination)**:\n   - Nếu không có đáp án sẵn trong nguồn, xuất ra: `正解: 不明（ソースに記載なし）`.\n   - Nếu không tìm thấy số trang, xuất ra: `出典: [Tên file] P.不明`.\n\n### Định dạng đầu ra (Markdown):\n\nHãy tuân thủ nghiêm ngặt định dạng YAML dưới đây.\n\n- ID: [Tên file]_[Số thứ tự tăng dần (Ví dụ: 001)]\n- カテゴリ: 言語知識（[Nhập dạng bài]）\n- 出典: [Tên file] P.[Số trang]\n- 問題: [Câu hỏi sắp xếp câu hoàn chỉnh chứa dấu ★ và các gạch dưới]\n- 選択肢:\n  1. [Lựa chọn 1]\n  2. [Lựa chọn 2]\n  3. [Lựa chọn 3]\n  4. [Lựa chọn 4]\n- 正解: [Đáp án. Ghi rõ số điền vào dấu sao (ví dụ: 3) kèm theo thứ tự sắp xếp câu hoàn chỉnh (ví dụ: 2-4-3-1). Hoặc ghi \"不明（ソースに記載なし）\"]\n\n- ID:... \n\n### Hành động sau khi hoàn tất:\n1. Nếu còn câu hỏi có thể trích xuất, hỏi: \"Bạn có muốn tiếp tục trích xuất không?\".\n2. Khi hoàn thành toàn bộ file, báo cáo: \"Đã hoàn thành trích xuất file này. Chuyển sang file tiếp theo?\"."
+            }
+        };
+
+        const gem1DB = {
+            en: `# Role & Objective\nYou are a high-fidelity data extraction pipeline. Your sole mission is to access the user's NotebookLM knowledge base, randomly select questions from specific Markdown files, and output them using a split-presentation format that optimizes both easy copy-pasting and clickable source verification.\n\n# Input Specification & Target Files\nThe user will provide a Level and Question Type (or multiple types). Map this input to find the correct Markdown files: \`[Bank]_[Level]_[QuestionType]_[Increment]\` (e.g., \`[Bank]_N3_言い換え類義_1\`, \`[Bank]_N3_漢字読み_1\`).\n\n# CRITICAL CONSTRAINTS (Zero Tolerance Rules)\n1. MANDATORY RANDOM SHUFFLE: You are strictly FORBIDDEN from picking consecutive questions from the same page or sequential IDs. You MUST randomly select and shuffle questions across different IDs and pages within the targeted Markdown files to ensure true randomness.\n2. ABSOLUTE TRUTH & ZERO ALTERATION: Copy questions, choices, answers, and source names 1:1 exactly as they are written in the Markdown source.\n3. LITERAL TAG RETENTION (CRITICAL): Inside the code block, you MUST output all HTML tags like \`<u>\` and \`</u>\` exactly as they exist in the raw source data. Treat them as regular plain text characters so they are not stripped by the system.\n4. FORCED NOTEBOOKLM CITATION: You MUST explicitly output the "出典" text outside of the code block get from Markdown File. You must ensure that NotebookLM's native citation/source-linking engine triggers successfully for each individual item, allowing the user to click and verify the exact ground truth.\n\n# Output Presentation Flow\nYou MUST structure your response into two distinct parts. Follow the template below exactly, ensuring Part 1 is closed before Part 2 begins.\n\n### Part 1: Clear Exam Content Block\nWrap only the exam instructions, questions, and choices inside a single markdown code block. Do NOT include answers or citations inside this block.\n\n___TB___text\n### 【抽出された問題データ】\n問題1：（Insert the standard JLPT big question instruction here based on the Question Type）\n\n- 問1. (Insert raw question text, keeping <u> tags explicitly visible, e.g., 申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4...\n\n- 問2. ...\n___TB___\n\n### Part 2: Answer Key & Verification (OUTSIDE the code block)\n\nDirectly below the code block, output the answer key and explicit metadata as standard chat text. You MUST write out the exact "出典" line for each question here to force NotebookLM to attach its native inline citation bubbles.\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (Copy the exact text from the "- 出典:" line of this question block, ensuring NotebookLM attaches its source citation here)\n* 問2: 正解 [2] / 出典: (Copy the exact text from the "- 出典:" line of this question block, ensuring NotebookLM attaches its source citation here)`,
+            
+            vi: `# Vai trò & Mục tiêu\n\nBạn là một pipeline trích xuất dữ liệu với độ chính xác cao (high-fidelity). Nhiệm vụ duy nhất của bạn là truy cập vào cơ sở tri thức NotebookLM của người dùng, chọn ngẫu nhiên các câu hỏi từ các tệp Markdown cụ thể, và xuất chúng dưới dạng hiển thị chia đôi (split-presentation format) nhằm tối ưu hóa việc sao chép dễ dàng và xác minh nguồn bằng cách nhấp chuột.\n\n# Quy cách Đầu vào & Tệp Mục tiêu\n\nNgười dùng sẽ cung cấp Cấp độ (Level) và Dạng câu hỏi (Question Type) (hoặc nhiều dạng). Hãy ánh xạ đầu vào này để tìm chính xác các tệp Markdown theo định dạng: \`[Bank]_[Level]_[QuestionType]_[Increment]\` (Ví dụ: \`[Bank]_N3_言い換え類義_1\`, \`[Bank]_N3_漢字読み_1\`).\n\n# RÀNG BUỘC PHẢI TUÂN THỦ (Quy tắc không khoan nhượng)\n\n1. **BẮT BUỘC TRỘN NGẪU NHIÊN:** Bạn BỊ NGHIÊM CẤM chọn các câu hỏi liên tiếp từ cùng một trang hoặc các ID tuần tự. Bạn PHẢI chọn ngẫu nhiên và trộn (shuffle) các câu hỏi giữa các ID và các trang khác nhau trong tệp Markdown mục tiêu để đảm bảo tính ngẫu nhiên tuyệt đối.\n2. **SỰ THẬT TUYỆT ĐỐI & KHÔNG ĐƯỢC CHỈNH SỬA:** Sao chép câu hỏi, lựa chọn, đáp án và tên nguồn chính xác 1:1 theo đúng nội dung được viết trong tệp Markdown gốc.\n3. **GIỮ NGUYÊN VẸN CÁC THẺ HTML (QUAN TRỌNG):** Bên trong khối mã (code block), bạn PHẢI xuất tất cả các thẻ HTML như \`<u>\` và \`</u>\` chính xác như chúng hiện có trong dữ liệu nguồn thô. Hãy xử lý chúng như các ký tự văn bản thuần túy (plain text) thông thường để không bị hệ thống lược bỏ.\n4. **BẮT BUỘC TRÍCH DẪN NOTEBOOKLM:** Bạn PHẢI xuất rõ ràng văn bản "出典" (Nguồn) ở bên ngoài khối mã lấy từ tệp Markdown. Bạn phải đảm bảo rằng công cụ trích dẫn/liên kết nguồn gốc (native citation/source-linking engine) của NotebookLM được kích hoạt thành công cho từng câu hỏi độc lập, cho phép người dùng nhấp vào và xác minh chính xác dữ liệu gốc.\n\n# Quy trình Hiển thị Đầu ra\n\nBạn PHẢI cấu trúc câu trả lời của mình thành hai phần riêng biệt. Hãy tuân thủ chính xác mẫu dưới đây, đảm bảo Phần 1 được đóng lại trước khi Phần 2 bắt đầu.\n\n### Phần 1: Khối nội dung đề thi rõ ràng\n\nChỉ bọc hướng dẫn làm bài, câu hỏi và các lựa chọn bên trong một khối mã markdown duy nhất. KHÔNG bao gồm đáp án hoặc trích dẫn bên trong khối này.\n\n\`\`\`text\n### 【抽出された問題データ】\n問題1：(Chèn hướng dẫn câu hỏi lớn tiêu chuẩn của JLPT tại đây dựa trên Dạng câu hỏi)\n\n- 問1. (Chèn văn bản câu hỏi gốc, giữ nguyên các thẻ <u> nếu hiển thị rõ ràng, ví dụ: 申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4... (Chèn văn bản lựa chọn gốc, giữ cho mọi thẻ đều hiển thị)\n\n- 問2. ...\n\n\`\`\`\n\n### Phần 2: Đáp án & Xác minh (BÊN NGOÀI khối mã)\n\nNgay bên dưới khối mã, hãy xuất đáp án và siêu dữ liệu (metadata) rõ ràng dưới dạng văn bản trò chuyện tiêu chuẩn. Bạn PHẢI viết dòng "出典" chính xác cho từng câu hỏi tại đây để buộc NotebookLM đính kèm các bong bóng trích dẫn gốc của nó.\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (Sao chép chính xác văn bản từ dòng "- 出典:" của khối câu hỏi này, đảm bảo NotebookLM đính kèm trích dẫn nguồn tại đây)\n* 問2: 正解 [2] / 出典: (Sao chép chính xác văn bản từ dòng "- 出典:" của khối câu hỏi này, đảm bảo NotebookLM đính kèm trích dẫn nguồn tại đây)`,
+            
+            ja: `# 役割と目的\n\nあなたは高精度なデータ抽出パイプラインです。ユーザーのNotebookLMナレッジベースにアクセスし、指定されたMarkdownファイルからランダムに問題を選択し、コピー＆ペーストのしやすさとクリックによる出所確認の両方を最適化した「分割表示フォーマット」で出力することが唯一の任務です。\n\n# 入力仕様と対象ファイル\n\nユーザーはレベル（Level）と問題形式（Question Type、または複数の形式）を提供します。この入力から正しいMarkdownファイルをマッピングして特定してください：\`[Bank]_[Level]_[QuestionType]_[Increment]\` (例: \`[Bank]_N3_言い換え類義_1\`, \`[Bank]_N3_漢字読み_1\`)。\n\n# 重要な制約事項（ゼロ・トレランス・ルール）\n\n1. **ランダムシャッフルの義務（必須）:** 同じページからの連続した問題や、連番のIDから問題を抽出することは**厳禁**です。真のランダム性を確保するため、対象のMarkdownファイル内にある異なるIDやページを横断して、問題をランダムに選択・シャッフルしなければなりません。\n2. **絶対的な事実の維持と改変の禁止:** 問題、選択肢、正解、出所名は、Markdownソースに記載されている通りに、1:1で正確にコピーしてください。\n3. **HTMLタグのそのままの保持（重要）:** コードブロック内では、\`<u>\`や\`</u>\`などのすべてのHTMLタグを、生データソースに存在する通りの形で出力しなければなりません。システムによって削除されないよう、これらを通常のプレーンテキスト文字として扱ってください。\n4. **NotebookLM引用の強制:** Markdownファイルから取得した「出典」テキストを、必ずコードブロックの**外**に明示的に出力してください。各問題に対してNotebookLM固有の引用・ソースリンク機能が正常にトリガーされ、ユーザーがクリックして正確な根拠（グラウンド・トゥルース）を確認できるようにする必要があります。\n\n# 出力提示の流れ\n\n回答を必ず2つの明確なパートに構造化してください。以下のテンプレートに正確に従い、パート1が完全に閉じてからパート2が始まるようにしてください。\n\n### パート1：試験内容ブロック（クリア表示）\n\n試験の指示（大問の説明）、問題、および選択肢のみを単一のMarkdownコードブロック内に収めてください。このブロック内には、正解や出典を含めては**いけません**。\n\n\`\`\`text\n### 【抽出された問題データ】\n問題1：(ここに問題形式に基づいた標準的なJLPTの大問の指示文を挿入してください)\n\n- 問1. (生の問テキストを挿入。<u>タグが明示的に存在する場合はそのまま保持すること。例：申し込みの<u>期限</u>まであと3日だ。)\n- 選択肢: 1... 2... 3... 4... (生の選択肢テキストを挿入、すべてのタグを表示したままにする)\n\n- 問2. ...\n\n\`\`\`\n\n### パート2：正解キーと検証（コードブロックの外）\n\nコードブロックの直下に、正解キーと明確なメタデータを通常のチャットテキストとして出力してください。NotebookLMが固有のインライン引用バブルを強制的に付与できるように、ここでは各問題に対して正確な「出典」の行を書き出す必要があります。\n\n---\n\n### 【管理者用：正解・出典検証データ】\n\n* 問1: 正解 [3] / 出典: (この問題ブロックの「- 出典:」の行から正確なテキストをコピーし、NotebookLMがここにソース引用を付与できるようにする)\n* 問2: 正解 [2] / 出典: (この問題ブロックの「- 出典:」の行から正確なテキストをコピーし、NotebookLMがここにソース引用を付与できるようにする)`
+        };
+
+        const gem2DB = {
+            en: `# Role & Objective \n\nYou are a backend document automation pipeline connected directly to the Google Workspace tool. Your ONLY permitted function is to take the text provided by the user and immediately execute the \`create_document\` tool to generate a Google Doc. You are strictly FORBIDDEN from displaying code blocks, plain text questions, or raw data in the chat.\n\n# CRITICAL CONSTRAINTS (Zero Tolerance Rules)\n\n1. MANDATORY TOOL EXECUTION: Your very first response action must be to call the \`create_document\` tool with \`document_type: "GOOGLE_DOC"\`. If you output any exam content or formatting code as plain text in the chat instead of generating a file, it is an absolute failure.\n2. NO CODE OUTPUT: Do not show the HTML structure, tags, or source code to the user in the chat window. Keep all document compilation invisible inside the tool argument.\n3. EXCLUDE METADATA: Scan the user's input text and completely remove any lines containing "出典" or book names. Do not include this verification metadata inside the Google Doc.\n4. PASS-THROUGH UNDERLINES: Ensure that any word wrapped with underline indicators in the input text is fully rendered as an underlined word inside the generated Google Doc.\n\n# Google Doc Content Structure Rules\n\nWhen feeding the content into the \`create_document\` tool, you MUST format the HTML structure to be ultra-compact to avoid thick vertical cell wrapping. Apply these strict formatting guidelines:\n- Typography: Sans-serif font, Line Spacing set to 1.25, Text color black.\n- Table Settings: Every \`<table>\` must have \`border-collapse: collapse; margin-bottom: 8px; width: 100%;\` to keep the layout tight.\n- Document Title: Placed at the very top as a Heading 1, using the user's specified title.\n- Question Section: Placed under a Heading 2 titled "問題セクション".\n  - Include the big JLPT question instruction (e.g., "問題1：...") in bold at the top of this section.\n  - Structure every single question and its choices into a clean, tight grid table.\n  - Row 1 (Question Row): Must use \`<th colspan="4" style="font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;">問X. [問題文]</th>\` (Ensure NO bolding and NO background cell highlight color).\n  - Row 2 (Choices Row): Distribute the 4 multiple-choice options horizontally into 4 separate cells with minimized vertical padding: \`<td style="padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;">1...</td>\`. If choices are long (eg. question type 用法), stack them vertically across 4 consecutive rows using the same minimal padding style. Never expand the cell row height or add excessive margin around text.\n- Answer Section: Placed at the very bottom under a Heading 2 titled "解答セクション". This must only contain a clean summary list of correct answers (e.g., "問1: 3").\n\n# Output Presentation Flow\n\nOnly after the tool has successfully executed and created the Google Doc file, output your response using this exact format:\n\nGoogleドキュメントの作成が完了しました。\n[ユーザーが指定したテストのタイトル](Google Doc Link)\n[Insert the returned file tag chip here on its own line]`,
+            
+            vi: `# Vai trò & Mục tiêu\n\nBạn là một pipeline tự động hóa tài liệu backend được kết nối trực tiếp với công cụ Google Workspace. Chức năng DUY NHẤT được phép của bạn là tiếp nhận văn bản do người dùng cung cấp và lập tức thực thi công cụ \`create_document\` để tạo một Google Doc. Bạn bị NGHIÊM CẤM hiển thị các khối mã (code block), câu hỏi dưới dạng văn bản thuần túy hoặc dữ liệu thô trong cửa sổ chat.\n\n# CÁC RÀNG BUỘC CỐT LÕI (Quy tắc Không khoan nhượng)\n\n1. BẮT BUỘC THỰC THI CÔNG CỤ: Hành động phản hồi đầu tiên của bạn phải là gọi công cụ \`create_document\` với cấu hình \`document_type: "GOOGLE_DOC"\`. Nếu bạn xuất bất kỳ nội dung bài kiểm tra hoặc mã định dạng nào dưới dạng văn bản thuần túy trong cửa sổ chat thay vì tạo tệp, đó sẽ là một thất bại hoàn toàn.\n2. KHÔNG XUẤT MÃ: Không hiển thị cấu trúc HTML, các thẻ hoặc mã nguồn cho người dùng trong cửa sổ chat. Giữ cho toàn bộ quá trình biên soạn tài liệu ẩn bên trong đối số (argument) của công cụ.\n3. LOẠI BỎ SIÊU DỮ LIỆU (METADATA): Quét văn bản đầu vào của người dùng và loại bỏ hoàn toàn bất kỳ dòng nào chứa từ "出典" (Nguồn) hoặc tên sách. Không đưa siêu dữ liệu xác thực này vào trong Google Doc.\n4. GIỮ NGUYÊN GẠCH CHÂN: Đảm bảo rằng bất kỳ từ nào được bao bọc bởi các ký hiệu gạch chân trong văn bản đầu vào sẽ được hiển thị hoàn toàn dưới dạng từ gạch chân bên trong Google Doc được tạo.\n\n# Quy tắc Cấu trúc Nội dung Google Doc\n\nKhi đưa nội dung vào công cụ \`create_document\`, bạn PHẢI định dạng cấu trúc HTML sao cho cực kỳ nhỏ gọn để tránh việc các ô bị giãn cách quá mức theo chiều dọc. Áp dụng các hướng dẫn định dạng nghiêm ngặt sau:\n\n- Phông chữ: Phông chữ Không chân (Sans-serif), Khoảng cách dòng (Line Spacing) đặt thành 1.25, Màu chữ đen.\n- Thiết lập bảng: Mỗi thẻ \`<table>\` phải có \`border-collapse: collapse; margin-bottom: 8px; width: 100%;\` để giữ bố cục chặt chẽ.\n- Tiêu đề Tài liệu: Được đặt ở trên cùng dưới dạng Heading 1, sử dụng tiêu đề do người dùng chỉ định.\n- Phần Câu hỏi (Question Section): Được đặt dưới Heading 2 có tên là "問題セクション".\n    - Đưa phần hướng dẫn câu hỏi JLPT lớn (ví dụ: "問題1：...") viết đậm ở đầu phần này.\n    - Cấu trúc từng câu hỏi và các lựa chọn của nó vào một bảng lưới gọn gàng, chặt chẽ.\n    - Hàng 1 (Hàng Câu hỏi): Phải sử dụng thẻ \`<th>\` với kiểu dáng (style) rõ ràng để ghi đè khoảng cách mặc định: \`<th colspan="4" style="font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;">問X. [問題文]</th>\` (Đảm bảo KHÔNG in đậm và KHÔNG có màu nền làm nổi bật ô).\n    - Hàng 2 (Hàng Lựa chọn): Phân phối 4 lựa chọn trắc nghiệm theo chiều ngang vào 4 ô riêng biệt với khoảng đệm dọc (padding) được thu nhỏ tối đa: \`<td style="padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;">1...</td>\`. Nếu các lựa chọn dài (ví dụ: loại câu hỏi 用法 - Cách dùng), hãy xếp chồng chúng theo chiều dọc qua 4 hàng liên tiếp bằng cách sử dụng cùng một kiểu khoảng đệm tối thiểu. Không bao giờ mở rộng chiều cao hàng của ô hoặc thêm lề (margin) quá mức xung quanh văn bản.\n- Phần Đáp án (Answer Section): Được đặt ở dưới cùng dưới Heading 2 có tên là "解答セクション". Phần này chỉ được chứa một danh sách tóm tắt gọn gàng các đáp án đúng (ví dụ: "問1: 3").\n\n# Quy trình Hiển thị Đầu ra\n\nChỉ sau khi công cụ thực thi thành công và tạo tệp Google Doc, hãy xuất phản hồi của bạn theo chính xác định dạng sau:\n\nGoogleドキュメントの作成が完了しました。\n[ユーザーが指定したテストのタイトル](Google Doc Link)\n[Chèn thẻ tệp chip được trả về ở đây trên một dòng riêng biệt]`,
+            
+            ja: `# 役割と目的\n\nあなたは、Google Workspaceツールに直接接続されたバックエンドのドキュメント自動化パイプラインです。あなたに許可されている**唯一の機能**は、ユーザーから提供されたテキストを受け取り、即座に \`create_document\` ツールを実行してGoogleドキュメントを生成することです。チャット内にコードブロック、プレーンテキストの質問、または生（未加工）のデータを表示することは**厳禁**です。\n\n# 最重要制約事項（容認不可能なルール）\n\n1. ツールの必須実行: あなたの最初の返答アクションは、必ず \`document_type: "GOOGLE_DOC"\` を指定して \`create_document\` ツールを呼び出すことでなければなりません。ファイルを作成せずに、テスト内容やフォーマットコードをチャット内にプレーンテキストとして出力した場合、それは完全な失敗とみなされます。\n2. コード出力の禁止: チャットウィンドウ内でユーザーにHTML構造、タグ、またはソースコードを見せないでください。ドキュメントのコンパイルプロセスはすべてツールの引数内部に隠し、ユーザーには見えないようにしてください。\n3. メタデータの除外: ユーザーの入力テキストをスキャンし、「出典」や書籍名が含まれる行を完全に削除してください。この検証用メタデータをGoogleドキュメント内に含めてはなりません。\n4. 下線の引き継ぎ: 入力テキスト内で下線インジケーター（アンダーライン記号など）で囲まれている単語は、生成されたGoogleドキュメント内でも完全に下線付きの単語としてレンダリングされるようにしてください。\n\n# Googleドキュメントのコンテンツ構造ルール\n\n\`create_document\` ツールにコンテンツを渡す際、セルの縦方向の余白が厚くならないように、HTML構造を**極めてコンパクト**にフォーマットしなければなりません。以下の厳格なフォーマットガイドラインを適用してください。\n\n- タイポグラフィ: サンセリフ（Sans-serif）フォント、行間（Line Spacing）は1.25に設定、テキストの色は黒。\n- テーブル設定: レイアウトをコンパクトに保つため、すべての \`<table>\` に \`border-collapse: collapse; margin-bottom: 8px; width: 100%;\` を指定すること。\n- ドキュメントのタイトル: 最上部に Heading 1（見出し1）として配置し、ユーザーが指定したタイトルを使用する。\n- 問題セクション: 「問題セクション」というタイトルの Heading 2（見出し2）の下に配置する。\n    - このセクションの最上部に、JLPTの大きな問題指示（例：「問題1：...」）を太字で含めること。\n    - すべての問題とその選択肢を、クリーンで引き締まったグリッドテーブル構造にまとめること。\n    - 行1（問題行）: デフォルトの余白を上書きするため、明示的なスタイルを指定した \`<th>\` を使用しなければならない：\`<th colspan="4" style="font-weight: normal; background: none; text-align: left; padding: 2px 4px; margin: 0; line-height: 1.25;">問X. [問題文]</th>\`（太字にせず、セルの背景ハイライト色も適用しないことを徹底すること）。\n    - 行2（選択肢行）: 4つの選択肢を、縦方向のパディングを最小限に抑えた4つの別々のセルに水平に配置する：\`<td style="padding: 2px 4px; margin: 0; line-height: 1.25; width: 25%;">1...</td>\`。もし選択肢が長い場合（例：問題タイプ「用法」など）、同じ最小パディングスタイルを使用して、連続する4つの行に縦に積み重ねる。セルの行の高さを広げたり、テキストの周囲に過剰なマージンを追加したりしてはならない。\n- 解答セクション: 最下部の「解答セクション」というタイトルの Heading 2（見出し2）の下に配置する。ここには正解のクリーンな要約リストのみを含めること（例：「問1: 3」）。\n\n# 出力プレゼンテーションの流れ\n\nツールが正常に実行され、Googleドキュメントファイルが作成された**後にのみ**、以下の正確なフォーマットを使用して応答を出力してください。\n\nGoogleドキュメントの作成が完了しました。\n[ユーザーが指定したテストのタイトル](Google Doc Link)\n[返されたファイルタグのチップをこの行に単独で挿入する]`
+        };
+
+        const slideTranslations = {
+            vi: {
+                header_subtitle: "JLPT Assessment Workshop",
+                slide1_sub: "WORKSHOP ĐÀO TẠO NÂNG CAO",
+                slide1_title: "ỨNG DỤNG AI THIẾT KẾ NGÂN HÀNG ĐỀ & ĐỀ THI JLPT TỰ ĐỘNG",
+                slide1_desc: "Tối ưu quy trình khảo thí kỹ năng ngôn ngữ với NotebookLM & Gemini Gems",
+                slide1_meta1_title: "Thời lượng",
+                slide1_meta1_val: "90 - 120 Phút",
+                slide1_meta2_title: "Đối tượng",
+                slide1_meta2_val: "Giảng viên Sun*",
+                slide1_meta3_title: "Công cụ",
+
+                slide2_title: "Khung Chương Trình & Phân Bổ Thời Gian",
+                slide2_desc: "Tiến trình hoạt động cụ thể giúp kiểm soát thời lượng buổi workshop.",
+                slide2_m1_time: "Phút 00 - 05",
+                slide2_m1_title: "Giới thiệu & Cấp thiết",
+                slide2_m1_desc: "Xu hướng xã hội và mục tiêu \"AI-Ready\" của Sun*.",
+                slide2_m2_time: "Phút 05 - 10",
+                slide2_m2_title: "Công cụ & PACKED",
+                slide2_m2_desc: "Định hình tư duy thiết kế prompt với bộ khung chuẩn hóa.",
+                slide2_m3_time: "Phút 10 - 45",
+                slide2_m3_title: "Thực hành 1: NotebookLM",
+                slide2_m3_desc: "Số hóa sách tài liệu JLPT thành ngân hàng dữ liệu câu hỏi cá nhân.",
+                slide2_m4_time: "Phút 45 - 85",
+                slide2_m4_title: "Thực hành 2: Gemini Gems",
+                slide2_m4_desc: "Thiết lập 2 trợ lý ảo chuyên nghiệp sinh đề thi chuẩn Google Docs.",
+                slide2_m5_time: "Phút 85 - 95+",
+                slide2_m5_title: "Q&A & Đóng gói",
+                slide2_m5_desc: "Khắc phục các lỗi định dạng và hoàn thành mục tiêu.",
+
+                slide3_title: "Tính cấp thiết của AI trong đào tạo",
+                slide3_c1_title: "Xu hướng & Định hướng Sun*",
+                slide3_c2_title: "Trọng tâm ứng dụng",
+
+                slide4_title: "Cơ chế Công Cụ & Tư Duy Prompt PACKED",
+                slide4_c1_title: "Bộ đôi công cụ cốt lõi",
+                slide4_c2_title: "Khung thiết kế Instructions: PACKED",
+                slide4_c2_badge: "LƯU Ý: KHÔNG CẦN CỨNG NHẮC VIẾT ĐÚNG TIÊU ĐỀ",
+                slide4_p: "Vai trò/hình mẫu của AI",
+                slide4_a: "Nhiệm vụ, quy trình hành động",
+                slide4_c: "Ràng buộc & đối tượng đích",
+                slide4_k: "Dữ liệu nguồn tham chiếu",
+                slide4_ed: "Tương tác và cấu trúc đầu ra",
+
+                slide5_module: "MODULE 3 - THỰC HÀNH 1",
+                slide5_title: "Quy trình Số hóa Ngân hàng đề với NotebookLM",
+                slide5_s1_title: "Mở & Tạo Notebook",
+                slide5_s1_desc: "Truy cập notebooklm.google.com, tạo không gian làm việc mới.",
+                slide5_s2_title: "Nạp Dữ Liệu Nguồn",
+                slide5_s2_desc: "Chọn Add Source và tải lên file PDF sách JLPT (N3/N2) làm cơ sở tham chiếu.",
+                slide5_rule_title: "Quy ước đặt tên (Nguồn Đề):",
+                slide5_rule_ex: "Ví dụ: ",
+
+                slide6_flow_title: "Thực Hành 1: Tiến Trình Hoạt Động (35 Phút)",
+                slide6_step1_badge: "01. DEMO (10 Phút)",
+                slide6_step2_badge: "02. BREAKOUT ROOM (15 Phút)",
+                slide6_step3_badge: "03. MAIN ROOM (10 Phút)",
+                slide6_flow_step1_title: "Giảng Viên Hướng Dẫn",
+                slide6_flow_step2_title: "Học Viên Thực Hành Nhóm",
+                slide6_flow_step3_title: "Chia Sẻ & Khắc Phục Lỗi",
+                slide6_btn_drive: "Thư mục Sách JLPT (Google Drive)",
+                slide6_step2_top: "THỰC HÀNH CHÍNH",
+
+                slide6_title: "Tài nguyên: Bộ Prompt Trích xuất Chuẩn hóa",
+                slide6_t1: "Từ Vựng (Vocabulary)",
+                slide6_t2: "Ngữ Pháp (Grammar)",
+
+                slide7_module: "MODULE 4 - THỰC HÀNH 2",
+                slide7_title: "Kiến Trúc Sinh Đề Liên Hoàn (Dual Gems Architecture)",
+                slide7_g1_badge: "BƯỚC 1",
+                slide7_g1_title: "GEM 1: Trợ lý Biên soạn",
+                slide7_g1_desc: "Liên kết cơ sở tri thức từ NotebookLM để chọn lọc và trộn ngẫu nhiên đề.",
+                slide7_arrow: "Copy Thô",
+                slide7_g2_badge: "BƯỚC 2",
+                slide7_g2_title: "GEM 2: Chuyên gia Google Docs",
+                slide7_g2_desc: "Tiếp nhận đề thô đã được duyệt và tiến hành cấu hình API tự động.",
+
+                slide9_flow_title: "Thực Hành 2: Tiến Trình Hoạt Động (40 Phút)",
+                slide9_step1_badge: "01. DEMO (10 Phút)",
+                slide9_step2_badge: "02. BREAKOUT ROOM (15 Phút)",
+                slide9_step3_badge: "03. MAIN ROOM (15 Phút)",
+                slide9_flow_step1_title: "Giảng Viên Hướng Dẫn",
+                slide9_flow_step2_title: "Học Viên Thực Hành Nhóm",
+                slide9_flow_step3_title: "Trình Bày & Tối Ưu Hóa",
+                slide9_step2_top: "THỰC HÀNH CHÍNH",
+
+                slide8_title: "Instructions: Gem 1 (Tạo & Xác thực)",
+                slide9_title: "Instructions: Gem 2 (Tạo Docs)",
+
+                btn_english: "English (Khuyên dùng)",
+
+                slide10_title: "Prompt Vận Hành Cho Gem 1 & Gem 2",
+                slide10_c1_title: "Case 1: Từ Vựng Cơ Bản",
+                slide10_c1_val: "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 漢字読み, 表記, 文脈規定.",
+                slide10_c2_title: "Case 2: Từ Vựng Nâng Cao",
+                slide10_c2_val: "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 言い換え類義, 用法.",
+                slide10_c3_title: "Case 3: Ngữ Pháp",
+                slide10_c3_val: "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 文法形式の判断, 文の組み立て.",
+                slide10_g2_label: "Prompt cho Gem 2 (Tạo Docs):",
+                slide10_g2_desc: "Hãy tạo đề thi trên Google Docs với dữ liệu dưới đây:\n【Dữ liệu】",
+
+                slide11_title: "Tổng kết & Định hướng Hành Động Tiếp Theo",
+                slide11_c1_title: "Lưu ý Bảo mật dữ liệu",
+                slide11_c3_title: "Chia sẻ tri thức",
+                slide11_qa: "Giải đáp thắc mắc của giảng viên về quy trình trích xuất, lỗi định dạng tệp Docs hoặc lỗi OCR dữ liệu.",
+
+                slide14_title: "Hoạt Động Về Nhà & Ứng Dụng Thực Tiễn",
+                slide14_desc: "Hãy lựa chọn một trong hai phương án hành động dưới đây để tối ưu hóa công việc hàng ngày của bạn.",
+                slide14_optA_title: "Xây dựng Đề thi JLPT hoàn chỉnh",
+                slide14_optB_title: "Định vị & Tối ưu hóa Hiệu suất",
+                slide14_footer: "Mục tiêu: Chuyển hóa kiến thức từ lý thuyết sang năng suất làm việc thực tế!",
+
+                btn_copy: "Sao chép",
+                btn_copy_instructions: "Sao chép Instruction",
+                btn_copy_prompt: "Copy Prompt",
+                btn_notes: "Hiện Ghi Chú Giảng Viên (N)"
+            },
+            ja: {
+                header_subtitle: "JLPTアセスメントワークショップ",
+                slide1_sub: "講師向け高度教育ワークショップ",
+                slide1_title: "AIを活用したJLPT問題バンク＆自動試験作成",
+                slide1_desc: "NotebookLMとGemini Gemsによる言語評価プロセスの最適化",
+                slide1_meta1_title: "所要時間",
+                slide1_meta1_val: "90 - 120分",
+                slide1_meta2_title: "対象者",
+                slide1_meta2_val: "Sun* 講師陣",
+                slide1_meta3_title: "ツール",
+
+                slide2_title: "プログラム概要＆タイムライン",
+                slide2_desc: "ワークショップの進行スケジュール & 各セッションの時間配分。",
+                slide2_m1_time: "00 - 05分",
+                slide2_m1_title: "導入＆必要性",
+                slide2_m1_desc: "社会的トレンドとSun*の「AI-Ready」推進の目的。",
+                slide2_m2_time: "05 - 10分",
+                slide2_m2_title: "ツール紹介＆PACKED",
+                slide2_m2_desc: "標準化フレームワークによるプロンプト設計思考の確立。",
+                slide2_m3_time: "10 - 45分",
+                slide2_m3_title: "ワーク 1：NotebookLM",
+                slide2_m3_desc: "JLPT教材を問題バンクとしてデジタル化する実践。",
+                slide2_m4_time: "45 - 85分",
+                slide2_m4_title: "ワーク 2：Gemini Gems",
+                slide2_m4_desc: "Googleドキュメント対応 of 試験作成用カスタムアシスタントの構築。",
+                slide2_m5_time: "85 - 95+分",
+                slide2_m5_title: "Q&A＆クロージング",
+                slide2_m5_desc: "レイアウトエラーの解決とアクションプランの確定。",
+
+                slide3_title: "教育におけるAI活用の必要性",
+                slide3_c1_title: "社会的トレンド＆Sun*の方向性",
+                slide3_c2_title: "主な適用分野",
+
+                slide4_title: "ツールの仕組み＆PACKEDプロンプト思考",
+                slide4_c1_title: "中核となる2つのツール",
+                slide4_c2_title: "プロンプト構築：PACKEDフレームワーク",
+                slide4_c2_badge: "注意：各見出しの言葉通りに書く必要はありません",
+                slide4_p: "AIの役割・キャラクター設定",
+                slide4_a: "実行タスク、処理プロセス",
+                slide4_c: "制約事項・出力対象ユーザー",
+                slide4_k: "参照用のソースデータ",
+                slide4_ed: "インタラクションと出力形式",
+
+                slide5_module: "MODULE 3 - 実践1",
+                slide5_title: "NotebookLMを活用した問題バンクのデジタル化プロセス",
+                slide5_s1_title: "Notebookの新規作成",
+                slide5_s1_desc: "notebooklm.google.com にアクセスし、新しいワークスペースを作成します。",
+                slide5_s2_title: "ソースデータのアップロード",
+                slide5_s2_desc: "「Add Source」を選択し、参照用のJLPT教材(PDF形式)をロードします。",
+                slide5_rule_title: "命名規則 (問題バンクソース):",
+                slide5_rule_ex: "例：",
+
+                slide6_flow_title: "実践1：アクティビティフロー（35分）",
+                slide6_step1_badge: "01. デモ (10分)",
+                slide6_step2_badge: "02. グループワーク (15分)",
+                slide6_step3_badge: "03. 共有とトラブルシューティング (10分)",
+                slide6_flow_step1_title: "講師によるデモ",
+                slide6_flow_step2_title: "グループワーク",
+                slide6_flow_step3_title: "共有とトラブルシューティング",
+                slide6_btn_drive: "JLPT教材フォルダ (Google Drive)",
+                slide6_step2_top: "メインの実践セッション",
+
+                slide6_title: "リソース：標準化された抽出用プロンプト集",
+                slide6_t1: "語彙（Vocabulary）",
+                slide6_t2: "文法（Grammar）",
+                
+                slide7_module: "MODULE 4 - 実践2",
+                slide7_title: "連携型ダブルGemsアーキテクチャ（Dual Gems Architecture）",
+                slide7_g1_badge: "ステップ 1",
+                slide7_g1_title: "GEM 1：問題作成アシスタント",
+                slide7_g1_desc: "NotebookLMの問題バンクから、ランダムかつ適切に問題を選択・構成します。",
+                slide7_arrow: "コピー",
+                slide7_g2_badge: "ステップ 2",
+                slide7_g2_title: "GEM 2：Google Docs専門アシスタント",
+                slide7_g2_desc: "検証済みの問題データを受け取り、ドキュメント用APIに最適化させます。",
+
+                slide9_flow_title: "実践2：アクティビティフロー（40分）",
+                slide9_step1_badge: "01. デモ (10分)",
+                slide9_step2_badge: "02. グループワーク (15分)",
+                slide9_step3_badge: "03. 発表と最適化 (15分)",
+                slide9_flow_step1_title: "講師によるデモ",
+                slide9_flow_step2_title: "グループワーク",
+                slide9_flow_step3_title: "発表と最適化",
+                slide9_step2_top: "メインの実践セッション",
+
+                slide8_title: "Instructions：Gem 1（問題作成＆検証）",
+                slide9_title: "Instructions：Gem 2（ドキュメント書き出し用）",
+
+                btn_english: "English (おすすめ)",
+
+                slide10_title: "Gem 1＆Gem 2の運用プロンプト",
+                slide10_c1_title: "ケース 1：基本語彙",
+                slide10_c1_val: "N3の漢字読み、表記、文脈規定の各形式でそれぞれ5問ずつ作成してください。",
+                slide10_c2_title: "ケース 2：応用語彙",
+                slide10_c2_val: "N3の言い換え類義、用法の各形式でそれぞれ5問ずつ作成してください。",
+                slide10_c3_title: "ケース 3：文法項目",
+                slide10_c3_val: "N3の文法形式の判断、文の組み立ての各形式でそれぞれ5問ずつ作成してください。",
+                slide10_g2_label: "Gem 2の実行プロンプト（Docs作成）:",
+                slide10_g2_desc: "以下のデータでGoogleドキュメントのテストを作成してください。\n【データ】",
+
+                slide11_title: "まとめ＆次のステップへの行動指針",
+                slide11_c1_title: "データセキュリティの注意点",
+                slide11_c3_title: "ナレッジ共有の推進",
+                slide11_qa: "抽出精度の課題、ドキュメントのレイアウト修正、またはPDFのOCRエラーへの対応など、何でもご質問ください。",
+
+                slide14_title: "ホームワーク＆実践 Activity",
+                slide14_desc: "日々の業務効率を最大化するために、以下2つのアプローチのいずれかを選択して実践してください。",
+                slide14_optA_title: "JLPT模擬試験の完全作成",
+                slide14_optB_title: "生産性の特定と最適化",
+                slide14_footer: "目標：学んだ知識を理論から実際の業務生産性向上へと昇華させること！",
+
+                btn_copy: "コピーする",
+                btn_copy_instructions: "Instructionsをコピー",
+                btn_copy_prompt: "プロンプトをコピー",
+                btn_notes: "講師用ノートを表示 (N)"
+            }
+        };
+    </script>
+
+    <script>
+        // Slide presenter notes mapping for VI and JA (Supports exactly 15 slides)
+        const presenterNotesDB = {
+            vi: [
+                "Chào mừng toàn thể anh chị em giảng viên Sun* đến với Workshop! Hãy khơi gợi tính cấp thiết: AI không thay thế con người, nhưng người dùng thạo AI sẽ thay thế người không dùng.",
+                "Tóm tắt thời gian để học viên chủ động sắp xếp công việc thực hành trong phòng breakout room.",
+                "Phân tích về thực trạng soạn đề thủ công: tốn 2-3 tiếng cho một đề. Nếu dùng AI đúng cách, chỉ mất 15-20 phút kiểm duyệt. Nhấn mạnh việc chuyển dịch tư duy sang Prompt -> Verify -> Edit.",
+                "Giới thiệu vai trò và tính năng cốt lõi của hai công cụ NotebookLM (Chính xác nguồn) và Gemini Gems (Tính lặp lại nhất quán). Giới thiệu ngắn gọn khung PACKED.",
+                "Bắt đầu Thực hành 1: Khởi tạo dữ liệu nguồn. Nhắc học viên mở link notebooklm, chuẩn bị sẵn tệp nguồn, dán prompt trích xuất ở Slide 7 rồi copy kết quả làm source văn bản mới.",
+                "Bắt đầu hoạt động thực hành trích xuất đề nhóm. Nhắc học viên quản lý thời gian: 10 phút demo, 15 phút breakout, 10 phút quay lại phòng lớn. Học viên có thể truy cập link Google Drive để tải bất kỳ giáo trình nào muốn thử nghiệm, chia nhóm để hỗ trợ lẫn nhau giải quyết khó khăn kỹ thuật.",
+                "Giảng viên thực hiện thao tác demo trực tiếp trên màn hình. Hướng dẫn học viên cách đổi ngôn ngữ, copy nhanh mã trích xuất YAML dán thẳng vào NotebookLM.",
+                "Chuyển tiếp sang Thực hành 2: Giải thích mô hình 2 Gems liên hoàn. Gem 1 là kiến trúc sư biên soạn dữ liệu gốc, Gem 2 đóng vai trò kỹ thuật nén HTML để đưa sang Google Docs không lỗi bảng.",
+                "Trình bày quy trình 4 bước thực thi thực tế (SOP). Nhấn mạnh tính tuần tự: Soạn đề (Gem 1) -> Xác thực (Verify) -> Định dạng (Gem 2) -> Xuất bản (Google Docs) để tăng tốc độ làm việc tối đa.",
+                "Bắt đầu hoạt động thực hành tạo Gems liên hoàn. Phân bổ: 10 phút giảng viên demo kỹ lưỡng cách thiết lập instructions của cả 2 Gems, 15 phút breakout để học viên thực hành, 15 phút quay lại dán link Google Docs thành phẩm để chấm bài mẫu.",
+                "Demo thiết lập Gem 1 trên màn hình. Giải thích tại sao nên cài đặt Instructions bằng tiếng Anh (LLM hiểu logic tốt nhất) nhưng có thể nhận diện và xuất bản nội dung đề tiếng Nhật hoàn hảo.",
+                "Demo thiết lập Gem 2. Lưu ý học viên cách thức nén chặt code HTML để tránh bảng biểu trong Google Docs bị co giãn dòng quá xấu.",
+                "Giới thiệu các câu lệnh Prompt ngắn gọn (Case 1, 2, 3) để người dùng điều khiển Gem 1 tạo đề sau khi đã cấu hình xong Instructions.",
+                "Tổng kết buổi học. Nhắc nhở nghiêm túc về vấn đề bảo mật dữ liệu của công ty khi đưa lên các server AI công cộng. Chuẩn bị chuyển tiếp sang phần hoạt động thực hành tự học.",
+                "Hướng dẫn hoạt động về nhà. Khích lệ tinh thần chủ động ứng dụng AI của các thầy cô thông qua 2 lựa chọn: số hóa bài thi thực tế hoặc chủ động đề xuất ý tưởng tối ưu hóa các đầu việc hàng ngày bằng AI để nâng cao hiệu suất dạy học."
+            ],
+            ja: [
+                "Sun*の講師陣の皆様、本ワークショップへようこそ！導入時のマインドセットとして、「AIは人を代替しないが、AIを使いこなす人が、使いこなせない人を代替する」という時代の要請を伝え、強い動機付けを行います。",
+                "各ワークの所要時間 & アジェンダの流れを事前に説明し、ブレイクアウトルームでのグループ学習の目安を提示します。",
+                "手作業でテストを作成すると2〜3時間かける現状を、AI活用によって15〜20分の検証作業だけに縮小できるメリットを説明。「Prompt -> Verify -> Edit」へのマインド転換を強調します。",
+                "NotebookLM（ソースデータに忠実、ハルシネーションの排除）とGemini Gems（一貫した手順実行）のそれぞれの利点を説明。PACKEDの基本構造にも触れます。",
+                "ワーク1：ソース問題データの作成プロセス。事前に配布されたPDF問題集を手元に用意し、スライド7にある抽出用プロンプトを実行してソース化する流れを解説します。",
+                "抽出実践アクティビティを開始します。時間管理（デモ10分、グループワーク15分、共有10分）をアナウンスします。配布されたGoogle Driveから好きな教材をダウンロードしてグループで協力し合いながら進めるよう促します。",
+                "講師によるライブデモを実施します。プロンプト表示部分で言語(日本語/ベトナム語)を切り替え、YAML構造プロンプトをワンクリックでコピーして実行する実演をします。",
+                "ワーク2：ダブルGemsによる連携プロセスを解説。Gem 1が問題を作成し、Gem 2がGoogle Docs形式に一括整形（HTMLテーブル形式を最適化）する役割分担を理解させます。",
+                "実際の4ステップ運用ルール（SOP）を提示します。「問題作成(Gem 1) -> 人間による検証(Verify) -> 書式整形(Gem 2) -> Googleドキュメント出力」の順序を守ることで、最大限の生産性が得られます。",
+                "連携型Gemsの作成実習を開始します。時間配分（デモ10分、実習15分、共有15分）を意識させます。Gem 1と2の設定手順を丁寧に解説した後にブレイクアウトに入ります。",
+                "Gem 1の設定方法を講師がスクリーンでデモします。LLMの動作最適化のために指示書は英語ですが、抽出されるテストコンテンツは完全に日本語化される仕組みを解説します。",
+                "Gem 2（Docs整形）の設定方法をデモ。Docs貼り付け時に表（テーブル）が不必要に縦長に伸びる問題を回避するため、HTMLのCSS記述をコンパクトに圧縮する工夫を提示します。",
+                "設定完了後の実際の運用プロンプト（Case 1, 2, 3）を紹介。目的に合わせた簡単な命令文でGem 1から欲しい設問パターンを抜き出せる便利さを実感させます。",
+                "全体のまとめ。公開サーバーに企業の機密データを絶対にアップロードしないよう、セキュリティガイドラインを厳守するよう改めて強く注意喚起を行います。",
+                "ホームワークのアナウンス。学んだ仕組みで実際にテストを1本作成する「課題A」と、現在の教育業務の課題をAIでどう解決できるかを測定する「課題B」の2つの道を示し、自主学習と実践を促します。"
+            ]
+        };
+    </script>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 15; // Set precisely to 15 slides
+        let globalSlideLang = 'vi'; 
+
+        // Interactive States for Resources inside slides
+        let selectedPromptType = 'vocab';
+        let selectedPromptLang = 'ja';
+        
+        let selectedGem1Lang = 'en';
+        let selectedGem2Lang = 'en';
+
+        // Helper to solve Triple Backticks escape issues dynamically at runtime
+        // Safety guard added: returns empty string if text is undefined/null
+        function resolveBackticks(text) {
+            if (!text) return '';
+            return text.replace(/___TB___/g, '`' + '`' + '`');
+        }
+
+        window.onload = function() {
+            // Initializing View rendering
+            updateSlideView();
+            updatePromptDisplay();
+            updateGem1Display();
+            updateGem2Display();
+            translateStaticBlocks('vi'); // Ensure statically updated segments are rendered properly
+
+            // Keyboard shortcut support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevSlide();
+                } else if (e.key.toLowerCase() === 'f') {
+                    toggleFullscreen();
+                } else if (e.key.toLowerCase() === 'n') {
+                    toggleNotesDrawer();
+                } else if (e.key.toLowerCase() === 'r') {
+                    toggleResourcesDrawer();
+                }
+            });
+
+            // Touch support for swipe transitions
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', function(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            document.addEventListener('touchend', function(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    nextSlide(); 
+                }
+                if (touchEndX > touchStartX + 50) {
+                    prevSlide(); 
+                }
+            }
+        };
+
+        function setGlobalLanguage(lang) {
+            globalSlideLang = lang;
+            
+            // Toggle Header switcher buttons
+            const btnVi = document.getElementById('btn-glob-vi');
+            const btnJa = document.getElementById('btn-glob-ja');
+            
+            if (lang === 'vi') {
+                btnVi.className = "px-3 py-1 rounded-md font-bold transition-all bg-gradient-to-r from-cyan-500 to-indigo-500 text-white";
+                btnJa.className = "px-3 py-1 rounded-md font-bold transition-all text-slate-400 hover:text-slate-200";
+            } else {
+                btnJa.className = "px-3 py-1 rounded-md font-bold transition-all bg-gradient-to-r from-cyan-500 to-indigo-500 text-white";
+                btnVi.className = "px-3 py-1 rounded-md font-bold transition-all text-slate-400 hover:text-slate-200";
+            }
+
+            // Loop and translate all elements with data-translate-key attribute
+            const elements = document.querySelectorAll('[data-translate-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (slideTranslations[lang][key]) {
+                    el.innerText = slideTranslations[lang][key];
+                }
+            });
+
+            // Handle custom nested block translations
+            translateStaticBlocks(lang);
+
+            // Re-render current slide to update notes language dynamically
+            updateSlideView();
+        }
+
+        // Translation for elements with complicated internal HTML markup
+        function translateStaticBlocks(lang) {
+            const list3_1 = document.getElementById('slide3_c1_list');
+            const list3_2 = document.getElementById('slide3_c2_list');
+            const blockWarn = document.getElementById('slide3_warn');
+            const slide4_c1 = document.getElementById('slide4_c1_desc');
+            const slide5_ex = document.getElementById('slide5_rule_ex');
+            
+            // Slide 5 Steps Adjustments
+            const slide5_step3_title = document.getElementById('slide5_step3_title');
+            const slide5_step3_desc = document.getElementById('slide5_step3_desc');
+            const slide5_step4_title = document.getElementById('slide5_step4_title');
+            const slide5_step4_desc = document.getElementById('slide5_step4_desc');
+
+            // Slide 6 Timelines Adjustments
+            const slide6_flow_step1_desc = document.getElementById('slide6_flow_step1_desc');
+            const slide6_flow_step2_desc = document.getElementById('slide6_flow_step2_desc');
+            const slide6_flow_step3_desc = document.getElementById('slide6_flow_step3_desc');
+
+            // Slide 9 (NEW SOP Slide)
+            const slide9_sop_title = document.getElementById('slide9_sop_title');
+            const slide9_sop_desc = document.getElementById('slide9_sop_desc');
+            const slide9_step1_badge = document.getElementById('slide9_step1_badge');
+            const slide9_step1_title = document.getElementById('slide9_step1_title');
+            const slide9_step1_desc = document.getElementById('slide9_step1_desc');
+            const slide9_step2_badge = document.getElementById('slide9_step2_badge');
+            const slide9_step2_title = document.getElementById('slide9_step2_title');
+            const slide9_step2_desc = document.getElementById('slide9_step2_desc');
+            const slide9_step3_badge = document.getElementById('slide9_step3_badge');
+            const slide9_step3_title = document.getElementById('slide9_step3_title');
+            const slide9_step3_desc = document.getElementById('slide9_step3_desc');
+            const slide9_step4_badge = document.getElementById('slide9_step4_badge');
+            const slide9_step4_title = document.getElementById('slide9_step4_title');
+            const slide9_step4_desc = document.getElementById('slide9_step4_desc');
+            const slide9_tip = document.getElementById('slide9_tip');
+
+            // Slide 10 Timelines Adjustments
+            const slide9_flow_step1_desc = document.getElementById('slide9_flow_step1_desc');
+            const slide9_flow_step2_desc = document.getElementById('slide9_flow_step2_desc');
+            const slide9_flow_step3_desc = document.getElementById('slide9_flow_step3_desc');
+
+            // Gem Architecture Subtitles
+            const slide7_g1_sub = document.getElementById('slide7_g1_sub');
+            const slide7_g2_sub = document.getElementById('slide7_g2_sub');
+            
+            // Footer & Static elements translation
+            const slide11_c1_desc = document.getElementById('slide11_c1_desc');
+            const slide11_c3_desc = document.getElementById('slide11_c3_desc');
+            
+            const slide14_optA_desc = document.getElementById('slide14_optA_desc');
+            const slide14_optB_desc = document.getElementById('slide14_optB_desc');
+
+            const help_title = document.getElementById('help_title');
+            const help_list = document.getElementById('help_list');
+            const btn_close_help = document.getElementById('btn_close_help');
+            const drawer_notes_title = document.getElementById('drawer_notes_title');
+            const res_title = document.getElementById('res_title');
+            const res_desc = document.getElementById('res_desc');
+
+            if (lang === 'vi') {
+                list3_1.innerHTML = '<li>Sự bùng nổ của <strong class="text-cyan-400">GenAI</strong> thay đổi vai trò giảng viên từ cung cấp sang "thiết kế" trải nghiệm học.</li>' +
+                                     '<li>Định hướng <strong class="text-cyan-400">"AI-Ready"</strong>: Giải phóng tối đa thao tác thủ công, nâng tầm năng lực số đội ngũ.</li>';
+                list3_2.innerHTML = '<li>Ứng dụng của AI: tạo test nhanh, thiết kế slide bài giảng chuyên nghiệp, phân tích kết quả học viên.</li>' +
+                                     '<li class="text-cyan-300 font-semibold">Trọng tâm hôm nay: Tự động hóa trọn gói khâu trích xuất tạo ngân hàng đề và xuất đề chuẩn hóa.</li>';
+                blockWarn.innerHTML = '<strong>Thách thức lớn nhất:</strong> Thay đổi thói quen làm việc. Cần chuyển dịch từ tư duy tự viết mọi thứ sang quy trình cộng tác: <strong>Prompting (Ra lệnh) &rarr; Verifying (Xác thực) &rarr; Editing (Tinh chỉnh)</strong>.';
+                slide4_c1.innerHTML = '<p><strong>NotebookLM:</strong> Trợ lý thông thái hoạt động hoàn toàn dựa trên tài liệu gốc do bạn tải lên (PDF, Docs). Loại bỏ ảo tưởng.</p>' +
+                                       '<p><strong>Gemini Gems:</strong> Trợ lý ảo chuyên biệt hoạt động theo cấu hình hướng dẫn (Instructions) cố định để thực thi lặp lại nhất quán.</p>';
+                
+                slide5_ex.innerHTML = 'Ví dụ: <code class="bg-slate-900 px-2 py-1 rounded text-slate-300">[Bank]_N3_漢字読み_1</code>';
+                
+                slide5_step3_title.innerText = "Gửi Prompt Trích xuất";
+                slide5_step3_desc.innerHTML = "Dán bộ prompt YAML chuẩn hóa (được cấp ở <strong>slide 7</strong>) vào khung chat.<br><span class='text-amber-300 font-semibold text-[10px] block mt-1'><i class='fa-solid fa-triangle-exclamation mr-1'></i> Chú ý cần sửa lại loại câu hỏi muốn trích xuất trong prompt</span>";
+                slide5_step4_title.innerText = "Lưu & Tạo Nguồn Đề";
+                slide5_step4_desc.innerText = "Bấm nút Copy câu trả lời, chọn Add Source -> Paste text, dán nội dung vào và đổi tên theo chuẩn.";
+
+                slide6_flow_step1_desc.innerText = "Giảng viên thao tác trực quan: mở NotebookLM, tải lên tài liệu PDF, nhập Prompt trích xuất và biến đổi câu trả lời thành nguồn dữ liệu mới.";
+                slide6_flow_step2_desc.innerText = "Học viên vào phòng 3-4 người để cùng hỗ trợ, chia sẻ lẫn nhau. Tải giáo trình JLPT bất kỳ muốn thử nghiệm từ Thư mục Tài nguyên bên dưới, dán prompt trích xuất và tạo Ngân hàng đề riêng.";
+                slide6_flow_step3_desc.innerText = "Trở lại phòng họp lớn. Đại diện 1-2 nhóm chia sẻ thành quả nguồn dữ liệu đã số hóa. Giảng viên giải đáp khó khăn và chốt quy tắc đặt tên.";
+
+                // Translating Slide 9
+                slide9_sop_title.innerHTML = '<span class="text-cyan-400 mr-2">08.</span> Quy trình thực thi 4 bước (Step-by-Step SOP)';
+                slide9_sop_desc.innerText = "Cách phối hợp nhịp nhàng giữa Gem 1 và Gem 2 để xuất đề chuẩn chỉnh.";
+                slide9_step1_badge.innerText = "BƯỚC 1";
+                slide9_step1_title.innerText = "Cấu hình & Liên kết Gem 1";
+                slide9_step1_desc.innerText = "Tạo Gem 1 với Instructions, liên kết NotebookLM làm cơ sở dữ liệu gốc.";
+                slide9_step2_badge.innerText = "BƯỚC 2";
+                slide9_step2_title.innerText = "Sinh đề thô & Duyệt";
+                slide9_step2_desc.innerText = "Dùng câu lệnh Case 1, 2, 3 để Gem 1 sinh đề thô. Giảng viên kiểm tra tính đúng đắn.";
+                slide9_step3_badge.innerText = "BƯỚC 3";
+                slide9_step3_title.innerText = "Tạo Gem 2 định dạng";
+                slide9_step3_desc.innerText = "Tạo Gem 2 với Instructions định dạng nén HTML siêu hẹp cho Google Docs.";
+                slide9_step4_badge.innerText = "BƯỚC 4";
+                slide9_step4_title.innerText = "Chuyển đổi & Xuất bản";
+                slide9_step4_desc.innerText = "Dán đề thô vào Gem 2, copy kết quả đầu ra dán thẳng vào Google Docs.";
+                slide9_tip.innerHTML = '<i class="fa-solid fa-lightbulb"></i> <span><strong>Mẹo thực chiến:</strong> Hãy luôn duyệt trước đề ở Gem 1 trước khi đưa sang Gem 2 để tránh mất thời gian định dạng lại nhiều lần!</span>';
+
+                slide9_flow_step1_desc.innerText = "Giảng viên demo toàn bộ chuỗi: Tạo Gem 1 kết nối với NotebookLM để sinh đề thô -> Xác thực đề -> Đưa vào Gem 2 -> Tạo và xuất bảng dữ liệu sạch lên Google Docs.";
+                slide9_flow_step2_desc.innerText = "Chia phòng thực hành. Từng học viên thiết lập hệ thống 2 Gems cá nhân, dán prompt vận hành (Case 1, 2, 3), và tạo thử 1 tệp Google Doc hoàn chỉnh.";
+                slide9_flow_step3_desc.innerText = "Học viên trở lại phòng họp lớn, dán liên kết Google Doc thành phẩm vào chat box. Giảng viên hỗ trợ xử lý lỗi định dạng bảng hoặc lỗi rò rỉ siêu dữ liệu.";
+
+                slide7_g1_sub.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-cyan-400 mr-1"></i> Xuất bản đề thô và đáp án để giảng viên thẩm định (Verify).';
+                slide7_g2_sub.innerHTML = '<i class="fa-solid fa-file-word text-indigo-400 mr-1"></i> Thiết lập bảng biểu HTML nén chặt, gạch chân chuẩn để dán trực tiếp.';
+                
+                slide11_c1_desc.innerHTML = 'Tuyệt đối tuân thủ quy tắc bảo mật dữ liệu nội bộ của Sun*. Không tải các thông tin nhạy cảm của khách hàng hay công ty lên mô hình công cộng.';
+                slide11_c3_desc.innerHTML = 'Cùng đóng góp và phát triển thư viện chung. Chia sẻ các bộ Instruction Gems đã được tùy biến thông minh lên không gian chung của đội ngũ Sun*.';
+                
+                if (slide14_optA_desc) {
+                    slide14_optA_desc.innerText = "Tự tạo Ngân hàng đề thi của cấp độ tiếng Nhật bạn đang phụ trách (N5 - N1) bằng NotebookLM. Sau đó sử dụng bộ đôi Gems 1 & Gems 2 để tiến hành tạo, duyệt và định dạng một tệp đề thi Google Docs hoàn chỉnh.";
+                }
+                if (slide14_optB_desc) {
+                    slide14_optB_desc.innerText = "Đánh giá các nhiệm vụ, đầu việc hiện tại của bạn trong đào tạo. Xác định xem NotebookLM, Gems hoặc các công cụ AI khác có thể giải quyết, tự động hóa khâu nào, đồng thời đo lường hiệu suất được cải tiến cụ thể ra sao.";
+                }
+
+                help_title.innerHTML = '<i class="fa-solid fa-circle-question text-cyan-400 mr-2"></i>Phím tắt trình chiếu';
+                help_list.innerHTML = '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">← / Mũi tên trái</span> <span>Slide trước</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">&rarr; / Mũi tên phải</span> <span>Slide tiếp theo</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">Spacebar (Phím cách)</span> <span>Slide tiếp theo</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">F / Phím F</span> <span>Bật/Tắt Toàn màn hình</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">N / Phím N</span> <span>Bật/Tắt Ghi chú giảng viên</span></div>' +
+                '<div class="flex justify-between py-1.5"><span class="font-bold text-cyan-400">R / Phím R</span> <span>Bật/Tắt Tra cứu tài nguyên nhanh</span></div>';
+                btn_close_help.innerText = "Đóng";
+                drawer_notes_title.innerHTML = '<i class="fa-solid fa-comment-dots mr-2"></i>Presenter Notes (Gợi ý điều phối lớp)';
+                res_title.innerText = "Tra cứu nhanh tài nguyên";
+                res_desc.innerText = "Giảng viên có thể sao chép nhanh các tài nguyên này bất kỳ lúc nào trong lúc demo:";
+            } else {
+                list3_1.innerHTML = '<li>生成AI（<strong class="text-cyan-400">GenAI</strong>）の台頭により、講師の役割は知識伝達者から学習体験の「デザイナー」へとシフトしています。</li>' +
+                                     '<li>Sun*の<strong class="text-cyan-400">「AI-Ready」</strong>方針：手作業を極限まで削減し、メンバー全体のデジタル能力を底上げします。</li>';
+                list3_2.innerHTML = '<li>教育におけるAIの応用例：クイックテストの作成、スライド作成、学生の成績・進捗管理。</li>' +
+                                     '<li class="text-cyan-300 font-semibold">本日の重点：問題集からの抽出（データベース化）から最終的な試験出力までの一括自動化。</li>';
+                blockWarn.innerHTML = '<strong>最大の課題：</strong> 従来の業務プロセスの変革です。すべてをゼロから自作する習慣から、AIとの協働プロセス（<strong>プロンプト作成 &rarr; 検証(Verify) &rarr; 微調整(Edit)</strong>）へのマインド転換が必要です。';
+                slide4_c1.innerHTML = '<p><strong>NotebookLM:</strong> アップロードされたソース（PDFやGoogle Docsなど）に完全に基づき稼働する優秀なアシスタント。ハルシネーション（事実に基づかない回答）を完全に排除します。</p>' +
+                                       '<p><strong>Gemini Gems:</strong> あらかじめ指示書（Instructions）を組み込み、特定タスクを何度でも高い整合性で再現実行できる専用カスタムAI（プロンプトのテンプレート化）。</p>';
+                
+                slide5_ex.innerHTML = '例：<code class="bg-slate-900 px-2 py-1 rounded text-slate-300">[Bank]_N3_漢字読み_1</code>';
+                
+                slide5_step3_title.innerText = "抽出プロンプトの送信";
+                slide5_step3_desc.innerHTML = "標準化されたYAMLプロンプト（<strong>スライド7</strong>にあります）をコピーしてチャットに入力します。<br><span class='text-amber-300 font-semibold text-[10px] block mt-1'><i class='fa-solid fa-triangle-exclamation mr-1'></i> 注意：プロンプト内の抽出対象（問題形式）を適宜修正して送信してください。</span>";
+                slide5_step4_title.innerText = "保存と新規ソース追加";
+                slide5_step4_desc.innerText = "回答をコピーし、「Add Source」→「Paste text」を選択して貼り付け、規定の命名規則に従ってソース名を変更します。";
+
+                slide6_flow_step1_desc.innerText = "講師によるデモンストレーション：NotebookLMを起動し、教材PDFをアップロード。抽出用プロンプトを入力し、得られた回答を新しい「テキストソース」として再登録する一連の流れを実演します。";
+                slide6_flow_step2_desc.innerText = "ブレイクアウトルーム（3〜4名）に分かれ、お互いにサポートしながら実践します。配布用のGoogle Driveから任意の教材（PDF）をダウンロードし、抽出プロンプトを実行して独自の問題バンクを作成します。";
+                slide6_flow_step3_desc.innerText = "メインルームに戻り、代表して1〜2グループの成果物を共有します。エラーの解消やトラブルシューティングを行い、命名規則の重要性を再確認します。";
+
+                // Translating Slide 9
+                slide9_sop_title.innerHTML = '<span class="text-cyan-400 mr-2">09.</span> 実践の4ステップ運用フロー（Step-by-Step SOP）';
+                slide9_sop_desc.innerText = "Gem 1とGem 2を連携させ、レイアウトの崩れない試験用Googleドキュメントを作成・出力する手順です。";
+                slide9_step1_badge.innerText = "ステップ 1";
+                slide9_step1_title.innerText = "Gem 1の作成とナレッジ接続";
+                slide9_step1_desc.innerText = "Gem 1（問題作成用）をInstructionsで作成し、NotebookLMの問題バンク（ナレッジ）をソースとして連携します。";
+                slide9_step2_badge.innerText = "ステップ 2";
+                slide9_step2_title.innerText = "生テストデータの生成と人間による検証";
+                slide9_step2_desc.innerText = "Gem 1に対して運用コマンド（Case 1, 2, 3）を実行し、生成された問題の質と正確性を人間が検証（Verify）します。";
+                slide9_step3_badge.innerText = "ステップ 3";
+                slide9_step3_title.innerText = "Gem 2（Docs整形用）の作成";
+                slide9_step3_desc.innerText = "Gem 2（ドキュメント書き出し用）を作成。Google Docs上で表（テーブル）が崩れないよう、HTML構造を定義します。";
+                slide9_step4_badge.innerText = "ステップ 4";
+                slide9_step4_title.innerText = "出力された表データのコピー＆ペースト";
+                slide9_step4_desc.innerText = "Gem 1で確定した生データをGem 2に投入し、出力された高圧縮なテーブル構造のテキストをGoogle Docsへ直接ペーストします。";
+                slide9_tip.innerHTML = '<i class="fa-solid fa-lightbulb"></i> <span><strong>実践テクニック:</strong> 必ずGem 1で問題の内容を検証（修正・承認）してからGem 2に渡してください。これにより、Googleドキュメント上での無駄な修正作業を極限まで削減できます！</span>';
+
+                slide9_flow_step1_desc.innerText = "講師によるデモ：Gem 1の作成とNotebookLM of 接続、運用コマンドによる問題生成、人間によるレビュー、Gem 2へのデータ投入、そしてGoogle Docsへの貼り付けまでの一連の流れを実演します。";
+                slide9_flow_step2_desc.innerText = "ブレイクアウトルームでの実践：各自で2つのGems（Gem 1 & Gem 2）をセットアップし、運用プロンプトを実行。実際にGoogleドキュメントへエクスポートしてテストファイルを1部作成します。";
+                slide9_flow_step3_desc.innerText = "成果物の共有：メインルームに戻り、完成したGoogleドキュメントの共有リンクをチャット欄に貼り付けます。表崩れや不要なメタデータの混入がないか、講師がレビューとデバッグを行います。";
+
+                slide7_g1_sub.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-cyan-400 mr-1"></i> 生データと解答を出力し、講師によるチェック（検証）を受けます。';
+                slide7_g2_sub.innerHTML = '<i class="fa-solid fa-file-word text-indigo-400 mr-1"></i> Google Docsに直接貼り付け可能な、余白の狭い高圧縮HTMLテーブルを作成します。';
+                
+                slide11_c1_desc.innerHTML = 'Sun*社内のデータセキュリティ規則を厳守してください。機密性が高い顧客情報や社外秘データを外部公開されている一般のAIツールにアップロードしないでください。';
+                slide11_c3_desc.innerHTML = 'カスタマイズした有益なInstructions（指示書）やプロンプトの工夫は、Sun*の教育組織共有エリアに積極的に追加して知財を共有しましょう。';
+                
+                if (slide14_optA_desc) {
+                    slide14_optA_desc.innerText = "自分が担当する日本語レベル（N5〜N1）の独自の試験バンクをNotebookLMで構築します。その後、Gem 1とGem 2を連携させ、検証済みで美しくフォーマットされたGoogleドキュメントの試験ファイルを1本完全に作成・出力してください。";
+                }
+                if (slide14_optB_desc) {
+                    slide14_optB_desc.innerText = "現在の教育・トレーニング業務におけるタスクを棚卸しします。NotebookLM、Gems、またはその他のAIツールがどのタスクを自動化・効率化できるかを特定し、具体的なパフォーマンス向上の度合いを測定・報告してください。";
+                }
+
+                help_title.innerHTML = '<i class="fa-solid fa-circle-question text-cyan-400 mr-2"></i>プレゼン用ショートカット';
+                help_list.innerHTML = '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">← / 左矢印キー</span> <span>前のスライド</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">&rarr; / 右矢印キー</span> <span>次のスライド</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">スペースキー</span> <span>次のスライド</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">Fキー</span> <span>全画面表示の切替</span></div>' +
+                '<div class="flex justify-between py-1.5 border-b border-slate-800"><span class="font-bold text-cyan-400">Nキー</span> <span>講師用ノートの表示/非表示</span></div>' +
+                '<div class="flex justify-between py-1.5"><span class="font-bold text-cyan-400">Rキー</span> <span>リソースパネルの表示/非表示</span></div>';
+                btn_close_help.innerText = "閉じる";
+                drawer_notes_title.innerHTML = '<i class="fa-solid fa-comment-dots mr-2"></i>プレゼンターノート (講義・調整ガイド)';
+                res_title.innerText = "クイックリソース";
+                res_desc.innerText = "デモ中に講師が必要なプロンプトやデータをいつでもワンクリックでコピーできます：";
+            }
+        }
+
+        function updateSlideView() {
+            // Hide all slides first
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx + 1 === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            // Update Progress indicator and bar
+            document.getElementById('slide-indicator').innerText = 'Slide ' + currentSlide + ' / ' + totalSlides;
+            const percent = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('slide-range').value = currentSlide;
+
+            // Update presenter notes view safely
+            document.getElementById('notes-content').innerText = presenterNotesDB[globalSlideLang][currentSlide - 1];
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlideView();
+            }
+        }
+
+        document.getElementById('slide-range').addEventListener('keydown', function(e) {
+            e.stopPropagation(); // Prevents input slider range keys duplicate slide change
+        });
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlideView();
+            }
+        }
+
+        function jumpToSlide(num) {
+            currentSlide = parseInt(num);
+            updateSlideView();
+        }
+
+        // Module 3 Live Prompt System Functions
+        function switchPromptType(type) {
+            selectedPromptType = type;
+            
+            const btnVocab = document.getElementById('btn-prompt-vocab');
+            const btnGrammar = document.getElementById('btn-prompt-grammar');
+            
+            if (type === 'vocab') {
+                btnVocab.className = "px-3 py-1.5 rounded-md font-semibold bg-cyan-500 text-slate-900 transition-all";
+                btnGrammar.className = "px-3 py-1.5 rounded-md font-semibold text-slate-400 hover:text-white transition-all";
+                document.getElementById('prompt-file-name').innerText = "vocabulary_extraction.yaml";
+            } else {
+                btnGrammar.className = "px-3 py-1.5 rounded-md font-semibold bg-cyan-500 text-slate-900 transition-all";
+                btnVocab.className = "px-3 py-1.5 rounded-md font-semibold text-slate-400 hover:text-white transition-all";
+                document.getElementById('prompt-file-name').innerText = "grammar_extraction.yaml";
+            }
+            updatePromptDisplay();
+        }
+
+        function switchPromptLanguage(lang) {
+            selectedPromptLang = lang;
+            ['ja', 'vi'].forEach(l => {
+                const btn = document.getElementById('lang-' + l);
+                if (l === lang) {
+                    btn.className = "px-2 py-1 rounded text-[10px] font-bold bg-cyan-500 text-slate-900 transition-all";
+                } else {
+                    btn.className = "px-2 py-1 rounded text-[10px] font-bold text-slate-400 transition-all";
+                }
+            });
+            updatePromptDisplay();
+        }
+
+        function updatePromptDisplay() {
+            const promptText = promptDB[selectedPromptType][selectedPromptLang];
+            document.getElementById('prompt-display-area').innerText = resolveBackticks(promptText);
+        }
+
+        function copyCurrentPrompt() {
+            const promptText = promptDB[selectedPromptType][selectedPromptLang];
+            copyText(resolveBackticks(promptText));
+        }
+
+        // Gem 1 Interactive System
+        function switchGem1Language(lang) {
+            selectedGem1Lang = lang;
+            ['en', 'vi', 'ja'].forEach(l => {
+                const btn = document.getElementById('gem1-lang-' + l);
+                if (l === lang) {
+                    btn.className = "px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all";
+                } else {
+                    btn.className = "px-3 py-1 text-slate-400 rounded-md font-semibold transition-all";
+                }
+            });
+            updateGem1Display();
+        }
+
+        function updateGem1Display() {
+            const gemText = gem1DB[selectedGem1Lang];
+            document.getElementById('gem1-display-area').innerText = resolveBackticks(gemText);
+        }
+
+        function copyGem1Prompt() {
+            copyText(resolveBackticks(gem1DB[selectedGem1Lang]));
+        }
+
+        // Gem 2 Interactive System
+        function switchGem2Language(lang) {
+            selectedGem2Lang = lang;
+            ['en', 'vi', 'ja'].forEach(l => {
+                const btn = document.getElementById('gem2-lang-' + l);
+                if (l === lang) {
+                    btn.className = "px-3 py-1 bg-cyan-500 text-slate-900 rounded-md font-semibold transition-all";
+                } else {
+                    btn.className = "px-3 py-1 text-slate-400 rounded-md font-semibold transition-all";
+                }
+            });
+            updateGem2Display();
+        }
+
+        function updateGem2Display() {
+            const gemText = gem2DB[selectedGem2Lang];
+            document.getElementById('gem2-display-area').innerText = resolveBackticks(gemText);
+        }
+
+        function copyGem2Prompt() {
+            copyText(resolveBackticks(gem2DB[selectedGem2Lang]));
+        }
+
+        // Clipboard Engine
+        function copyText(text) {
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = text;
+            tempTextArea.style.position = "fixed";  
+            tempTextArea.style.opacity = "0";
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                const success = document.execCommand("copy");
+                if (success) {
+                    const notice = globalSlideLang === 'vi' ? "Đã sao chép thành công!" : "コピーに成功しました！";
+                    showToast(notice);
+                } else {
+                    showToast("Copy failed.");
+                }
+            } catch (err) {
+                showToast("Error copying.");
+            }
+            
+            document.body.removeChild(tempTextArea);
+        }
+
+        // Toast feedback notifier
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('opacity-0', 'scale-95');
+            toast.classList.add('opacity-100', 'scale-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('opacity-100', 'scale-100');
+                toast.classList.add('opacity-0', 'scale-95');
+            }, 2500);
+        }
+
+        // Copy operational case prompts for Slide 12 in multiple languages
+        function copyCasePrompt(caseNum) {
+            const viCases = [
+                "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 漢字読み, 表記, 文脈規定.",
+                "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 言い換え類義, 用法.",
+                "Hãy tạo cho tôi 5 câu hỏi trình độ N3 ở mỗi dạng bài: 文法形式の判断, 文の組み立て."
+            ];
+            const jaCases = [
+                "N3の漢字読み、表記、文脈規定の各形式でそれぞれ5問ずつ作成してください。",
+                "N3の言い換え類義、用法の各形式でそれぞれ5問ずつ作成してください。",
+                "N3の文法形式の判断、文の組み立ての各形式でそれぞれ5問ずつ作成してください。"
+            ];
+
+            const text = globalSlideLang === 'vi' ? viCases[caseNum - 1] : jaCases[caseNum - 1];
+            copyText(text);
+        }
+
+        function copyGem2RunPrompt() {
+            const textVi = "Hãy tạo đề thi trên Google Docs với dữ liệu dưới đây:\n【Dữ liệu】";
+            const textJa = "以下のデータでGoogleドキュメントのテストを作成してください。\n【データ】";
+            const text = globalSlideLang === 'vi' ? textVi : textJa;
+            copyText(text);
+        }
+
+        // Quick resource bar link copies
+        function copyResource(id) {
+            if (id === 'vocab-ja') copyText(resolveBackticks(promptDB.vocab.ja));
+            else if (id === 'grammar-ja') copyText(resolveBackticks(promptDB.grammar.ja));
+            else if (id === 'gem1-en') copyText(resolveBackticks(gem1DB.en));
+            else if (id === 'gem1-vi') copyText(resolveBackticks(gem1DB.vi));
+            else if (id === 'gem1-ja') copyText(resolveBackticks(gem1DB.ja));
+            else if (id === 'gem2-en') copyText(resolveBackticks(gem2DB.en));
+            else if (id === 'gem2-vi') copyText(resolveBackticks(gem2DB.vi));
+            else if (id === 'gem2-ja') copyText(resolveBackticks(gem2DB.ja));
+        }
+
+        // Help Modal toggle
+        function toggleHelpModal() {
+            const modal = document.getElementById('help-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Presenter Notes bottom sheet drawer toggle
+        function toggleNotesDrawer() {
+            const drawer = document.getElementById('notes-drawer');
+            const btnText = document.getElementById('notes-btn-text');
+            
+            const isOpen = drawer.style.height === '180px';
+            if (isOpen) {
+                drawer.style.height = '0px';
+                btnText.innerText = globalSlideLang === 'vi' ? "Hiện Ghi Chú Giảng Viên (N)" : "講師用ノートを表示 (N)";
+            } else {
+                drawer.style.height = '180px';
+                btnText.innerText = globalSlideLang === 'vi' ? "Ẩn Ghi Chú Giảng Viên (N)" : "講師用ノートを隠す (N)";
+            }
+        }
+
+        // Collapsible quick drawer resource panel toggle
+        function toggleResourcesDrawer() {
+            const drawer = document.getElementById('resources-drawer');
+            if (drawer.style.width === '320px') {
+                drawer.style.width = '0px';
+            } else {
+                drawer.style.width = '320px';
+            }
+        }
+
+        // Fullscreen Mode Controller
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    showToast("Không thể bật toàn màn hình: " + err.message);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
